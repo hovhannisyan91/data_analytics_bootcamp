@@ -1,0 +1,3619 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Session 11: Cohort Analysis – Data Analytics Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../img/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-29574c2ad9c7fe2279cf41f25198438f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-4d1c39a9b3d53dfc5345e203ea289592.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script>
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+</script>
+<script type="module">import "https://cdn.plot.ly/plotly-3.7.0.min"</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../img/favicon.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Data Analytics Bootcamp</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../materials/syllabus.html" aria-current="page"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/statistics/index.html"> 
+<span class="menu-text">Statistical Thinking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/sql/index.html"> 
+<span class="menu-text">SQL</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/python/index.html"> 
+<span class="menu-text">Python</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/tableau/index.html"> 
+<span class="menu-text">Tableau</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/lab/index.html"> 
+<span class="menu-text">Lab</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/capstone/index.html"> 
+<span class="menu-text">Capstone</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/hovhannisyan91"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../materials/python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../materials/python/session11.html">Session 11: Cohort Analysis</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical Thinking</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Data Layers and Bias in Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Types of Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 02: Data Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 03: Probabilistic Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 04: Probabilistic Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 05: Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 06: Inferential Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Descriptive Stats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hypothesis Testing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/sql/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/sql/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analytics with SQL</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Intro to Relational Databases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Intro to PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: DA with SQL | Data Types &amp; Constraints</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: DA with SQL | Filtering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: DA with SQL | Numeric Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: DA with SQL | String Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: DA with SQL | Date Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08: DA with SQL | JOINs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09: DA with SQL | Advanced SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10: DA with SQL | Advanced SQL Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11: DA with SQL | UDFs, Stored Procedures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 12: DA with SQL | Advanced Aggregations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 13: DA with SQL | Final Project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Relational Databases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic Queries: DDL DLM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Filtering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numeric Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">String Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Date Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normalization and JOINs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temporary Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced SQL Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reporting and Analysis with SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Aggregations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Programming for Data Analysts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Python basic Syntax, Data Structures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: Introduction to Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: Advanced Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: Intro to Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: Working with Dates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08: Data Visualization | Plotly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09: Customer Segmentation | RFM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10: A/B Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session11.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Session 11: Cohort Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 12: Simple Linear Regression and Forecasting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 13: Logistic Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 14: Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 15: Geoanalytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 16: SQLAlchemy with Dockerized PostGIS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/slides/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grammar of Graphics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/tableau/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tableau</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/tableau/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tableau</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Introduction to Tableau</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Intermediate Visual Analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: Advanced Analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: Dashboard Design &amp; Performance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: Sales Analysis Dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: Customer Analysis Dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: Tableau with SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#cohort-analysis" id="toc-cohort-analysis" class="nav-link active" data-scroll-target="#cohort-analysis">Cohort Analysis</a>
+  <ul class="collapse">
+  <li><a href="#why-cohort-analysis-matters" id="toc-why-cohort-analysis-matters" class="nav-link" data-scroll-target="#why-cohort-analysis-matters">Why Cohort Analysis Matters</a></li>
+  <li><a href="#simple-mental-model" id="toc-simple-mental-model" class="nav-link" data-scroll-target="#simple-mental-model">Simple Mental Model</a></li>
+  <li><a href="#types-of-cohorts" id="toc-types-of-cohorts" class="nav-link" data-scroll-target="#types-of-cohorts">Types of Cohorts</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#key-metrics" id="toc-key-metrics" class="nav-link" data-scroll-target="#key-metrics">Key Metrics</a></li>
+  <li><a href="#cohort-analysis-steps" id="toc-cohort-analysis-steps" class="nav-link" data-scroll-target="#cohort-analysis-steps">Cohort Analysis | Steps</a>
+  <ul class="collapse">
+  <li><a href="#typical-output-heatmap-structure" id="toc-typical-output-heatmap-structure" class="nav-link" data-scroll-target="#typical-output-heatmap-structure">Typical Output (Heatmap Structure)</a></li>
+  <li><a href="#where-its-used" id="toc-where-its-used" class="nav-link" data-scroll-target="#where-its-used">Where It’s Used</a></li>
+  <li><a href="#key-insight" id="toc-key-insight" class="nav-link" data-scroll-target="#key-insight">Key Insight</a></li>
+  </ul></li>
+  <li><a href="#case-study-cohort-analysis" id="toc-case-study-cohort-analysis" class="nav-link" data-scroll-target="#case-study-cohort-analysis">Case Study: Cohort Analysis</a>
+  <ul class="collapse">
+  <li><a href="#business-context" id="toc-business-context" class="nav-link" data-scroll-target="#business-context">Business Context</a></li>
+  <li><a href="#business-objective" id="toc-business-objective" class="nav-link" data-scroll-target="#business-objective">Business Objective</a></li>
+  <li><a href="#analytical-questions" id="toc-analytical-questions" class="nav-link" data-scroll-target="#analytical-questions">Analytical Questions</a></li>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages">Loading Packages</a></li>
+  <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link" data-scroll-target="#loading-the-data">Loading the Data</a></li>
+  <li><a href="#first-look-at-the-data" id="toc-first-look-at-the-data" class="nav-link" data-scroll-target="#first-look-at-the-data">First Look at the Data</a></li>
+  <li><a href="#what-do-we-have-so-far" id="toc-what-do-we-have-so-far" class="nav-link" data-scroll-target="#what-do-we-have-so-far">What do we have so far</a></li>
+  <li><a href="#variable-description" id="toc-variable-description" class="nav-link" data-scroll-target="#variable-description">Variable Description</a></li>
+  <li><a href="#data-preperation-cohort-month" id="toc-data-preperation-cohort-month" class="nav-link" data-scroll-target="#data-preperation-cohort-month">Data Preperation | Cohort Month</a></li>
+  <li><a href="#data-preperation-churn-flag" id="toc-data-preperation-churn-flag" class="nav-link" data-scroll-target="#data-preperation-churn-flag">Data Preperation | Churn Flag</a></li>
+  <li><a href="#data-preperation-calculate-the-month-of-churn" id="toc-data-preperation-calculate-the-month-of-churn" class="nav-link" data-scroll-target="#data-preperation-calculate-the-month-of-churn">Data Preperation | Calculate the Month of Churn</a></li>
+  <li><a href="#data-preperation-keep-only-valid-churn-months" id="toc-data-preperation-keep-only-valid-churn-months" class="nav-link" data-scroll-target="#data-preperation-keep-only-valid-churn-months">Data Preperation | Keep Only Valid Churn Months</a></li>
+  <li><a href="#data-preperation-cohort-size" id="toc-data-preperation-cohort-size" class="nav-link" data-scroll-target="#data-preperation-cohort-size">Data Preperation | Cohort Size</a></li>
+  <li><a href="#data-preperation-count-actual-churn-events-by-cohort-and-tenure-month" id="toc-data-preperation-count-actual-churn-events-by-cohort-and-tenure-month" class="nav-link" data-scroll-target="#data-preperation-count-actual-churn-events-by-cohort-and-tenure-month">Data Preperation | Count Actual Churn Events by Cohort and Tenure Month</a></li>
+  <li><a href="#data-preperation-full-12-month-grid" id="toc-data-preperation-full-12-month-grid" class="nav-link" data-scroll-target="#data-preperation-full-12-month-grid">Data Preperation | Full 12-Month Grid</a></li>
+  <li><a href="#data-preperation-merge-cohort-size" id="toc-data-preperation-merge-cohort-size" class="nav-link" data-scroll-target="#data-preperation-merge-cohort-size">Data Preperation | Merge Cohort Size</a></li>
+  <li><a href="#data-preperation-calculate-metrics" id="toc-data-preperation-calculate-metrics" class="nav-link" data-scroll-target="#data-preperation-calculate-metrics">Data Preperation | Calculate Metrics</a></li>
+  </ul></li>
+  <li><a href="#retention-by-cohort" id="toc-retention-by-cohort" class="nav-link" data-scroll-target="#retention-by-cohort">Retention by Cohort</a>
+  <ul class="collapse">
+  <li><a href="#retention-line-plots-gender-level" id="toc-retention-line-plots-gender-level" class="nav-link" data-scroll-target="#retention-line-plots-gender-level">Retention Line Plots | Gender Level</a></li>
+  <li><a href="#gender-retention-line-plot" id="toc-gender-retention-line-plot" class="nav-link" data-scroll-target="#gender-retention-line-plot">Gender Retention Line Plot</a></li>
+  </ul></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
+  <li><a href="#cohort-retention-heatmap" id="toc-cohort-retention-heatmap" class="nav-link" data-scroll-target="#cohort-retention-heatmap">Cohort Retention Heatmap</a>
+  <ul class="collapse">
+  <li><a href="#step-1-prepare-the-heatmap-table" id="toc-step-1-prepare-the-heatmap-table" class="nav-link" data-scroll-target="#step-1-prepare-the-heatmap-table">Step 1: Prepare the Heatmap Table</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../materials/python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../materials/python/session11.html">Session 11: Cohort Analysis</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Session 11: Cohort Analysis</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Cohort Analysis</div>
+    <div class="quarto-category">Pandas</div>
+    <div class="quarto-category">Plotly</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="cohort-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="cohort-analysis">Cohort Analysis</h2>
+<p><strong>Cohort analysis</strong> is a technique where you <strong>group users/customers into cohorts (groups with a shared characteristic)</strong> and track how their behavior evolves over time.</p>
+<p><strong>A cohort is typically defined by something like:</strong></p>
+<ul>
+<li>Signup date (most common → <em>acquisition cohorts</em>)</li>
+<li>First purchase</li>
+<li>Marketing channel</li>
+<li>Behavior (e.g., users who used feature X)</li>
+</ul>
+<p>Instead of looking at <strong>averages across all users</strong>, cohort analysis lets you see <strong>how different groups behave differently over time</strong>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the groupings that are <strong>not time-dependent</strong>, the term segment is more appropriate to use.</p>
+</div>
+</div>
+<section id="why-cohort-analysis-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-cohort-analysis-matters">Why Cohort Analysis Matters</h3>
+<p>Aggregate metrics can be misleading. For example if <code>Overall retention = 70% (looks good)</code></p>
+<p><strong>But:</strong></p>
+<ul>
+<li>Old users → <code>90%</code> retention<br>
+</li>
+<li>New users → <code>40%</code> retention</li>
+</ul>
+<p>Without cohorts, you <strong>miss the problem completely</strong>.</p>
+<p><strong>Cohort analysis helps you:</strong></p>
+<ul>
+<li>Identify <strong>when users churn</strong></li>
+<li>Understand <strong>why some cohorts perform better</strong></li>
+<li>Measure <strong>impact of campaigns or product changes</strong></li>
+<li>Separate <strong>growth (new users)</strong> from <strong>retention (existing users)</strong></li>
+</ul>
+</section>
+<section id="simple-mental-model" class="level3">
+<h3 class="anchored" data-anchor-id="simple-mental-model">Simple Mental Model</h3>
+<p>Think of cohorts as <strong>batches of users starting at the same time</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cohort (Signup Month)</th>
+<th>Month 0</th>
+<th>Month 1</th>
+<th>Month 2</th>
+<th>Month 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Jan users</td>
+<td>100%</td>
+<td>70%</td>
+<td>55%</td>
+<td>40%</td>
+</tr>
+<tr class="even">
+<td>Feb users</td>
+<td>100%</td>
+<td>60%</td>
+<td>45%</td>
+<td>30%</td>
+</tr>
+<tr class="odd">
+<td>Mar users</td>
+<td>100%</td>
+<td>80%</td>
+<td>65%</td>
+<td>50%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Insights:</strong></p>
+<ul>
+<li>February cohort performs worse</li>
+<li>March cohort performs better</li>
+<li>Something changed in the system</li>
+</ul>
+</section>
+<section id="types-of-cohorts" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-cohorts">Types of Cohorts</h3>
+<ol type="1">
+<li><strong>Acquisition Cohorts</strong>
+<ul>
+<li>Grouped by <strong>start date</strong></li>
+<li>Used for <strong>retention analysis</strong></li>
+</ul></li>
+<li><strong>Behavioral Cohorts</strong> Grouped by:
+<ul>
+<li>users who completed onboarding vs not</li>
+<li>old vs new</li>
+</ul></li>
+<li><strong>Segment-Based Cohorts:</strong> Grouped by
+<ul>
+<li>Country<br>
+</li>
+<li>Gender<br>
+</li>
+<li>Channel</li>
+</ul></li>
+</ol>
+</section>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p><img src="../../img/python/11/cohort.png" class="img-fluid"></p>
+<section id="looking-vertically" class="level4">
+<h4 class="anchored" data-anchor-id="looking-vertically">Looking Vertically</h4>
+<p>When looking vertically, we fix a specific week (column) and compare how different cohorts perform at the same lifecycle stage.</p>
+<ul>
+<li><strong>Week 1 retention is relatively stable (~18%–24%):</strong> Most cohorts begin with similar retention levels, indicating a <strong>consistent onboarding experience</strong>.</li>
+<li><strong>Mid-term retention (Weeks 4–8) shows strong variability:</strong> Some cohorts (e.g., mid-May) perform significantly better, reaching <code>~27–29%</code>, while others decline earlier. This suggests <em>differences in cohort quality</em>, could by driven by:
+<ul>
+<li>acquisition channels<br>
+</li>
+<li>campaign effectiveness<br>
+</li>
+<li>audience targeting<br>
+</li>
+</ul></li>
+<li><strong>Later weeks (10+) show deterioration in newer cohorts:</strong> Earlier cohorts (April–May) maintain retention in the <code>~10–16%</code> range longer, whereas newer cohorts (July–August) drop into single digits faster.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Interpretation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is a clear <strong>decline in cohort quality over time</strong>. While early engagement remains stable, long-term retention is weakening for newer users. This often indicates scaling acquisition at the cost of quality.</p>
+</div>
+</div>
+</section>
+<section id="looking-horizontally" class="level4">
+<h4 class="anchored" data-anchor-id="looking-horizontally">Looking Horizontally</h4>
+<p>When looking horizontally, we track a single cohort across weeks to understand its lifecycle behavior.</p>
+<ul>
+<li><p><strong>Typical retention decay pattern:</strong> Most cohorts follow a gradual decline from <code>~20–25%</code> down to <code>~5–10%</code>.</p></li>
+<li><p><strong>Early drop-off (Weeks 1–3):</strong> A noticeable decline occurs early, reflecting <strong>initial churn after signup</strong>. This is expected but still critical.</p></li>
+<li><p><strong>Mid-term stabilization (Weeks 4–8):</strong> Stronger cohorts stabilize temporarily (e.g., May 18 cohort maintains high retention longer), suggesting:</p>
+<ul>
+<li>better engagement<br>
+</li>
+<li>stronger product value perception<br>
+</li>
+</ul></li>
+<li><p><strong>Long-term decay (Weeks 10+):</strong> All cohorts eventually converge toward low retention (~5–10%), indicating:</p>
+<ul>
+<li>limited long-term stickiness<br>
+</li>
+<li>possible lack of retention mechanisms (e.g., re-engagement, habit formation)</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Interpretation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The product has <strong>reasonable short-term engagement</strong>, but struggles with <strong>long-term retention</strong>. Some cohorts outperform others, indicating that improvements are possible with better targeting or experience design.</p>
+</div>
+</div>
+</section>
+<section id="looking-diagonally-same-calendar-time-across-cohorts" class="level4">
+<h4 class="anchored" data-anchor-id="looking-diagonally-same-calendar-time-across-cohorts">Looking Diagonally (Same Calendar Time Across Cohorts)</h4>
+<p>Diagonal analysis compares cohorts at different lifecycle stages but at the same calendar time.</p>
+<ul>
+<li><p>Each diagonal represents <strong>user activity in the same real-world period</strong> across different cohorts.</p></li>
+<li><p><strong>Consistent decline across diagonals:</strong> Most diagonals toward the right side of the chart show lower retention <code>(~5–10%)</code>, regardless of cohort.</p></li>
+<li><p><strong>No strong recovery pattern:</strong> There is no visible diagonal where all cohorts improve simultaneously.</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="interpretation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>There is likely a <strong>systemic issue affecting all users</strong>, not just specific cohorts.</p></li>
+<li><p>Possible causes:</p>
+<ul>
+<li>product changes negatively impacting engagement<br>
+</li>
+<li>seasonality effects<br>
+</li>
+<li>lack of lifecycle marketing (CRM, push, email)<br>
+</li>
+</ul></li>
+<li><p>Since all cohorts converge to low retention in later periods, the issue is <strong>structural, not cohort-specific</strong>.</p></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="key-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="key-metrics">Key Metrics</h2>
+<!-- todo explore -->
+<ul>
+<li><strong>Retention Rate:</strong> <span class="math inline">\(Retention = \frac{\text{Active Users at time t}}{\text{Users in cohort at start}}\)</span></li>
+<li><strong>Churn Rate:</strong> <span class="math inline">\(Churn = 1 - Retention\)</span></li>
+<li><strong>Lifetime Value (LTV):</strong> Total value generated by a cohort over time.</li>
+</ul>
+</section>
+<section id="cohort-analysis-steps" class="level2">
+<h2 class="anchored" data-anchor-id="cohort-analysis-steps">Cohort Analysis | Steps</h2>
+<ol type="1">
+<li><strong>Define a cohort:</strong> users who signed up in January (monthly)</li>
+<li><strong>Track behavior over time:</strong> Activity, purchases, churn</li>
+<li><strong>Aggregate by time periods:</strong> Month 1, Month 2, Month 3…</li>
+<li><strong>Visualize:</strong>
+<ul>
+<li>Heatmap<br>
+</li>
+<li>Line plots<br>
+</li>
+</ul></li>
+<li><strong>Compare cohorts:</strong> Identify patterns and anomalies</li>
+</ol>
+<section id="typical-output-heatmap-structure" class="level3">
+<h3 class="anchored" data-anchor-id="typical-output-heatmap-structure">Typical Output (Heatmap Structure)</h3>
+<ul>
+<li>Rows → Cohorts (by acquisition month)</li>
+<li>Columns → Time since acquisition</li>
+<li>Values → Retention %</li>
+</ul>
+<p><strong>Example interpretation:</strong></p>
+<ul>
+<li>Early drop-off → onboarding issue<br>
+</li>
+<li>Late drop-off → product value issue</li>
+</ul>
+<p><img src="../../img/python/11/cohort.png" class="img-fluid"></p>
+</section>
+<section id="where-its-used" class="level3">
+<h3 class="anchored" data-anchor-id="where-its-used">Where It’s Used</h3>
+<ul>
+<li>SaaS (retention, churn)</li>
+<li>E-commerce (repeat purchases)</li>
+<li>Telecom (churn analysis, campaigns)</li>
+<li>Mobile apps (engagement tracking)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In other words, any serivice providing business.</p>
+</div>
+</div>
+</section>
+<section id="key-insight" class="level3">
+<h3 class="anchored" data-anchor-id="key-insight">Key Insight</h3>
+<p><strong>Cohort analysis answers:</strong></p>
+<blockquote class="blockquote">
+<p>What happens to users <strong>after they join</strong>, not just overall performance?</p>
+</blockquote>
+<p>This makes it one of the most powerful tools in <strong>product and marketing analytics</strong>.</p>
+</section>
+</section>
+<section id="case-study-cohort-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-cohort-analysis">Case Study: Cohort Analysis</h2>
+<section id="business-context" class="level3">
+<h3 class="anchored" data-anchor-id="business-context">Business Context</h3>
+<p>A European subscription-based digital service is analyzing customer behavior to better understand retention dynamics over time.</p>
+<p>The company acquires customers through multiple channels such as <code>Organic traffic</code>, <code>Paid Advertising</code>, and <code>Referrals</code>. While overall growth has been steady, management has observed that:</p>
+<ul>
+<li>Some acquisition periods seem to generate more loyal customers</li>
+<li>Other periods show faster customer drop-off (churn)</li>
+</ul>
+<blockquote class="blockquote">
+<p>The business wants to understand whether these differences are real and what might be driving them.</p>
+</blockquote>
+</section>
+<section id="business-objective" class="level3">
+<h3 class="anchored" data-anchor-id="business-objective">Business Objective</h3>
+<p>Identify which acquisition cohorts perform better or worse over time and understand the possible drivers behind these differences.</p>
+</section>
+<section id="analytical-questions" class="level3">
+<h3 class="anchored" data-anchor-id="analytical-questions">Analytical Questions</h3>
+<p>In this analysis, we will answer the following questions:</p>
+<ol type="1">
+<li>How large is each acquisition cohort?</li>
+<li>What does the overall retention pattern look like across cohorts?</li>
+<li>Which cohorts show stronger or weaker retention over a 12-month horizon?</li>
+<li>Do retention patterns differ by:
+<ul>
+<li>gender,</li>
+<li>marital status,</li>
+<li>income segment,</li>
+<li>country,</li>
+<li>channel,</li>
+<li>campaign,</li>
+<li>device type,</li>
+<li>and plan type?</li>
+</ul></li>
+<li>Which features seem most strongly associated with customer retention?</li>
+</ol>
+</section>
+<section id="loading-packages" class="level3">
+<h3 class="anchored" data-anchor-id="loading-packages">Loading Packages</h3>
+<div id="7e573280" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="loading-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-data">Loading the Data</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'../data/cohort/cohort_analysis.csv'</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                 parse_dates <span class="op">=</span> [<span class="st">"acquisition_date"</span>, <span class="st">'cancellation_month'</span>],</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                 errors <span class="op">=</span> <span class="st">"coerce"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4036e109" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">acquisition_date</th>
+<th data-quarto-table-cell-role="th">cancellation_month</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">marital_status</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">income_segment</th>
+<th data-quarto-table-cell-role="th">country</th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">campaign_id</th>
+<th data-quarto-table-cell-role="th">device_type</th>
+<th data-quarto-table-cell-role="th">plan_type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>2024-07-01</td>
+<td>2025-02-01</td>
+<td>Male</td>
+<td>Married</td>
+<td>31</td>
+<td>Medium</td>
+<td>Germany</td>
+<td>Paid Ads</td>
+<td>Paid Ads_C</td>
+<td>iOS</td>
+<td>Standard</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>2024-04-01</td>
+<td>2024-05-01</td>
+<td>Male</td>
+<td>Single</td>
+<td>54</td>
+<td>Premium</td>
+<td>Netherlands</td>
+<td>Referral</td>
+<td>Referral_B</td>
+<td>iOS</td>
+<td>Standard</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>2024-05-01</td>
+<td>2024-07-01</td>
+<td>Male</td>
+<td>Single</td>
+<td>34</td>
+<td>Medium</td>
+<td>Poland</td>
+<td>Paid Ads</td>
+<td>Paid Ads_A</td>
+<td>Android</td>
+<td>Standard</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>2024-07-01</td>
+<td>NaN</td>
+<td>Male</td>
+<td>Married</td>
+<td>38</td>
+<td>High</td>
+<td>Belgium</td>
+<td>Organic</td>
+<td>Organic_C</td>
+<td>Android</td>
+<td>Standard</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>2024-03-01</td>
+<td>2024-04-01</td>
+<td>Male</td>
+<td>Single</td>
+<td>25</td>
+<td>Low</td>
+<td>Sweden</td>
+<td>Paid Ads</td>
+<td>Paid Ads_A</td>
+<td>Android</td>
+<td>Basic</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="first-look-at-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="first-look-at-the-data">First Look at the Data</h3>
+<div id="e0bac6f3" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(12000, 12)</code></pre>
+</div>
+</div>
+<div id="34a0fd1f" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 12000 entries, 0 to 11999
+Data columns (total 12 columns):
+ #   Column              Non-Null Count  Dtype         
+---  ------              --------------  -----         
+ 0   user_id             12000 non-null  int64         
+ 1   acquisition_date    12000 non-null  datetime64[us]
+ 2   cancellation_month  7066 non-null   str           
+ 3   gender              12000 non-null  str           
+ 4   marital_status      12000 non-null  str           
+ 5   age                 12000 non-null  int64         
+ 6   income_segment      11369 non-null  str           
+ 7   country             12000 non-null  str           
+ 8   channel             12000 non-null  str           
+ 9   campaign_id         12000 non-null  str           
+ 10  device_type         12000 non-null  str           
+ 11  plan_type           12000 non-null  str           
+dtypes: datetime64[us](1), int64(2), str(9)
+memory usage: 1.8 MB</code></pre>
+</div>
+</div>
+<div id="0cdc8cd5" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.isnull().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>user_id                  0
+acquisition_date         0
+cancellation_month    4934
+gender                   0
+marital_status           0
+age                      0
+income_segment         631
+country                  0
+channel                  0
+campaign_id              0
+device_type              0
+plan_type                0
+dtype: int64</code></pre>
+</div>
+</div>
+<div id="1d423d37" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df.describe(include<span class="op">=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">acquisition_date</th>
+<th data-quarto-table-cell-role="th">cancellation_month</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">marital_status</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">income_segment</th>
+<th data-quarto-table-cell-role="th">country</th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">campaign_id</th>
+<th data-quarto-table-cell-role="th">device_type</th>
+<th data-quarto-table-cell-role="th">plan_type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>12000.00000</td>
+<td>12000</td>
+<td>7066</td>
+<td>12000</td>
+<td>12000</td>
+<td>12000.000000</td>
+<td>11369</td>
+<td>12000</td>
+<td>12000</td>
+<td>12000</td>
+<td>12000</td>
+<td>12000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">unique</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>19</td>
+<td>2</td>
+<td>2</td>
+<td>NaN</td>
+<td>4</td>
+<td>12</td>
+<td>3</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">top</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>2024-05-01</td>
+<td>Female</td>
+<td>Single</td>
+<td>NaN</td>
+<td>High</td>
+<td>Netherlands</td>
+<td>Paid Ads</td>
+<td>Paid Ads_A</td>
+<td>Android</td>
+<td>Standard</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">freq</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>932</td>
+<td>6016</td>
+<td>7087</td>
+<td>NaN</td>
+<td>4823</td>
+<td>1057</td>
+<td>4854</td>
+<td>1636</td>
+<td>6582</td>
+<td>5979</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>6000.50000</td>
+<td>2024-04-15 20:46:48</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>34.630250</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>1.00000</td>
+<td>2024-01-01 00:00:00</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>18.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>3000.75000</td>
+<td>2024-02-01 00:00:00</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>28.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>6000.50000</td>
+<td>2024-04-01 00:00:00</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>34.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>9000.25000</td>
+<td>2024-06-01 00:00:00</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>41.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>12000.00000</td>
+<td>2024-08-01 00:00:00</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>65.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>3464.24595</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>9.514896</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="what-do-we-have-so-far" class="level3">
+<h3 class="anchored" data-anchor-id="what-do-we-have-so-far">What do we have so far</h3>
+<p><strong>At this stage, we want to confirm three things:</strong></p>
+<ol type="1">
+<li>the dataset is at the <strong>customer level</strong>, meaning each row represents one user.</li>
+<li>Second, <code>acquisition_date</code> tells us when the customer entered the business, while <code>cancellation_month</code> tells us whether the customer churned and, if so, when.</li>
+<li>several categorical variables are available for segmentation later in the analysis. These variables will allow us to compare retention across different customer groups.</li>
+</ol>
+</section>
+<section id="variable-description" class="level3">
+<h3 class="anchored" data-anchor-id="variable-description">Variable Description</h3>
+<p>The dataset contains customer-level information available at the time of acquisition, along with churn-related variables used later for retention analysis.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>user_id</code></td>
+<td>Unique customer identifier</td>
+</tr>
+<tr class="even">
+<td><code>acquisition_date</code></td>
+<td>Date the customer joined the service</td>
+</tr>
+<tr class="odd">
+<td><code>gender</code></td>
+<td>Customer gender</td>
+</tr>
+<tr class="even">
+<td><code>marital_status</code></td>
+<td>Customer marital status</td>
+</tr>
+<tr class="odd">
+<td><code>age</code></td>
+<td>Customer age at acquisition</td>
+</tr>
+<tr class="even">
+<td><code>income_segment</code></td>
+<td>Income segment derived from age</td>
+</tr>
+<tr class="odd">
+<td><code>country</code></td>
+<td>Customer country</td>
+</tr>
+<tr class="even">
+<td><code>region</code></td>
+<td>Region derived from country (e.g., Western, Eastern Europe)</td>
+</tr>
+<tr class="odd">
+<td><code>channel</code></td>
+<td>Acquisition channel (Organic, Paid Ads, Referral)</td>
+</tr>
+<tr class="even">
+<td><code>campaign_id</code></td>
+<td>Campaign identifier linked to acquisition</td>
+</tr>
+<tr class="odd">
+<td><code>device_type</code></td>
+<td>Device used at acquisition (Android, iOS, Web)</td>
+</tr>
+<tr class="even">
+<td><code>plan_type</code></td>
+<td>Subscription plan (Basic, Standard, Premium)</td>
+</tr>
+<tr class="odd">
+<td><code>engagement_score</code></td>
+<td>Latent customer quality indicator (simulated)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="data-preperation-cohort-month" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-cohort-month">Data Preperation | Cohort Month</h3>
+<div id="bb566466" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"acquisition_month"</span>] <span class="op">=</span> df[<span class="st">"acquisition_date"</span>].dt.to_period(<span class="st">"M"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"user_id"</span>, <span class="st">"acquisition_date"</span>, <span class="st">"acquisition_month"</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">acquisition_date</th>
+<th data-quarto-table-cell-role="th">acquisition_month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>2024-07-01</td>
+<td>2024-07</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>2024-04-01</td>
+<td>2024-04</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>2024-05-01</td>
+<td>2024-05</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>2024-07-01</td>
+<td>2024-07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>2024-03-01</td>
+<td>2024-03</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="data-preperation-churn-flag" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-churn-flag">Data Preperation | Churn Flag</h3>
+<p>A missing cancellation date does <strong>not</strong> mean the customer churned in month 12.</p>
+<p>It means the customer is still active during the observation window.</p>
+<p>So we first create an explicit churn flag.</p>
+<div id="ceebad08" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"is_churned"</span>] <span class="op">=</span> df[<span class="st">"cancellation_month"</span>].notna().astype(<span class="bu">int</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"is_churned"</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>is_churned
+1    7066
+0    4934
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="data-preperation-calculate-the-month-of-churn" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-calculate-the-month-of-churn">Data Preperation | Calculate the Month of Churn</h3>
+<p>We calculate the number of months between acquisition and cancellation only for users who actually churned.</p>
+<div id="513b4368" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"acquisition_date"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"acquisition_date"</span>], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"cancellation_month"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"cancellation_month"</span>], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"month_churned"</span>] <span class="op">=</span> np.where(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"cancellation_month"</span>].notna(),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        (df[<span class="st">"cancellation_month"</span>].dt.year <span class="op">-</span> df[<span class="st">"acquisition_date"</span>].dt.year) <span class="op">*</span> <span class="dv">12</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> (df[<span class="st">"cancellation_month"</span>].dt.month <span class="op">-</span> df[<span class="st">"acquisition_date"</span>].dt.month)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    np.nan</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"user_id"</span>, <span class="st">"acquisition_date"</span>, <span class="st">"acquisition_month"</span>,<span class="st">"cancellation_month"</span>, <span class="st">"month_churned"</span>]].head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">acquisition_date</th>
+<th data-quarto-table-cell-role="th">acquisition_month</th>
+<th data-quarto-table-cell-role="th">cancellation_month</th>
+<th data-quarto-table-cell-role="th">month_churned</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>2024-07-01</td>
+<td>2024-07</td>
+<td>2025-02-01</td>
+<td>7.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>2024-04-01</td>
+<td>2024-04</td>
+<td>2024-05-01</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>2024-05-01</td>
+<td>2024-05</td>
+<td>2024-07-01</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>2024-07-01</td>
+<td>2024-07</td>
+<td>NaT</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>2024-03-01</td>
+<td>2024-03</td>
+<td>2024-04-01</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>6</td>
+<td>2024-08-01</td>
+<td>2024-08</td>
+<td>NaT</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>7</td>
+<td>2024-05-01</td>
+<td>2024-05</td>
+<td>NaT</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>8</td>
+<td>2024-05-01</td>
+<td>2024-05</td>
+<td>2024-06-01</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>9</td>
+<td>2024-07-01</td>
+<td>2024-07</td>
+<td>NaT</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>10</td>
+<td>2024-02-01</td>
+<td>2024-02</td>
+<td>2024-12-01</td>
+<td>10.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="data-preperation-keep-only-valid-churn-months" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-keep-only-valid-churn-months">Data Preperation | Keep Only Valid Churn Months</h3>
+<p>For a <code>12-month</code> cohort study, we only want churn months from 1 to 12.</p>
+<div id="0c2a6d46" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"month_churned"</span>] <span class="op">=</span> df[<span class="st">"month_churned"</span>].where(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"month_churned"</span>].between(<span class="dv">1</span>, <span class="dv">12</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    np.nan</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"month_churned"</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>).sort_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>month_churned
+1.0     2392
+2.0     1363
+3.0      845
+4.0      585
+5.0      443
+6.0      362
+7.0      266
+8.0      248
+9.0      182
+10.0     168
+11.0     113
+12.0      99
+NaN     4934
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This step is very important.</p>
+<p>A value from 1 to 12 means the customer churned during that month of tenure.</p>
+<p>A missing value means the customer did <strong>not</strong> churn during the 12-month observation window.</p>
+<p>This distinction is critical because otherwise active users may be incorrectly treated as churned users.</p>
+</div>
+</div>
+</section>
+<section id="data-preperation-cohort-size" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-cohort-size">Data Preperation | Cohort Size</h3>
+<p>Now we calculate how many users entered in each acquisition month.</p>
+<div id="f3cf7f17" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cohort_size <span class="op">=</span> (</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    df.groupby(<span class="st">"acquisition_month"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>      .agg(new_users<span class="op">=</span>(<span class="st">"user_id"</span>, <span class="st">"count"</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>      .reset_index()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>cohort_size</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">acquisition_month</th>
+<th data-quarto-table-cell-role="th">new_users</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2024-01</td>
+<td>1502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2024-02</td>
+<td>1528</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2024-03</td>
+<td>1465</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2024-04</td>
+<td>1509</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2024-05</td>
+<td>1541</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2024-06</td>
+<td>1493</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2024-07</td>
+<td>1500</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2024-08</td>
+<td>1462</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<!-- ```{python}
+fig = px.bar(
+    cohort_size,
+    x="acquisition_month",
+    y="new_users",
+    title="Cohort Size by Acquisition Month",
+    # labels={"acquisition_month": "Acquisition Month", "new_users": "New Users"}
+)
+fig.show()
+``` -->
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>This chart shows the size of each acquisition cohort.</strong></p>
+<p>Before comparing retention performance, it is always useful to inspect cohort sizes, because very small cohorts may produce unstable patterns, while larger cohorts provide more reliable retention estimates.</p>
+</div>
+</div>
+</section>
+<section id="data-preperation-count-actual-churn-events-by-cohort-and-tenure-month" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-count-actual-churn-events-by-cohort-and-tenure-month">Data Preperation | Count Actual Churn Events by Cohort and Tenure Month</h3>
+<p>Next, we count only <strong>real churn</strong> events.</p>
+<div id="adce00c3" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cohort_churn <span class="op">=</span> (</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"month_churned"</span>].notna()]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">"acquisition_month"</span>, <span class="st">"month_churned"</span>])</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    .agg(users<span class="op">=</span>(<span class="st">"user_id"</span>, <span class="st">"count"</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>cohort_churn[<span class="st">"month_churned"</span>] <span class="op">=</span> cohort_churn[<span class="st">"month_churned"</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>cohort_churn.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">acquisition_month</th>
+<th data-quarto-table-cell-role="th">month_churned</th>
+<th data-quarto-table-cell-role="th">users</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2024-01</td>
+<td>1</td>
+<td>148</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2024-01</td>
+<td>2</td>
+<td>95</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2024-01</td>
+<td>3</td>
+<td>79</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2024-01</td>
+<td>4</td>
+<td>76</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2024-01</td>
+<td>5</td>
+<td>52</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2024-01</td>
+<td>6</td>
+<td>49</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2024-01</td>
+<td>7</td>
+<td>41</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2024-01</td>
+<td>8</td>
+<td>37</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2024-01</td>
+<td>9</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2024-01</td>
+<td>10</td>
+<td>26</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>2024-01</td>
+<td>11</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>2024-01</td>
+<td>12</td>
+<td>13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>2024-02</td>
+<td>1</td>
+<td>155</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>2024-02</td>
+<td>2</td>
+<td>110</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>2024-02</td>
+<td>3</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="data-preperation-full-12-month-grid" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-full-12-month-grid">Data Preperation | Full 12-Month Grid</h3>
+<p>Some cohorts may have no churn in a particular month. That does not mean the month should disappear from the table.</p>
+<p>So we create a complete grid from month 1 to month 12 for every cohort.</p>
+<div id="956d136a" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>max_month <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>tenure_range <span class="op">=</span> np.arange(<span class="dv">1</span>, max_month <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>full_index <span class="op">=</span> pd.MultiIndex.from_product(</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    [cohort_size[<span class="st">"acquisition_month"</span>].unique(), tenure_range],</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    names<span class="op">=</span>[<span class="st">"acquisition_month"</span>, <span class="st">"month_churned"</span>]</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>cohort_data <span class="op">=</span> (</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    cohort_churn</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    .set_index([<span class="st">"acquisition_month"</span>, <span class="st">"month_churned"</span>])</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    .reindex(full_index, fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>cohort_data.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">acquisition_month</th>
+<th data-quarto-table-cell-role="th">month_churned</th>
+<th data-quarto-table-cell-role="th">users</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2024-01</td>
+<td>1</td>
+<td>148</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2024-01</td>
+<td>2</td>
+<td>95</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2024-01</td>
+<td>3</td>
+<td>79</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2024-01</td>
+<td>4</td>
+<td>76</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2024-01</td>
+<td>5</td>
+<td>52</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2024-01</td>
+<td>6</td>
+<td>49</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2024-01</td>
+<td>7</td>
+<td>41</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2024-01</td>
+<td>8</td>
+<td>37</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2024-01</td>
+<td>9</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2024-01</td>
+<td>10</td>
+<td>26</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>2024-01</td>
+<td>11</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>2024-01</td>
+<td>12</td>
+<td>13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>2024-02</td>
+<td>1</td>
+<td>155</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>2024-02</td>
+<td>2</td>
+<td>110</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>2024-02</td>
+<td>3</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="data-preperation-merge-cohort-size" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-merge-cohort-size">Data Preperation | Merge Cohort Size</h3>
+<div id="8a72a2f9" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cohort_data <span class="op">=</span> cohort_data.merge(cohort_size, on<span class="op">=</span><span class="st">"acquisition_month"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>cohort_data.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">acquisition_month</th>
+<th data-quarto-table-cell-role="th">month_churned</th>
+<th data-quarto-table-cell-role="th">users</th>
+<th data-quarto-table-cell-role="th">new_users</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2024-01</td>
+<td>1</td>
+<td>148</td>
+<td>1502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2024-01</td>
+<td>2</td>
+<td>95</td>
+<td>1502</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2024-01</td>
+<td>3</td>
+<td>79</td>
+<td>1502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2024-01</td>
+<td>4</td>
+<td>76</td>
+<td>1502</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2024-01</td>
+<td>5</td>
+<td>52</td>
+<td>1502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2024-01</td>
+<td>6</td>
+<td>49</td>
+<td>1502</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2024-01</td>
+<td>7</td>
+<td>41</td>
+<td>1502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2024-01</td>
+<td>8</td>
+<td>37</td>
+<td>1502</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2024-01</td>
+<td>9</td>
+<td>24</td>
+<td>1502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2024-01</td>
+<td>10</td>
+<td>26</td>
+<td>1502</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>2024-01</td>
+<td>11</td>
+<td>11</td>
+<td>1502</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>2024-01</td>
+<td>12</td>
+<td>13</td>
+<td>1502</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>2024-02</td>
+<td>1</td>
+<td>155</td>
+<td>1528</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>2024-02</td>
+<td>2</td>
+<td>110</td>
+<td>1528</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>2024-02</td>
+<td>3</td>
+<td>90</td>
+<td>1528</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="data-preperation-calculate-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="data-preperation-calculate-metrics">Data Preperation | Calculate Metrics</h3>
+<div id="0026b184" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cohort_data <span class="op">=</span> cohort_data.sort_values([<span class="st">"acquisition_month"</span>, <span class="st">"month_churned"</span>])</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>cohort_data[<span class="st">"cumulative_churn"</span>] <span class="op">=</span> (</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    cohort_data.groupby(<span class="st">"acquisition_month"</span>)[<span class="st">"users"</span>].cumsum()</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>cohort_data[<span class="st">"active_users"</span>] <span class="op">=</span> (</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    cohort_data[<span class="st">"new_users"</span>] <span class="op">-</span> cohort_data[<span class="st">"cumulative_churn"</span>]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>cohort_data[<span class="st">"retention_rate"</span>] <span class="op">=</span> (</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    cohort_data[<span class="st">"active_users"</span>] <span class="op">/</span> cohort_data[<span class="st">"new_users"</span>]</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>cohort_data[<span class="st">"acquisition_month"</span>] <span class="op">=</span> cohort_data[<span class="st">"acquisition_month"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>cohort_data.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">acquisition_month</th>
+<th data-quarto-table-cell-role="th">month_churned</th>
+<th data-quarto-table-cell-role="th">users</th>
+<th data-quarto-table-cell-role="th">new_users</th>
+<th data-quarto-table-cell-role="th">cumulative_churn</th>
+<th data-quarto-table-cell-role="th">active_users</th>
+<th data-quarto-table-cell-role="th">retention_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2024-01</td>
+<td>1</td>
+<td>148</td>
+<td>1502</td>
+<td>148</td>
+<td>1354</td>
+<td>0.901465</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2024-01</td>
+<td>2</td>
+<td>95</td>
+<td>1502</td>
+<td>243</td>
+<td>1259</td>
+<td>0.838216</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2024-01</td>
+<td>3</td>
+<td>79</td>
+<td>1502</td>
+<td>322</td>
+<td>1180</td>
+<td>0.785619</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2024-01</td>
+<td>4</td>
+<td>76</td>
+<td>1502</td>
+<td>398</td>
+<td>1104</td>
+<td>0.735020</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2024-01</td>
+<td>5</td>
+<td>52</td>
+<td>1502</td>
+<td>450</td>
+<td>1052</td>
+<td>0.700399</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2024-01</td>
+<td>6</td>
+<td>49</td>
+<td>1502</td>
+<td>499</td>
+<td>1003</td>
+<td>0.667776</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2024-01</td>
+<td>7</td>
+<td>41</td>
+<td>1502</td>
+<td>540</td>
+<td>962</td>
+<td>0.640479</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2024-01</td>
+<td>8</td>
+<td>37</td>
+<td>1502</td>
+<td>577</td>
+<td>925</td>
+<td>0.615846</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2024-01</td>
+<td>9</td>
+<td>24</td>
+<td>1502</td>
+<td>601</td>
+<td>901</td>
+<td>0.599867</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2024-01</td>
+<td>10</td>
+<td>26</td>
+<td>1502</td>
+<td>627</td>
+<td>875</td>
+<td>0.582557</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>2024-01</td>
+<td>11</td>
+<td>11</td>
+<td>1502</td>
+<td>638</td>
+<td>864</td>
+<td>0.575233</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>2024-01</td>
+<td>12</td>
+<td>13</td>
+<td>1502</td>
+<td>651</td>
+<td>851</td>
+<td>0.566578</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>2024-02</td>
+<td>1</td>
+<td>155</td>
+<td>1528</td>
+<td>155</td>
+<td>1373</td>
+<td>0.898560</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>2024-02</td>
+<td>2</td>
+<td>110</td>
+<td>1528</td>
+<td>265</td>
+<td>1263</td>
+<td>0.826571</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>2024-02</td>
+<td>3</td>
+<td>90</td>
+<td>1528</td>
+<td>355</td>
+<td>1173</td>
+<td>0.767670</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>At this point:</strong></p>
+<ul>
+<li><code>users</code> shows how many users churned in a given tenure month,</li>
+<li><code>cumulative_churn</code> shows how many users have churned up to that point,</li>
+<li><code>active_users</code> shows how many users remain,</li>
+<li>and <code>retention_rate</code> shows the share of the original cohort still active.</li>
+</ul>
+<p>This table is the analytical foundation for both the heatmap and the line plots.</p>
+</section>
+</section>
+<section id="retention-by-cohort" class="level2">
+<h2 class="anchored" data-anchor-id="retention-by-cohort">Retention by Cohort</h2>
+<p>Once we have the retention table ready, we can visualize it in different ways. Going over the line plots and heatmap will help us understand the strengths and weaknesses of each visualization method. Using Line plots will help us to estimate cohort performance per gender, marital status, income segment, country, channel, campaign, device type, and plan type. Using heatmap will help us to estimate the overall retention pattern across cohorts.</p>
+<section id="retention-line-plots-gender-level" class="level3">
+<h3 class="anchored" data-anchor-id="retention-line-plots-gender-level">Retention Line Plots | Gender Level</h3>
+<section id="aggregate-by-gender-and-month-of-churn" class="level4">
+<h4 class="anchored" data-anchor-id="aggregate-by-gender-and-month-of-churn">Aggregate by Gender and Month of Churn</h4>
+<div id="86fac0e2" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>gender_data <span class="op">=</span> (</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"month_churned"</span>].notna()]</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">"gender"</span>, <span class="st">"month_churned"</span>])</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    .agg(churned_users<span class="op">=</span>(<span class="st">"user_id"</span>, <span class="st">"count"</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>gender_data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">month_churned</th>
+<th data-quarto-table-cell-role="th">churned_users</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Female</td>
+<td>1.0</td>
+<td>1200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Female</td>
+<td>2.0</td>
+<td>702</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Female</td>
+<td>3.0</td>
+<td>409</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Female</td>
+<td>4.0</td>
+<td>294</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Female</td>
+<td>5.0</td>
+<td>227</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="merge-total-users" class="level4">
+<h4 class="anchored" data-anchor-id="merge-total-users">Merge Total Users</h4>
+<div id="63295ec9" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>gender_base <span class="op">=</span> (</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    df.groupby(<span class="st">"gender"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    .agg(total_users<span class="op">=</span>(<span class="st">"user_id"</span>, <span class="st">"count"</span>))</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="merge-and-calculate-churn-rate" class="level4">
+<h4 class="anchored" data-anchor-id="merge-and-calculate-churn-rate">Merge and Calculate Churn Rate</h4>
+<div id="44fe2377" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gender_data <span class="op">=</span> gender_data.merge(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    gender_base,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">"gender"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>gender_data[<span class="st">"churn_rate"</span>] <span class="op">=</span> (</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    gender_data[<span class="st">"churned_users"</span>] <span class="op">/</span> gender_data[<span class="st">"total_users"</span>]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>gender_data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">month_churned</th>
+<th data-quarto-table-cell-role="th">churned_users</th>
+<th data-quarto-table-cell-role="th">total_users</th>
+<th data-quarto-table-cell-role="th">churn_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Female</td>
+<td>1.0</td>
+<td>1200</td>
+<td>6016</td>
+<td>0.199468</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Female</td>
+<td>2.0</td>
+<td>702</td>
+<td>6016</td>
+<td>0.116689</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Female</td>
+<td>3.0</td>
+<td>409</td>
+<td>6016</td>
+<td>0.067985</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Female</td>
+<td>4.0</td>
+<td>294</td>
+<td>6016</td>
+<td>0.048870</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Female</td>
+<td>5.0</td>
+<td>227</td>
+<td>6016</td>
+<td>0.037733</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="gender-retention-line-plot" class="level3">
+<h3 class="anchored" data-anchor-id="gender-retention-line-plot">Gender Retention Line Plot</h3>
+<div id="47848b91" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.line(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    gender_data,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"month_churned"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"churn_rate"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"gender"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    markers<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Monthly Churn Rate by Gender"</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"month_churned"</span>: <span class="st">"Month Since Acquisition"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"churn_rate"</span>: <span class="st">"Churn Rate"</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"gender"</span>: <span class="st">"Gender"</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    yaxis_tickformat<span class="op">=</span><span class="st">".0%"</span>,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    xaxis<span class="op">=</span><span class="bu">dict</span>(dtick<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    hovermode<span class="op">=</span><span class="st">"x unified"</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div style="height:525px; width:100%;">            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.7.0.min.js" integrity="sha256-jvTGqxNp8AGWEcvNLVuKr+8j5dGe9Yw51LQkmDH+IYA=" crossorigin="anonymous"></script>                <div id="4a9953fa-0811-41b9-9c49-70b2a8a7a9a5" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("4a9953fa-0811-41b9-9c49-70b2a8a7a9a5")) {                    Plotly.newPlot(                        "4a9953fa-0811-41b9-9c49-70b2a8a7a9a5",                        [{"hovertemplate":"Gender=Female\u003cbr\u003eMonth Since Acquisition=%{x}\u003cbr\u003eChurn Rate=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Female","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Female","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"AAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAAAAAAAAAEEAAAAAAAAAUQAAAAAAAABhAAAAAAAAAHEAAAAAAAAAgQAAAAAAAACJAAAAAAAAAJEAAAAAAAAAmQAAAAAAAAChA"},"xaxis":"x","y":{"dtype":"f8","bdata":"JlcQkyuIyT9no76zUd+9P476zkZ9Z7E\u002fxOQKYnIFqT99Z6O+s1GjPxbE5Apicp0\u002fXUFMriAmlz9XEJMriMmVP3IFMbmCmIw\u002f+85GfWejjj+ZXEFMriCGP0FMriAmV4A\u002f"},"yaxis":"y","type":"scatter"},{"hovertemplate":"Gender=Male\u003cbr\u003eMonth Since Acquisition=%{x}\u003cbr\u003eChurn Rate=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Male","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Male","orientation":"v","showlegend":true,"x":{"dtype":"f8","bdata":"AAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAAAAAAAAAEEAAAAAAAAAUQAAAAAAAABhAAAAAAAAAHEAAAAAAAAAgQAAAAAAAACJAAAAAAAAAJEAAAAAAAAAmQAAAAAAAAChA"},"xaxis":"x","y":{"dtype":"f8","bdata":"fzkixVB\u002fyT9HpBjqL0e8P6cyYRsEp7I\u002f5ogUQ\u002f3lqD97ku9jNXuiPyygcbfOK6A\u002fP1azJ\u002fk+lj+JFEP95YiUP8VQfzkixZA\u002fspo9yfexij9uEJzKhG2AP3TRRRdddIE\u002f"},"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"bgcolor":"white","angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"ternary":{"bgcolor":"white","aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"white","subunitcolor":"#C8D4E3","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Month Since Acquisition"},"dtick":1},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Churn Rate"},"tickformat":".0%"},"legend":{"title":{"text":"Gender"},"tracegroupgap":0},"title":{"text":"Monthly Churn Rate by Gender"},"hovermode":"x unified"},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('4a9953fa-0811-41b9-9c49-70b2a8a7a9a5');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</section>
+</section>
+<section id="homework" class="level2">
+<h2 class="anchored" data-anchor-id="homework">Homework</h2>
+<p><strong>Create similar line plots for the following variables:</strong></p>
+<ul>
+<li>marital status</li>
+<li>income segment</li>
+<li>country</li>
+<li>channel</li>
+<li>campaign</li>
+</ul>
+</section>
+<section id="cohort-retention-heatmap" class="level2">
+<h2 class="anchored" data-anchor-id="cohort-retention-heatmap">Cohort Retention Heatmap</h2>
+<p>A heatmap is one of the most common and effective ways to visualize cohort retention.</p>
+<p><strong>In this chart:</strong></p>
+<ul>
+<li>each <strong>row</strong> represents an acquisition cohort,</li>
+<li>each <strong>column</strong> represents the number of months since acquisition,</li>
+<li>and each cell shows the <strong>retention rate</strong> for that cohort at that point in time.</li>
+</ul>
+<section id="step-1-prepare-the-heatmap-table" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-prepare-the-heatmap-table">Step 1: Prepare the Heatmap Table</h3>
+<p>We first reshape the cohort retention table into a matrix format where:</p>
+<ul>
+<li>rows = acquisition cohorts,</li>
+<li>columns = tenure months,</li>
+<li>values = retention rate.</li>
+</ul>
+<div id="997f8c78" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>heatmap_data <span class="op">=</span> cohort_data.pivot(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">"acquisition_month"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">"month_churned"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"retention_rate"</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>heatmap_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">month_churned</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">6</th>
+<th data-quarto-table-cell-role="th">7</th>
+<th data-quarto-table-cell-role="th">8</th>
+<th data-quarto-table-cell-role="th">9</th>
+<th data-quarto-table-cell-role="th">10</th>
+<th data-quarto-table-cell-role="th">11</th>
+<th data-quarto-table-cell-role="th">12</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">acquisition_month</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2024-01</td>
+<td>0.901465</td>
+<td>0.838216</td>
+<td>0.785619</td>
+<td>0.735020</td>
+<td>0.700399</td>
+<td>0.667776</td>
+<td>0.640479</td>
+<td>0.615846</td>
+<td>0.599867</td>
+<td>0.582557</td>
+<td>0.575233</td>
+<td>0.566578</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2024-02</td>
+<td>0.898560</td>
+<td>0.826571</td>
+<td>0.767670</td>
+<td>0.726440</td>
+<td>0.685864</td>
+<td>0.649869</td>
+<td>0.628272</td>
+<td>0.607330</td>
+<td>0.587042</td>
+<td>0.569372</td>
+<td>0.553010</td>
+<td>0.540576</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2024-03</td>
+<td>0.651195</td>
+<td>0.494198</td>
+<td>0.423208</td>
+<td>0.379522</td>
+<td>0.345392</td>
+<td>0.325597</td>
+<td>0.305802</td>
+<td>0.291468</td>
+<td>0.283959</td>
+<td>0.273038</td>
+<td>0.270307</td>
+<td>0.264164</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2024-04</td>
+<td>0.644798</td>
+<td>0.487078</td>
+<td>0.408880</td>
+<td>0.370444</td>
+<td>0.341948</td>
+<td>0.322068</td>
+<td>0.308151</td>
+<td>0.298211</td>
+<td>0.287608</td>
+<td>0.280318</td>
+<td>0.273691</td>
+<td>0.269052</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2024-05</td>
+<td>0.755354</td>
+<td>0.603504</td>
+<td>0.522388</td>
+<td>0.467229</td>
+<td>0.420506</td>
+<td>0.384166</td>
+<td>0.363400</td>
+<td>0.345230</td>
+<td>0.328358</td>
+<td>0.315380</td>
+<td>0.305646</td>
+<td>0.299805</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2024-06</td>
+<td>0.744139</td>
+<td>0.582050</td>
+<td>0.473543</td>
+<td>0.409243</td>
+<td>0.373074</td>
+<td>0.344943</td>
+<td>0.318151</td>
+<td>0.299397</td>
+<td>0.287341</td>
+<td>0.270596</td>
+<td>0.260549</td>
+<td>0.252512</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2024-07</td>
+<td>0.905333</td>
+<td>0.823333</td>
+<td>0.773333</td>
+<td>0.722000</td>
+<td>0.688000</td>
+<td>0.651333</td>
+<td>0.627333</td>
+<td>0.596000</td>
+<td>0.580000</td>
+<td>0.561333</td>
+<td>0.550667</td>
+<td>0.539333</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2024-08</td>
+<td>0.903557</td>
+<td>0.841313</td>
+<td>0.778386</td>
+<td>0.733242</td>
+<td>0.692886</td>
+<td>0.661423</td>
+<td>0.638167</td>
+<td>0.610807</td>
+<td>0.588919</td>
+<td>0.578659</td>
+<td>0.567031</td>
+<td>0.558140</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This table is the direct input for the heatmap.</p>
+<p>For example, if a value in column <code>3</code> is <code>0.72</code>, it means that <strong>72% of the original cohort is still active after 3 months</strong>.</p>
+</div>
+</div>
+<hr>
+<div id="b56be09a" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.imshow(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    heatmap_data,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    aspect<span class="op">=</span><span class="st">"auto"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    color_continuous_scale<span class="op">=</span><span class="st">"Blues"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    text_auto<span class="op">=</span><span class="st">".0%"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"x"</span>: <span class="st">"Months Since Acquisition"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"y"</span>: <span class="st">"Acquisition Month"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"color"</span>: <span class="st">"Retention Rate"</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Cohort Retention Heatmap"</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>fig.update_xaxes(</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    tickmode<span class="op">=</span><span class="st">"array"</span>,</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    tickvals<span class="op">=</span><span class="bu">list</span>(heatmap_data.columns),</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    ticktext<span class="op">=</span>[<span class="bu">str</span>(x) <span class="cf">for</span> x <span class="kw">in</span> heatmap_data.columns],</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    side<span class="op">=</span><span class="st">"top"</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>fig.update_yaxes(</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    tickmode<span class="op">=</span><span class="st">"array"</span>,</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    tickvals<span class="op">=</span><span class="bu">list</span>(heatmap_data.index),</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    ticktext<span class="op">=</span>[<span class="bu">str</span>(y) <span class="cf">for</span> y <span class="kw">in</span> heatmap_data.index],</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    autorange<span class="op">=</span><span class="st">"reversed"</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div style="height:525px; width:100%;">            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.7.0.min.js" integrity="sha256-jvTGqxNp8AGWEcvNLVuKr+8j5dGe9Yw51LQkmDH+IYA=" crossorigin="anonymous"></script>                <div id="c8d652af-0118-432a-ad86-8c70ded5b917" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("c8d652af-0118-432a-ad86-8c70ded5b917")) {                    Plotly.newPlot(                        "c8d652af-0118-432a-ad86-8c70ded5b917",                        [{"coloraxis":"coloraxis","name":"0","texttemplate":"%{z:.0%}","x":{"dtype":"i1","bdata":"AQIDBAUGBwgJCgsM"},"y":["2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08"],"z":{"dtype":"f8","bdata":"ne78hszY7D8NxvXBqdLqP\u002fbBqdLKI+k\u002ftdRwm0iF5z8rntAkrGnmP3d+Q2ZsXuU\u002fAPGTks5+5D+oLFO0AbXjP\u002fJ1uvMbMuM\u002frFpquE2k4j+ZsXkVT2jiP\u002faj0fdnIeI\u002fxdMeVwHB7D9AMCRbRHPqP9QeVwHBkOg\u002fOyzhqP4+5z+9TbrLmPLlP\u002fv7vE26y+Q\u002fhmSLaM4a5D8s4aj+Pm\u002fjP+1xFRAMyeI\u002fGVO+Dks44j97XAUEQ7LhP37eJt1lTOE\u002ffhUt7pXW5D8f0KFy8KDfPx9ZEs\u002fXFds\u002f90prahdK2D\u002fox8gb6RrWP34VLe6V1tQ\u002fFGORwEKS0z9vkoqfZ6fSPwHcPY5iLNI\u002fdxgUdXJ50T+Up8lutkzRP5cpomAP6NA\u002fAV+QKS+i5D\u002fi3KJARyzfP0D76z0XK9o\u002fXZkYw1q11z9pFz4qe+LVP4pXTGbBnNQ\u002fBx4jXb+40z8XPip74hXTPzpPqRIqaNI\u002fAqvQSrvw0T+3FYAJKITRPzatx1snONE\u002f2yzKc9sr6D8tY+8T6E\u002fjP0ykBypnt+A\u002fPk8HxBTn3T+F+mywkunaP\u002fQNvIQtltg\u002foj3ptPNB1z9axxAfQRjWPxd+NSbSA9U\u002f47tRBC4v1D896ubqso\u002fTP6afc6gCMNM\u002fM\u002furQf3P5z83Q5hoJqDiP0FuCSWITt4\u002ftNHVHQox2j+lycg5c+DXPyg1ohaME9Y\u002fQgmik5dc1D\u002fvUIjRUinTP5SjLjDLY9I\u002fJYhOXnJR0T+vdy6t1qzQPx0ESOwmKdA\u002fkqZUnH347D9Z8oslv1jqP79Y8oslv+g\u002ftMh2vp8a5z9qvHSTGATmPz7DrgC51+Q\u002fRm\u002fLWh0T5D\u002ffT42XbhLjP4\u002fC9Shcj+I\u002fXUiaUnH24T\u002fSlIqzD5\u002fhPw\u002fmifo3QuE\u002fK8z74+\u002fp7D8zV0XOCezqP9HEykeJ6Og\u002fRy87Nbh25z+pZwg4ICzmP3gey\u002fRfKuU\u002fSDa\u002f+txr5D+YnRpcu4vjPz7wlkNt2OI\u002f+zYZqGCE4j\u002fkQhMrHyXiP3fEHXFH3OE\u002f","shape":"8, 12"},"type":"heatmap","xaxis":"x","yaxis":"y","hovertemplate":"Months Since Acquisition: %{x}\u003cbr\u003eAcquisition Month: %{y}\u003cbr\u003eRetention Rate: %{z}\u003cextra\u003e\u003c\u002fextra\u003e"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"bgcolor":"white","angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"ternary":{"bgcolor":"white","aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"white","subunitcolor":"#C8D4E3","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Months Since Acquisition"},"tickmode":"array","tickvals":[1,2,3,4,5,6,7,8,9,10,11,12],"ticktext":["1","2","3","4","5","6","7","8","9","10","11","12"],"side":"top"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"autorange":"reversed","title":{"text":"Acquisition Month"},"tickmode":"array","tickvals":["2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08"],"ticktext":["2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08"]},"coloraxis":{"colorbar":{"title":{"text":"Retention Rate"}},"colorscale":[[0.0,"rgb(247,251,255)"],[0.125,"rgb(222,235,247)"],[0.25,"rgb(198,219,239)"],[0.375,"rgb(158,202,225)"],[0.5,"rgb(107,174,214)"],[0.625,"rgb(66,146,198)"],[0.75,"rgb(33,113,181)"],[0.875,"rgb(8,81,156)"],[1.0,"rgb(8,48,107)"]],"autocolorscale":false},"title":{"text":"Cohort Retention Heatmap"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('c8d652af-0118-432a-ad86-8c70ded5b917');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

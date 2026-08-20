@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../../../img/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.39">
+
+  <meta name="author" content="Karen Hovhannisyan">
+  <meta name="dcterms.date" content="2026-08-16">
+  <title>Data Analytics Bootcamp – Discrete Distributions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-bbe7401fe57d4b791b917637bb662036.css">
+  <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .icon-xxl { font-size: 84px; }
+    .icon-xl  { font-size: 64px; }
+    .icon-lg  { font-size: 48px; }
+    .muted { opacity: .8 }
+    .pill { border-radius: 10px; }
+    .circle { border-radius: 50%; }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Discrete Distributions</h1>
+  <p class="subtitle">Probabilistic Distributions</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Karen Hovhannisyan 
+</div>
+</div>
+</div>
+
+  <p class="date">2026-08-16</p>
+</section>
+<section id="topics" class="slide level2">
+<h2>Topics</h2>
+<ul>
+<li>Discrete Distributions</li>
+<li>Poisson Distribution</li>
+<li>Bernuli Distribution</li>
+<li>Central Limit Theorem | CLT</li>
+</ul>
+</section>
+<section>
+<section id="the-properties-of-discrete-distributions" class="title-slide slide level1 center">
+<h1>The Properties of Discrete Distributions</h1>
+
+</section>
+<section id="when-do-we-have-a-discrete-distributions" class="slide level2 smaller">
+<h2>When do we have a Discrete Distributions?</h2>
+<p>A distribution is <strong>discrete</strong> if:</p>
+<ul>
+<li>The random variable takes <strong>countable values</strong></li>
+<li>Probabilities are assigned to <strong>exact outcomes</strong></li>
+<li>The total probability is obtained by <strong>summing</strong>, not integrating</li>
+</ul>
+<p><strong>Examples of Discrete Outcomes</strong></p>
+<div class="fragment">
+<ul>
+<li>Number of purchases made today<br>
+</li>
+<li>Number of customers who churned this month<br>
+</li>
+<li>Number of defects in a production batch<br>
+</li>
+<li>Whether a user clicked an ad (yes / no)</li>
+</ul>
+</div>
+</section>
+<section id="discrete-random-variables" class="slide level2">
+<h2>Discrete Random Variables</h2>
+<p>A <strong>discrete random variable</strong> is a numerical description of a countable outcome.</p>
+<p><strong>Typical forms:</strong></p>
+<ul>
+<li>Binary outcomes: <span class="math inline">\(X \in \{0,1\}\)</span></li>
+<li>Counts: <span class="math inline">\(X = 0,1,2,3,\dots\)</span></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(X = 1\)</span> if a customer churns, <span class="math inline">\(0\)</span> otherwise<br>
+</li>
+<li><span class="math inline">\(X\)</span> = number of purchases per user<br>
+</li>
+<li><span class="math inline">\(X\)</span> = number of support tickets per day</li>
+</ul>
+</div>
+</section>
+<section id="probability-mass-function" class="slide level2 smaller">
+<h2>Probability Mass Function</h2>
+<p>Discrete distributions are described by a <strong>Probability Mass Function (PMF)</strong>.</p>
+<p><strong>The PMF answers the question:</strong></p>
+<blockquote>
+<p>What is the <strong>probability</strong> that the random variable equals a specific value?</p>
+</blockquote>
+<div class="fragment">
+<p><strong>Mathematically:</strong></p>
+<p><span class="math display">\[
+P(X = x)
+\]</span></p>
+<p><strong>Core Properties of a PMF</strong></p>
+<p><span class="math display">\[
+\sum_x P(X = x) = 1
+\]</span></p>
+<ul>
+<li><span class="math inline">\(0 \le P(X = x) \le 1\)</span></li>
+<li>Probabilities are assigned to <strong>exact values</strong></li>
+<li>The total probability sums to 1:</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<blockquote>
+
+<ul>
+<li>Հավանականության խտության ֆունկից ա;</li>
+<li>Հավանականության զանգվածի ֆունկցիա</li>
+</ul>
+
+</blockquote>
+</section></section>
+<section>
+<section id="poisson-distribution" class="title-slide slide level1 center">
+<h1>Poisson Distribution</h1>
+<p>Poisson models turn <strong>randomness</strong> into <strong>operational clarity</strong>.</p>
+</section>
+<section class="slide level2">
+
+<p><strong>How many times does an event occur within a fixed time (or space) interval?</strong></p>
+</section>
+<section id="imagine" class="slide level2 smaller">
+<h2>Imagine</h2>
+<p>Imagine a retail store observing customer foot traffic.</p>
+<p>Every <strong>10 minutes</strong>, a random number of customers enter the store.</p>
+<p><strong>Over many days, management notices:</strong></p>
+<div>
+<ul>
+<li class="fragment">Some intervals have 1–2 customers<br>
+</li>
+<li class="fragment">Some have 5–6 customers<br>
+</li>
+<li class="fragment">Occasionally, none</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Yet the <strong>average</strong> stays roughly the same.</p>
+</div>
+</section>
+<section id="probability-mass-function-1" class="slide level2">
+<h2>Probability Mass Function</h2>
+<p><span class="math display">\[
+P(X = x) = \frac{\lambda^x e^{-\lambda}}{x!}, \quad x = 0,1,2,\dots
+\]</span></p>
+<div class="fragment">
+<p>This formula gives the probability of seeing <em>exactly</em> <span class="math inline">\(x\)</span> events</p>
+</div>
+</section>
+<section id="expected-value-and-variance" class="slide level2 smaller">
+<h2>Expected Value and Variance</h2>
+<p><span class="math display">\[
+E[X] = \lambda
+\]</span></p>
+<p><span class="math display">\[
+Var(X) = \lambda
+\]</span></p>
+<ul>
+<li>The <strong>average</strong> number of events equals <span class="math inline">\(\lambda\)</span><br>
+</li>
+<li>The <strong>uncertainty</strong> (variance) grows at the same rate</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Large <span class="math inline">\(\lambda\)</span> → frequent events<br>
+</li>
+<li>Small <span class="math inline">\(\lambda\)</span> → rare events</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li><span class="math inline">\(\lambda = 2\)</span> → about 2 calls per hour<br>
+</li>
+<li><span class="math inline">\(\lambda = 15\)</span> → about 15 website visits per minute<br>
+</li>
+<li><span class="math inline">\(\lambda = 0.2\)</span> → a rare failure, once every 5 intervals</li>
+</ul>
+</section>
+<section id="business-applications-of-poisson-distribution" class="slide level2 smaller">
+<h2>Business Applications of Poisson Distribution</h2>
+<p>Poisson models are widely used in practice for:</p>
+<ul>
+<li>customer arrivals and foot traffic<br>
+</li>
+<li>call center volume estimation<br>
+</li>
+<li>website click and impression counts<br>
+</li>
+<li>manufacturing defects<br>
+</li>
+<li>incident and outage reporting</li>
+</ul>
+</section>
+<section id="poisson-process" class="slide level2">
+<h2>Poisson Process</h2>
+<ul>
+<li>Exponential distribution models <strong>time between events</strong></li>
+<li>Poisson distribution models <strong>number of events</strong></li>
+</ul>
+<p>They describe the <strong>same process</strong> from different perspectives.</p>
+</section>
+<section class="slide level2">
+
+<p><a href="https://docs.google.com/spreadsheets/d/1tJNjOvn8m393UluPVnIAT5W30NrreMnWx3Zhzkj6_WM/edit?usp=sharing">Distributions Spreadsheets</a></p>
+</section>
+<section id="visualization" class="slide level2">
+<h2>Visualization</h2>
+<ul>
+<li>Left plot → PMF for <span class="math inline">\(\lambda = 3\)</span> and <span class="math inline">\(\lambda = 10\)</span><br>
+</li>
+<li>Right plot → likelihood as a function of <span class="math inline">\(\lambda\)</span></li>
+</ul>
+<div id="acd59950" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="session4_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="1336" height="374"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="bernoulli-distribution" class="title-slide slide level1 center">
+<h1>Bernoulli Distribution</h1>
+<p>The <strong>Bernoulli Distribution</strong> models the most fundamental probabilistic question in data analytics and business decision-making:</p>
+</section>
+<section id="two-possible-outcomes" class="slide level2 smaller">
+<h2>Two Possible Outcomes</h2>
+<blockquote>
+<p><strong>Did an event happen or not?</strong></p>
+</blockquote>
+<div class="fragment">
+<p>A Bernoulli random variable has only <strong>two possible outcomes</strong>:</p>
+<ul>
+<li>success<br>
+</li>
+<li>failure</li>
+</ul>
+<p><strong>These outcomes can be represented in multiple equivalent ways depending on context:</strong></p>
+<div>
+<ul>
+<li class="fragment">yes / no<br>
+</li>
+<li class="fragment">1 / 0<br>
+</li>
+<li class="fragment">click / no click<br>
+</li>
+<li class="fragment">purchase / no purchase<br>
+</li>
+<li class="fragment">tail / head (ղուշ / գիր)<br>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="mathematical-definition" class="slide level2">
+<h2>Mathematical Definition</h2>
+<p>A random variable <span class="math inline">\(X\)</span> follows a <strong>Bernoulli distribution</strong> if:</p>
+<p><span class="math display">\[
+X \sim \text{Bernoulli}(p)
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(p \in [0,1]\)</span> is the <strong>probability of success</strong></li>
+</ul>
+</section>
+<section id="what-is-a-bernoulli-trial" class="slide level2">
+<h2>What Is a Bernoulli Trial</h2>
+<p>A <strong>Bernoulli trial</strong> is a single experiment with:</p>
+<ul>
+<li>exactly <strong>one attempt</strong></li>
+<li>exactly <strong>two possible outcomes</strong></li>
+<li>a <strong>fixed probability</strong> of success</li>
+</ul>
+<p>Each trial is assumed to be <strong>independent</strong>.</p>
+</section>
+<section id="examples-of-bernoulli-trials" class="slide level2">
+<h2>Examples of Bernoulli Trials</h2>
+<p>Common real-world Bernoulli trials include:</p>
+<ul>
+<li>Did a user click an advertisement?<br>
+</li>
+<li>Did a customer complete a purchase?<br>
+</li>
+<li>Did a transaction fail?<br>
+</li>
+<li>Did a device respond to a health check?</li>
+</ul>
+<p>Each produces a <strong>binary outcome</strong>.</p>
+</section>
+<section id="real-world-narrative" class="slide level2">
+<h2>Real-World Narrative</h2>
+<p>Consider an online store tracking customer conversions.</p>
+<p>For <strong>each user session</strong>:</p>
+<ul>
+<li>Purchase → <code>1</code><br>
+</li>
+<li>No purchase → <code>0</code></li>
+</ul>
+<p><strong>Across thousands of sessions:</strong></p>
+<ul>
+<li>Some users convert<br>
+</li>
+<li>Most users do not</li>
+</ul>
+<p>Each session is evaluated <strong>independently</strong>, with the same underlying probability of conversion.</p>
+</section>
+<section id="business-use-cases" class="slide level2">
+<h2>Business Use Cases</h2>
+<p>Typical Bernoulli use cases in analytics:</p>
+<ul>
+<li>ad click behavior<br>
+</li>
+<li>conversion events<br>
+</li>
+<li>email engagement<br>
+</li>
+<li>fraud detection flags<br>
+</li>
+<li>churn indicators</li>
+</ul>
+<p>Bernoulli is the <strong>building block</strong> for many advanced models.</p>
+</section>
+<section id="probability-mass-function-pmf" class="slide level2">
+<h2>Probability Mass Function (PMF)</h2>
+<p>Because Bernoulli is a <strong>discrete</strong> distribution, it is described by a <strong>Probability Mass Function (PMF)</strong>:</p>
+<p><span class="math display">\[
+P(X = x) = p^x (1-p)^{1-x}, \quad x \in \{0,1\}
+\]</span></p>
+</section>
+<section id="pmf-interpretation" class="slide level2">
+<h2>PMF Interpretation</h2>
+<p><strong>This formula yields exactly two probabilities:</strong></p>
+<ul>
+<li><span class="math inline">\(P(X = 1) = p\)</span><br>
+</li>
+<li><span class="math inline">\(P(X = 0) = 1 - p\)</span></li>
+</ul>
+</section>
+<section id="expected-value-and-variance-1" class="slide level2">
+<h2>Expected Value and Variance</h2>
+<p><strong>For a Bernoulli random variable:</strong></p>
+<p><span class="math display">\[
+E[X] = p
+\]</span></p>
+<p><span class="math display">\[
+Var(X) = p(1-p)
+\]</span></p>
+</section>
+<section id="interpretation-of-moments" class="slide level2">
+<h2>Interpretation of Moments</h2>
+<ul>
+<li>Expected value equals the <strong>probability of success</strong></li>
+<li>Variance is largest at <span class="math inline">\(p = 0.5\)</span></li>
+<li>Variance shrinks as outcomes become more certain</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Large <span class="math inline">\(p\)</span> → success likely<br>
+</li>
+<li>Small <span class="math inline">\(p\)</span> → success rare</li>
+</ul>
+</div>
+</section>
+<section id="concrete-examples" class="slide level2">
+<h2>Concrete Examples</h2>
+<ul>
+<li><span class="math inline">\(p = 0.02\)</span> → 2% conversion rate<br>
+</li>
+<li><span class="math inline">\(p = 0.35\)</span> → 35% email open rate<br>
+</li>
+<li><span class="math inline">\(p = 0.90\)</span> → highly reliable system</li>
+</ul>
+</section>
+<section id="business-context" class="slide level2">
+<h2>Business Context</h2>
+<p>An e-commerce company records whether each visitor completes a purchase.</p>
+<p>Each session is encoded as:</p>
+<ul>
+<li><code>1</code> → purchase<br>
+</li>
+<li><code>0</code> → no purchase</li>
+</ul>
+<h3 id="observed-data">Observed Data</h3>
+<p>{.smaller}</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Session</th>
+<th style="text-align: right;">Purchase</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="summary-statistics" class="slide level2 smaller">
+<h2>Summary Statistics</h2>
+<p>Let <span class="math inline">\(X\)</span> be the purchase indicator per session.</p>
+<ul>
+<li>Number of sessions: <span class="math inline">\(n = 10\)</span><br>
+</li>
+<li>Total purchases: <span class="math inline">\(S = 4\)</span></li>
+</ul>
+<p>Sample mean:</p>
+<p><span class="math display">\[
+\bar{x} = \frac{4}{10} = 0.4
+\]</span></p>
+<p>Estimated probability:</p>
+<p><span class="math display">\[
+\hat{p} = 0.4
+\]</span></p>
+</section>
+<section id="defining-the-random-variable" class="slide level2">
+<h2>Defining the Random Variable</h2>
+<p><span class="math display">\[
+X =
+\begin{cases}
+1 &amp; \text{if a purchase occurs} \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<div class="fragment">
+<blockquote>
+<p>A Bernoulli model is an appropriate first representation of this process.</p>
+</blockquote>
+</div>
+</section></section>
+<section>
+<section id="so-far" class="title-slide slide level1 center">
+<h1>So Far …</h1>
+
+</section>
+<section id="final-intuition-summary" class="slide level2">
+<h2>Final Intuition Summary</h2>
+<ul>
+<li>Use <strong>Uniform</strong> for “random within limits.”</li>
+<li>Use <strong>Exponential</strong> for “time until next event.”</li>
+<li>Use <strong>Poisson</strong> for “number of events per interval.”</li>
+<li>Use <strong>Bernoulli</strong> for “one yes/no outcome”.</li>
+<li></li>
+</ul>
+</section></section>
+<section>
+<section id="clt" class="title-slide slide level1 center">
+<h1>CLT</h1>
+<p><em>“Even if you’re not normal, the average is normal”</em></p>
+</section>
+<section id="the-magic-of-the-normal-distribution" class="slide level2">
+<h2>The Magic of the Normal Distribution</h2>
+<p>The Normal distribution appears <strong>everywhere in data</strong>.</p>
+</section>
+<section id="what-the-central-limit-theorem-says" class="slide level2">
+<h2>What the Central Limit Theorem Says</h2>
+<p><strong>The Central Limit Theorem states:</strong></p>
+<ul>
+<li>When we take the <strong>mean of many independent random variables</strong></li>
+<li>regardless of the shape of the original distribution</li>
+<li>provided they have finite mean and variance</li>
+<li>the distribution of the <strong>sample mean</strong> becomes approximately Normal as the sample size grows</li>
+</ul>
+</section>
+<section id="in-other-words" class="slide level2">
+<h2>in other words…</h2>
+
+<img data-src="../../../img/statistics/04/clt.png" class="r-stretch quarto-figure-center"><p class="caption">.</p></section>
+<section id="intuition-behind-the-clt" class="slide level2">
+<h2>Intuition Behind the CLT</h2>
+<ul>
+<li>Real-world data often come from skewed or irregular distributions.</li>
+<li>But when we <strong>average many small effects</strong>, the result tends toward a bell shape.</li>
+<li>This “averaging effect” is why the Normal distribution is so common.</li>
+</ul>
+</section>
+<section id="why-this-matters-in-analytics" class="slide level2">
+<h2>Why This Matters in Analytics</h2>
+<p><strong>The CLT allows us to:</strong></p>
+<ul>
+<li>build <strong>confidence intervals</strong></li>
+<li>perform <strong>hypothesis tests</strong></li>
+<li>use Normal-based statistical tools</li>
+<li>approximate distributions of sums and averages</li>
+</ul>
+<p>Even when the original data are not Normal.</p>
+</section>
+<section id="non-normal-data-example" class="slide level2 smaller">
+<h2>Non-Normal Data Example</h2>
+<p><strong>Think about:</strong></p>
+<div class="fragment">
+<ul>
+<li>waiting times (often skewed)</li>
+<li>revenue per customer (heavy-tailed)</li>
+<li>customer arrival counts (discrete)</li>
+</ul>
+<p>Individually, these can be far from Normal.</p>
+<p><strong>When we repeatedly take many samples and compute means:</strong></p>
+<ul>
+<li>the distribution of the means becomes more symmetric</li>
+<li>it approaches the characteristic bell curve</li>
+<li>this happens regardless of the original shape</li>
+</ul>
+</div>
+</section>
+<section id="simulation-visualizing-clt" class="slide level2">
+<h2>Simulation: Visualizing CLT</h2>
+<div id="dd485e99" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="session4_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="1911" height="374"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="what-the-simulation-shows" class="slide level2">
+<h2>What the Simulation Shows</h2>
+<ul>
+<li>For <strong>small n</strong>, the distribution of sample means is skewed.</li>
+<li>As <strong>n increases</strong>:
+<ul>
+<li>the distribution becomes more symmetric</li>
+<li>it approaches a bell shape</li>
+<li>even though the original data were not Normal</li>
+</ul></li>
+</ul>
+</section>
+<section id="conditions-for-clt" class="slide level2">
+<h2>Conditions for CLT</h2>
+<p><strong>Before applying CLT:</strong></p>
+<ul>
+<li>samples should be <strong>independent</strong></li>
+<li>sample size should be <strong>sufficiently large</strong></li>
+<li>underlying distribution must have <strong>finite variance</strong></li>
+</ul>
+<p>These ensure the sample mean behaves approximately <code>Normal</code>.</p>
+</section>
+<section id="practical-rules-of-thumb-heuristics-in-analytics" class="slide level2">
+<h2>Practical Rules of Thumb (heuristics in analytics)</h2>
+<ul>
+<li>If original data are nearly Normal → small n is ok<br>
+</li>
+<li>If data are skewed → larger n is needed<br>
+</li>
+<li>n ≥ 30 often yields good Normal approximation</li>
+</ul>
+</section>
+<section id="applying-clt-in-practice" class="slide level2">
+<h2>Applying CLT in Practice</h2>
+<ul>
+<li>confidence interval construction<br>
+</li>
+<li>hypothesis testing<br>
+</li>
+<li>A/B testing rules<br>
+</li>
+<li>regression inference</li>
+</ul>
+<p>These methods assume approximate Normality of averages.</p>
+</section>
+<section class="slide level2">
+
+<blockquote>
+<p><em>“Even if you’re not normal, the average is normal.”</em></p>
+</blockquote>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../../../img/favicon.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="../session4.html">Back to chapter</a></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1500,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

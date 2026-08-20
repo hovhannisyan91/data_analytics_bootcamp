@@ -1,0 +1,2766 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Session 13: DA with SQL | Final Project – Data Analytics Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../img/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-29574c2ad9c7fe2279cf41f25198438f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-4d1c39a9b3d53dfc5345e203ea289592.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../img/favicon.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Data Analytics Bootcamp</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../materials/syllabus.html" aria-current="page"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/statistics/index.html"> 
+<span class="menu-text">Statistical Thinking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/sql/index.html"> 
+<span class="menu-text">SQL</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/python/index.html"> 
+<span class="menu-text">Python</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/tableau/index.html"> 
+<span class="menu-text">Tableau</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/lab/index.html"> 
+<span class="menu-text">Lab</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/capstone/index.html"> 
+<span class="menu-text">Capstone</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/hovhannisyan91"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/sql/index.html">SQL</a></li><li class="breadcrumb-item"><a href="../../materials/sql/index.html">Data Analytics with SQL</a></li><li class="breadcrumb-item"><a href="../../materials/sql/session13.html">Session 13: DA with SQL | Final Project</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical Thinking</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Data Layers and Bias in Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Types of Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 02: Data Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 03: Probabilistic Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 04: Probabilistic Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 05: Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 06: Inferential Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Descriptive Stats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hypothesis Testing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/sql/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/sql/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analytics with SQL</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Intro to Relational Databases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Intro to PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: DA with SQL | Data Types &amp; Constraints</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: DA with SQL | Filtering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: DA with SQL | Numeric Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: DA with SQL | String Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: DA with SQL | Date Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08: DA with SQL | JOINs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09: DA with SQL | Advanced SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10: DA with SQL | Advanced SQL Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11: DA with SQL | UDFs, Stored Procedures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 12: DA with SQL | Advanced Aggregations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session13.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Session 13: DA with SQL | Final Project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Relational Databases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic Queries: DDL DLM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Filtering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numeric Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">String Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Date Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normalization and JOINs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temporary Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced SQL Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reporting and Analysis with SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Aggregations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Programming for Data Analysts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Python basic Syntax, Data Structures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: Introduction to Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: Advanced Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: Intro to Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: Working with Dates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08: Data Visualization | Plotly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09: Customer Segmentation | RFM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10: A/B Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11: Cohort Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 12: Simple Linear Regression and Forecasting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 13: Logistic Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 14: Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 15: Geoanalytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 16: SQLAlchemy with Dockerized PostGIS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/slides/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grammar of Graphics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/tableau/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tableau</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/tableau/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tableau</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Introduction to Tableau</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Intermediate Visual Analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: Advanced Analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: Dashboard Design &amp; Performance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: Sales Analysis Dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: Customer Analysis Dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: Tableau with SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#final-sql-project-kickoff" id="toc-final-sql-project-kickoff" class="nav-link active" data-scroll-target="#final-sql-project-kickoff">Final SQL Project | Kickoff</a>
+  <ul class="collapse">
+  <li><a href="#project-goal" id="toc-project-goal" class="nav-link" data-scroll-target="#project-goal">Project Goal</a></li>
+  <li><a href="#step-1-select-a-business-domain" id="toc-step-1-select-a-business-domain" class="nav-link" data-scroll-target="#step-1-select-a-business-domain">Step 1 | Select a Business Domain</a></li>
+  <li><a href="#step-2-normalize-the-data-model" id="toc-step-2-normalize-the-data-model" class="nav-link" data-scroll-target="#step-2-normalize-the-data-model">Step 2 | Normalize the Data Model</a></li>
+  <li><a href="#step-3-create-a-new-database-and-schema" id="toc-step-3-create-a-new-database-and-schema" class="nav-link" data-scroll-target="#step-3-create-a-new-database-and-schema">Step 3 | Create a New Database and Schema</a></li>
+  <li><a href="#step-4-create-tables-ddl" id="toc-step-4-create-tables-ddl" class="nav-link" data-scroll-target="#step-4-create-tables-ddl">Step 4 | Create Tables (DDL)</a></li>
+  <li><a href="#step-5-populate-the-database" id="toc-step-5-populate-the-database" class="nav-link" data-scroll-target="#step-5-populate-the-database">Step 5 | Populate the Database</a></li>
+  <li><a href="#step-6-create-the-erd" id="toc-step-6-create-the-erd" class="nav-link" data-scroll-target="#step-6-create-the-erd">Step 6 | Create the ERD</a></li>
+  <li><a href="#step-7-push-the-changes-into-github" id="toc-step-7-push-the-changes-into-github" class="nav-link" data-scroll-target="#step-7-push-the-changes-into-github">Step 7 | Push the changes into GitHub</a></li>
+  <li><a href="#step-8-define-analytical-questions" id="toc-step-8-define-analytical-questions" class="nav-link" data-scroll-target="#step-8-define-analytical-questions">Step 8 | Define Analytical Questions</a></li>
+  <li><a href="#step-9-construct-a-denormalized-analytical-table" id="toc-step-9-construct-a-denormalized-analytical-table" class="nav-link" data-scroll-target="#step-9-construct-a-denormalized-analytical-table">Step 9 | Construct a Denormalized Analytical Table</a></li>
+  <li><a href="#step-10-visualization" id="toc-step-10-visualization" class="nav-link" data-scroll-target="#step-10-visualization">Step 10 | Visualization</a></li>
+  <li><a href="#step-11-create-a-data-dictionary" id="toc-step-11-create-a-data-dictionary" class="nav-link" data-scroll-target="#step-11-create-a-data-dictionary">Step 11 | Create a Data Dictionary</a></li>
+  <li><a href="#step-12-final-review-and-presentation" id="toc-step-12-final-review-and-presentation" class="nav-link" data-scroll-target="#step-12-final-review-and-presentation">Step 12 | Final Review and Presentation</a></li>
+  <li><a href="#evaluation-focus" id="toc-evaluation-focus" class="nav-link" data-scroll-target="#evaluation-focus">Evaluation Focus</a></li>
+  </ul></li>
+  <li><a href="#example-project" id="toc-example-project" class="nav-link" data-scroll-target="#example-project">Example Project</a>
+  <ul class="collapse">
+  <li><a href="#what-do-we-have" id="toc-what-do-we-have" class="nav-link" data-scroll-target="#what-do-we-have">What Do We Have?</a></li>
+  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">Goal</a></li>
+  <li><a href="#creating-database" id="toc-creating-database" class="nav-link" data-scroll-target="#creating-database">Creating Database</a></li>
+  <li><a href="#create-schema" id="toc-create-schema" class="nav-link" data-scroll-target="#create-schema">Create Schema</a></li>
+  <li><a href="#creating-the-table-analytics._stg_rockbuster" id="toc-creating-the-table-analytics._stg_rockbuster" class="nav-link" data-scroll-target="#creating-the-table-analytics._stg_rockbuster">Creating the Table <code>analytics._stg_rockbuster</code></a></li>
+  <li><a href="#download-csv-file" id="toc-download-csv-file" class="nav-link" data-scroll-target="#download-csv-file">Download <code>CSV</code> file</a></li>
+  <li><a href="#inserting-the-data-into-analytics._stg_rockbuster" id="toc-inserting-the-data-into-analytics._stg_rockbuster" class="nav-link" data-scroll-target="#inserting-the-data-into-analytics._stg_rockbuster">Inserting the Data Into <code>analytics._stg_rockbuster</code></a></li>
+  <li><a href="#data-modeling" id="toc-data-modeling" class="nav-link" data-scroll-target="#data-modeling">Data Modeling</a></li>
+  <li><a href="#q0-what-do-we-have" id="toc-q0-what-do-we-have" class="nav-link" data-scroll-target="#q0-what-do-we-have">Q0: What do we have?</a></li>
+  <li><a href="#q1-what-does-one-row-represent" id="toc-q1-what-does-one-row-represent" class="nav-link" data-scroll-target="#q1-what-does-one-row-represent">Q1: What does one row represent?</a></li>
+  <li><a href="#q2-is-this-table-normalized" id="toc-q2-is-this-table-normalized" class="nav-link" data-scroll-target="#q2-is-this-table-normalized">Q2: Is this table normalized?</a></li>
+  <li><a href="#q3-does-customer_email-uniquely-identify-a-customer" id="toc-q3-does-customer_email-uniquely-identify-a-customer" class="nav-link" data-scroll-target="#q3-does-customer_email-uniquely-identify-a-customer">Q3: Does <code>customer_email</code> uniquely identify a customer?</a></li>
+  <li><a href="#q4-does-customer_city-determine-customer_country" id="toc-q4-does-customer_city-determine-customer_country" class="nav-link" data-scroll-target="#q4-does-customer_city-determine-customer_country">Q4: Does <code>customer_city</code> determine <code>customer_country</code>?</a></li>
+  <li><a href="#q5-does-title-determine-film-attributes" id="toc-q5-does-title-determine-film-attributes" class="nav-link" data-scroll-target="#q5-does-title-determine-film-attributes">Q5: Does <code>title</code> determine film attributes?</a></li>
+  <li><a href="#q6-is-there-a-many-to-many-relationship-between-films-and-actors" id="toc-q6-is-there-a-many-to-many-relationship-between-films-and-actors" class="nav-link" data-scroll-target="#q6-is-there-a-many-to-many-relationship-between-films-and-actors">Q6: Is there a many-to-many relationship between films and actors?</a></li>
+  <li><a href="#exploring-the-raw-data" id="toc-exploring-the-raw-data" class="nav-link" data-scroll-target="#exploring-the-raw-data">Exploring the Raw Data</a></li>
+  <li><a href="#total-rows" id="toc-total-rows" class="nav-link" data-scroll-target="#total-rows">Total Rows</a></li>
+  <li><a href="#distinct-customers" id="toc-distinct-customers" class="nav-link" data-scroll-target="#distinct-customers">Distinct Customers</a></li>
+  <li><a href="#distinct-films" id="toc-distinct-films" class="nav-link" data-scroll-target="#distinct-films">Distinct Films</a></li>
+  <li><a href="#distinct-actors" id="toc-distinct-actors" class="nav-link" data-scroll-target="#distinct-actors">Distinct Actors</a></li>
+  <li><a href="#q7-what-does-the-difference-between-total-rows-and-distinct-films-indicate" id="toc-q7-what-does-the-difference-between-total-rows-and-distinct-films-indicate" class="nav-link" data-scroll-target="#q7-what-does-the-difference-between-total-rows-and-distinct-films-indicate">Q7: What does the difference between total rows and distinct films indicate?</a></li>
+  <li><a href="#step-3-logical-entity-derivation" id="toc-step-3-logical-entity-derivation" class="nav-link" data-scroll-target="#step-3-logical-entity-derivation">STEP 3: Logical Entity Derivation</a></li>
+  <li><a href="#q8-why-do-we-not-immediately-create-tables" id="toc-q8-why-do-we-not-immediately-create-tables" class="nav-link" data-scroll-target="#q8-why-do-we-not-immediately-create-tables">Q8: Why do we not immediately create tables?</a></li>
+  <li><a href="#deriving-the-normalized-schema" id="toc-deriving-the-normalized-schema" class="nav-link" data-scroll-target="#deriving-the-normalized-schema">Deriving the Normalized Schema</a></li>
+  <li><a href="#final-checks" id="toc-final-checks" class="nav-link" data-scroll-target="#final-checks">Final Checks</a></li>
+  <li><a href="#reflection" id="toc-reflection" class="nav-link" data-scroll-target="#reflection">Reflection</a></li>
+  <li><a href="#erd" id="toc-erd" class="nav-link" data-scroll-target="#erd">ERD</a></li>
+  <li><a href="#what-is-the-general-statistical-summary-of-movie-rental-conditions" id="toc-what-is-the-general-statistical-summary-of-movie-rental-conditions" class="nav-link" data-scroll-target="#what-is-the-general-statistical-summary-of-movie-rental-conditions">What is the general statistical summary of movie rental conditions?</a></li>
+  <li><a href="#how-many-customers-are-there-per-country" id="toc-how-many-customers-are-there-per-country" class="nav-link" data-scroll-target="#how-many-customers-are-there-per-country">How many customers are there per country?</a></li>
+  <li><a href="#how-much-revenue-does-each-country-generate" id="toc-how-much-revenue-does-each-country-generate" class="nav-link" data-scroll-target="#how-much-revenue-does-each-country-generate">How much revenue does each country generate?</a></li>
+  <li><a href="#how-much-revenue-does-each-country-generate-1" id="toc-how-much-revenue-does-each-country-generate-1" class="nav-link" data-scroll-target="#how-much-revenue-does-each-country-generate-1">How much revenue does each country generate?</a></li>
+  <li><a href="#what-is-the-average-revenue-per-customer-by-country" id="toc-what-is-the-average-revenue-per-customer-by-country" class="nav-link" data-scroll-target="#what-is-the-average-revenue-per-customer-by-country">What is the average revenue per customer by country?</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/sql/index.html">SQL</a></li><li class="breadcrumb-item"><a href="../../materials/sql/index.html">Data Analytics with SQL</a></li><li class="breadcrumb-item"><a href="../../materials/sql/session13.html">Session 13: DA with SQL | Final Project</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Session 13: DA with SQL | Final Project</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Project</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="final-sql-project-kickoff" class="level2">
+<h2 class="anchored" data-anchor-id="final-sql-project-kickoff">Final SQL Project | Kickoff</h2>
+<section id="project-goal" class="level3">
+<h3 class="anchored" data-anchor-id="project-goal">Project Goal</h3>
+<p>Design and deliver a <strong>production-grade analytical SQL project</strong> that demonstrates:</p>
+<ul>
+<li>Proper normalization<br>
+</li>
+<li>Relational and spatial modeling<br>
+</li>
+<li>Analytical querying<br>
+</li>
+<li>Documentation and reproducibility</li>
+</ul>
+<p>This project simulates a <strong>real analytics workflow</strong>, from raw data to insights.</p>
+<hr>
+</section>
+<section id="step-1-select-a-business-domain" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-select-a-business-domain">Step 1 | Select a Business Domain</h3>
+<p>Choose <strong>one primary business table</strong> that genuinely interests your team.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Customer transactions<br>
+</li>
+<li>Product sales<br>
+</li>
+<li>Service usage events<br>
+</li>
+<li>Location-based activity</li>
+</ul>
+<p><strong>Mandatory requirement</strong>:</p>
+<ul>
+<li>The domain <strong>must include geography</strong></li>
+<li>Geography can be:
+<ul>
+<li>Customer locations</li>
+<li>Service areas</li>
+<li>Store regions</li>
+<li>Delivery zones</li>
+</ul></li>
+</ul>
+<p>If unsure, propose your domain and validate it before proceeding.</p>
+</section>
+<section id="step-2-normalize-the-data-model" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-normalize-the-data-model">Step 2 | Normalize the Data Model</h3>
+<p>Start from a <strong>single wide table</strong> (conceptual or real).</p>
+<p><strong>Example (not final):</strong></p>
+<ul>
+<li>customer_name<br>
+</li>
+<li>product_name<br>
+</li>
+<li>city<br>
+</li>
+<li>region<br>
+</li>
+<li>country<br>
+</li>
+<li>order_date<br>
+</li>
+<li>price</li>
+</ul>
+<p>Normalize into <strong>logical entities</strong>:</p>
+<ul>
+<li>Countries<br>
+</li>
+<li>Regions<br>
+</li>
+<li>Cities<br>
+</li>
+<li>Customers<br>
+</li>
+<li>Events / Orders / Activities<br>
+</li>
+<li>Products (if applicable)<br>
+</li>
+<li>Spatial boundaries</li>
+</ul>
+<p><strong>Rules</strong>:</p>
+<ul>
+<li>Remove redundancy<br>
+</li>
+<li>Use surrogate or natural keys consistently<br>
+</li>
+<li>Enforce referential integrity</li>
+</ul>
+<hr>
+</section>
+<section id="step-3-create-a-new-database-and-schema" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-create-a-new-database-and-schema">Step 3 | Create a New Database and Schema</h3>
+<p>Create a dedicated database for the project.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> final_sql_project; <span class="co">-- any meaningful name which goes according to your project</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Create a dedicated schema.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">SCHEMA</span> analytics;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>All tables must live under this schema</li>
+<li>Never use <code>public</code></li>
+</ul>
+<hr>
+</section>
+<section id="step-4-create-tables-ddl" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-create-tables-ddl">Step 4 | Create Tables (DDL)</h3>
+<p><strong>Define all tables explicitly:</strong></p>
+<ul>
+<li>Primary keys<br>
+</li>
+<li>Foreign keys<br>
+</li>
+<li>Constraints<br>
+</li>
+<li>Geometry types with SRID</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.example_table (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">id</span> <span class="dt">INT</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  geom GEOMETRY(Point, <span class="dv">4326</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Spatial tables are <strong>mandatory</strong></li>
+<li>Use PostGIS correctly</li>
+</ul>
+<hr>
+</section>
+<section id="step-5-populate-the-database" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-populate-the-database">Step 5 | Populate the Database</h3>
+<p>Populate tables using <strong>CSV-based loading</strong>.</p>
+<ul>
+<li>Use <code>COPY</code> or staging tables</li>
+<li>Data volume should be realistic: more that 10k rows</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> analytics.table_name</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'/data/table_name.csv'</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>CSV <span class="kw">HEADER</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Validate row counts</li>
+<li>Validate referential integrity</li>
+<li>Validate geometries using <code>ST_IsValid</code></li>
+</ul>
+<hr>
+</section>
+<section id="step-6-create-the-erd" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-create-the-erd">Step 6 | Create the ERD</h3>
+<p>Produce an <strong>Entity Relationship Diagram</strong> that shows:</p>
+<ul>
+<li>Tables<br>
+</li>
+<li>Primary keys<br>
+</li>
+<li>Foreign keys<br>
+</li>
+<li>Cardinality</li>
+</ul>
+<hr>
+</section>
+<section id="step-7-push-the-changes-into-github" class="level3">
+<h3 class="anchored" data-anchor-id="step-7-push-the-changes-into-github">Step 7 | Push the changes into GitHub</h3>
+<p>Create a <strong>dedicated GitHub repository</strong>.</p>
+<p>Repository structure example:</p>
+<ul>
+<li><code>/queries</code></li>
+<li><code>/init</code></li>
+<li><code>/data</code></li>
+<li><code>/erd</code></li>
+<li><code>/docs</code></li>
+<li><code>README.md</code></li>
+<li><code>docker-comose.yaml</code></li>
+<li><code>.env</code></li>
+</ul>
+<p><strong>Push:</strong></p>
+<ul>
+<li>DDL scripts<br>
+</li>
+<li>CSV files (or generation scripts)<br>
+</li>
+<li>ERD<br>
+</li>
+<li>Documentation</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Commit early and often.</strong></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-8-define-analytical-questions" class="level3">
+<h3 class="anchored" data-anchor-id="step-8-define-analytical-questions">Step 8 | Define Analytical Questions</h3>
+<p>Before writing complex SQL, define <strong>business questions</strong>.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Revenue by country / region / city<br>
+</li>
+<li>Customer distribution by geography<br>
+</li>
+<li>Top products per region<br>
+</li>
+<li>Customers outside expected boundaries<br>
+</li>
+<li>Growth trends over time</li>
+</ul>
+<p>Each question should map to <strong>specific joins</strong>.</p>
+</section>
+<section id="step-9-construct-a-denormalized-analytical-table" class="level3">
+<h3 class="anchored" data-anchor-id="step-9-construct-a-denormalized-analytical-table">Step 9 | Construct a Denormalized Analytical Table</h3>
+<p>Create a <strong>flattened analytical table</strong>.</p>
+<ul>
+<li>Join all necessary dimensions</li>
+<li>One row per analytical grain (e.g., order, customer-day)</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.fact_orders <span class="kw">AS</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  o.order_id,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  o.order_date,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  c.customer_id,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  ci.city_name,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  r.region_name,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  co.country_name,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> revenue</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.orders o</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.customers c <span class="kw">ON</span> o.customer_id <span class="op">=</span> c.customer_id</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.cities ci <span class="kw">ON</span> c.city_id <span class="op">=</span> ci.city_id</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.regions r <span class="kw">ON</span> ci.region_id <span class="op">=</span> r.region_id</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.countries co <span class="kw">ON</span> r.country_id <span class="op">=</span> co.country_id</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  o.order_id, o.order_date,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  c.customer_id, ci.city_name,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  r.region_name, co.country_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>This table will be reused later for:</strong>
+<ul>
+<li>Subqueries</li>
+<li>Window functions</li>
+<li>Advanced analytics</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="step-10-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="step-10-visualization">Step 10 | Visualization</h3>
+<p><strong>Use any tool</strong>: SQL client charts is recommended</p>
+<p><strong>Focus on:</strong></p>
+<ul>
+<li>Geography-based insights</li>
+<li>Trends</li>
+<li>Comparisons</li>
+</ul>
+<hr>
+</section>
+<section id="step-11-create-a-data-dictionary" class="level3">
+<h3 class="anchored" data-anchor-id="step-11-create-a-data-dictionary">Step 11 | Create a Data Dictionary</h3>
+<p>Document every table and column.</p>
+<p><strong>Example:</strong></p>
+<ul>
+<li>Table name<br>
+</li>
+<li>Column name<br>
+</li>
+<li>Data type<br>
+</li>
+<li>Description<br>
+</li>
+<li>Constraints</li>
+</ul>
+<p>Store as: Markdown (<code>.md</code>)</p>
+<p>This is a <strong>professional requirement</strong>, not optional.</p>
+<hr>
+</section>
+<section id="step-12-final-review-and-presentation" class="level3">
+<h3 class="anchored" data-anchor-id="step-12-final-review-and-presentation">Step 12 | Final Review and Presentation</h3>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>SQL database<br>
+</li>
+<li>ERD<br>
+</li>
+<li>GitHub repository<br>
+</li>
+<li>Analytical tables<br>
+</li>
+<li>Answered business questions<br>
+</li>
+<li>Visuals<br>
+</li>
+<li>Data dictionary</li>
+</ul>
+<p>Final step:</p>
+<ul>
+<li>Present:
+<ul>
+<li>Design decisions</li>
+<li>Normalization logic</li>
+<li>Join strategy</li>
+<li>Analytical findings</li>
+</ul></li>
+</ul>
+</section>
+<section id="evaluation-focus" class="level3">
+<h3 class="anchored" data-anchor-id="evaluation-focus">Evaluation Focus</h3>
+<ul>
+<li>Correct normalization<br>
+</li>
+<li>Correct joins<br>
+</li>
+<li>Proper use of geography<br>
+</li>
+<li>Clean SQL<br>
+</li>
+<li>Reproducibility<br>
+</li>
+<li>Analytical thinking</li>
+</ul>
+<p>This project simulates real-world analytics work.</p>
+</section>
+</section>
+<section id="example-project" class="level2">
+<h2 class="anchored" data-anchor-id="example-project">Example Project</h2>
+<p>This analysis provides <strong>data-driven</strong> insights into several aspects including revenue, customer distribution, and sales trends to guide the <strong>worldwide online service and optimize market strategy.</strong></p>
+<section id="what-do-we-have" class="level3">
+<h3 class="anchored" data-anchor-id="what-do-we-have">What Do We Have?</h3>
+<p><strong>We have:</strong></p>
+<ul>
+<li>Fully denormalized tabl</li>
+<li>Actor-level exploded (massive duplication)</li>
+<li>No surrogate IDs</li>
+<li>No foreign keys</li>
+<li>No artificial primary keys</li>
+</ul>
+</section>
+<section id="goal" class="level3">
+<h3 class="anchored" data-anchor-id="goal">Goal</h3>
+<p><strong>We have to answer the following questions:</strong></p>
+<ul>
+<li>What is the general statistic schema of movies rental condition?</li>
+<li>What is the geographical distribution of Rockbustor’s customers?</li>
+<li>Which countries comprise the main <strong>top 10</strong> customers?</li>
+<li>Which genres are the top best seller movies?</li>
+<li>Where are the customers with the highest lifetime value based in?</li>
+</ul>
+<!-- Todo apply window functiosn as well -->
+</section>
+<section id="creating-database" class="level3">
+<h3 class="anchored" data-anchor-id="creating-database">Creating Database</h3>
+<p>Go to <code>PgAdmin</code> and open <code>query tool</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> rockbuster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="create-schema" class="level3">
+<h3 class="anchored" data-anchor-id="create-schema">Create Schema</h3>
+<p>Now <strong>open another QUERY TOOL</strong> after clicking on the <code>rockbuser</code></p>
+<p><img src="../../img/sql/13/rockbuster1.png" class="img-fluid"></p>
+<p>Once you’re in the <code>rockbuster query tool</code>, start creating the schema:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">SCHEMA</span> analytics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="creating-the-table-analytics._stg_rockbuster" class="level3">
+<h3 class="anchored" data-anchor-id="creating-the-table-analytics._stg_rockbuster">Creating the Table <code>analytics._stg_rockbuster</code></h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics._stg_rockbuster;</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics._stg_rockbuster (</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    rental_date           <span class="dt">timestamp</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    return_date           <span class="dt">timestamp</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    amount                <span class="dt">numeric</span>(<span class="dv">5</span>,<span class="dv">2</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    payment_date          <span class="dt">timestamp</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    customer_first_name   <span class="dt">varchar</span>(<span class="dv">45</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    customer_last_name    <span class="dt">varchar</span>(<span class="dv">45</span>),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    customer_email        <span class="dt">varchar</span>(<span class="dv">50</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    customer_active       <span class="dt">boolean</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    customer_create_date  <span class="dt">date</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    customer_address      <span class="dt">varchar</span>(<span class="dv">50</span>),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    customer_address2     <span class="dt">varchar</span>(<span class="dv">50</span>),</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    customer_district     <span class="dt">varchar</span>(<span class="dv">20</span>),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    customer_postal_code  <span class="dt">varchar</span>(<span class="dv">10</span>),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    customer_phone        <span class="dt">varchar</span>(<span class="dv">20</span>),</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    customer_city         <span class="dt">varchar</span>(<span class="dv">50</span>),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    customer_country      <span class="dt">varchar</span>(<span class="dv">50</span>),</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    title                 <span class="dt">varchar</span>(<span class="dv">255</span>),</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    description           text,</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    release_year          <span class="dt">int</span>,</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    rental_duration       <span class="dt">int</span>,</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    rental_rate           <span class="dt">numeric</span>(<span class="dv">4</span>,<span class="dv">2</span>),</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>                <span class="dt">int</span>,</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    replacement_cost      <span class="dt">numeric</span>(<span class="dv">5</span>,<span class="dv">2</span>),</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    rating                <span class="dt">varchar</span>(<span class="dv">10</span>),</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    language_name         <span class="dt">varchar</span>(<span class="dv">20</span>),</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    category_name         <span class="dt">varchar</span>(<span class="dv">25</span>),</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    actor_first_name      <span class="dt">varchar</span>(<span class="dv">45</span>),</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    actor_last_name       <span class="dt">varchar</span>(<span class="dv">45</span>),</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    store_number          <span class="dt">int</span>,</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    staff_first_name      <span class="dt">varchar</span>(<span class="dv">45</span>),</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    staff_last_name       <span class="dt">varchar</span>(<span class="dv">45</span>),</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    staff_email           <span class="dt">varchar</span>(<span class="dv">50</span>)</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="download-csv-file" class="level3">
+<h3 class="anchored" data-anchor-id="download-csv-file">Download <code>CSV</code> file</h3>
+<p>You can download the data from <a href="https://raw.githubusercontent.com/hovhannisyan91/sql-analytics-portfolio/refs/heads/main/data/rockbuster/rockbuster_denormalized.csv">her.e</a></p>
+<p><strong>Place it under:</strong></p>
+<pre><code>data/rockbuster/rockbuster_denormalized.csv</code></pre>
+</section>
+<section id="inserting-the-data-into-analytics._stg_rockbuster" class="level3">
+<h3 class="anchored" data-anchor-id="inserting-the-data-into-analytics._stg_rockbuster">Inserting the Data Into <code>analytics._stg_rockbuster</code></h3>
+<p>Once you have donloaded the <code>csv</code> data, lets try to ingest the data into SQL in order to continue the data modeling part</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> analytics._stg_rockbuster</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="st">'/docker-entrypoint-initdb.d/data/rockbuster/rockbuster_denormalized.csv'</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>CSV <span class="kw">HEADER</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">NULL</span> <span class="st">'NULL'</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+<p><img src="../../img/sql/13/rockbuster2.png" class="img-fluid"></p>
+</section>
+<section id="data-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="data-modeling">Data Modeling</h3>
+<p>Once we have the flat file in SQL, we <strong>begin the logical normalization process.</strong></p>
+</section>
+<section id="q0-what-do-we-have" class="level3">
+<h3 class="anchored" data-anchor-id="q0-what-do-we-have">Q0: What do we have?</h3>
+<p><strong>We have movie rental transaction data including:</strong></p>
+<ul>
+<li>rental information</li>
+<li>payment information</li>
+<li>customer demographic data</li>
+<li>geographic data</li>
+<li>film metadata</li>
+<li>actor-level exploded rows</li>
+</ul>
+<p><strong>The list of columns:</strong></p>
+<p><code>rental_date</code>,<code>return_date</code>,<code>amount</code>,<code>payment_date</code>,<code>customer_first_name</code>,<code>customer_last_name</code>,<code>customer_email</code>,<code>customer_active</code>,<code>customer_create_date</code>,<code>customer_address</code>,<code>customer_address2</code>,<code>customer_district</code>,<code>customer_postal_code</code>,<code>customer_phone</code>,<code>customer_city</code>,<code>customer_country</code>,<code>title</code>,<code>description</code>,<code>release_year</code>,<code>rental_duration</code>,<code>rental_rate</code>,<code>length</code>,<code>replacement_cost</code>,<code>rating</code>,<code>language_name</code>,<code>category_name</code>,<code>actor_first_name</code>,<code>actor_last_name</code>,<code>store_number</code>,<code>staff_first_name</code>,<code>staff_last_name</code>,<code>staff_email</code></p>
+</section>
+<section id="q1-what-does-one-row-represent" class="level3">
+<h3 class="anchored" data-anchor-id="q1-what-does-one-row-represent">Q1: What does one row represent?</h3>
+<p><strong>One row represents:</strong></p>
+<ul>
+<li>One rental transaction<br>
+</li>
+<li>One payment<br>
+</li>
+<li>One film<br>
+</li>
+<li>One actor associated with that film</li>
+</ul>
+<p>Because actors are stored directly in the row, the dataset is <strong>duplicated at the actor level.</strong></p>
+</section>
+<section id="q2-is-this-table-normalized" class="level3">
+<h3 class="anchored" data-anchor-id="q2-is-this-table-normalized">Q2: Is this table normalized?</h3>
+<p><strong>No!</strong></p>
+<ul>
+<li>Customer data <strong>repeats</strong></li>
+<li>Film attributes <strong>repeat</strong></li>
+<li>Country repeats for each city<br>
+</li>
+<li>Actor rows duplicate film data</li>
+</ul>
+<p><em>This is a classic denormalized transactional dataset.</em></p>
+</section>
+<section id="q3-does-customer_email-uniquely-identify-a-customer" class="level3">
+<h3 class="anchored" data-anchor-id="q3-does-customer_email-uniquely-identify-a-customer">Q3: Does <code>customer_email</code> uniquely identify a customer?</h3>
+<p><strong>Yes, most likely:</strong></p>
+<pre><code>customer_email →
+customer_first_name,
+customer_last_name,
+customer_active,
+customer_create_date,
+customer_address</code></pre>
+<p>Therefore, customer attributes <strong>must be separated.</strong></p>
+</section>
+<section id="q4-does-customer_city-determine-customer_country" class="level3">
+<h3 class="anchored" data-anchor-id="q4-does-customer_city-determine-customer_country">Q4: Does <code>customer_city</code> determine <code>customer_country</code>?</h3>
+<p><strong>Yes:</strong> This is a <em>transitive</em> dependency.</p>
+<pre><code>city → country</code></pre>
+<p>Country should not be stored in the same table as rental.</p>
+</section>
+<section id="q5-does-title-determine-film-attributes" class="level3">
+<h3 class="anchored" data-anchor-id="q5-does-title-determine-film-attributes">Q5: Does <code>title</code> determine film attributes?</h3>
+<p><strong>Yes:</strong> Film should be its own entity.</p>
+<pre><code>title →
+description,
+release_year,
+rental_duration,
+rental_rate,
+length,
+replacement_cost,
+rating,
+language_name</code></pre>
+</section>
+<section id="q6-is-there-a-many-to-many-relationship-between-films-and-actors" class="level3">
+<h3 class="anchored" data-anchor-id="q6-is-there-a-many-to-many-relationship-between-films-and-actors">Q6: Is there a many-to-many relationship between films and actors?</h3>
+<p><strong>Yes:</strong></p>
+<ul>
+<li>One film has multiple actors<br>
+</li>
+<li>One actor appears in multiple films</li>
+</ul>
+<p>Therefore, a bridge table is required.</p>
+</section>
+<section id="exploring-the-raw-data" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-the-raw-data">Exploring the Raw Data</h3>
+<p>Before designing tables, we inspect duplication.</p>
+</section>
+<section id="total-rows" class="level3">
+<h3 class="anchored" data-anchor-id="total-rows">Total Rows</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[\downarrow\]</span></p>
+<p><span class="math display">\[80,115\]</span></p>
+</section>
+<section id="distinct-customers" class="level3">
+<h3 class="anchored" data-anchor-id="distinct-customers">Distinct Customers</h3>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> customer_email)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[\downarrow\]</span></p>
+<p><span class="math display">\[599\]</span></p>
+</section>
+<section id="distinct-films" class="level3">
+<h3 class="anchored" data-anchor-id="distinct-films">Distinct Films</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> title)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[\downarrow\]</span></p>
+<p><span class="math display">\[955\]</span></p>
+</section>
+<section id="distinct-actors" class="level3">
+<h3 class="anchored" data-anchor-id="distinct-actors">Distinct Actors</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> actor_first_name <span class="op">||</span> actor_last_name)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[\downarrow\]</span></p>
+<p><span class="math display">\[199\]</span></p>
+</section>
+<section id="q7-what-does-the-difference-between-total-rows-and-distinct-films-indicate" class="level3">
+<h3 class="anchored" data-anchor-id="q7-what-does-the-difference-between-total-rows-and-distinct-films-indicate">Q7: What does the difference between total rows and distinct films indicate?</h3>
+<p><strong>It indicates:</strong></p>
+<ul>
+<li>Film data is repeated multiple times<br>
+</li>
+<li>Actor explosion causes duplication<br>
+</li>
+<li>The table mixes multiple entity types</li>
+</ul>
+</section>
+<section id="step-3-logical-entity-derivation" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-logical-entity-derivation">STEP 3: Logical Entity Derivation</h3>
+<ul>
+<li>Country<br>
+</li>
+<li>City<br>
+</li>
+<li>Address<br>
+</li>
+<li>Customer<br>
+</li>
+<li>Language<br>
+</li>
+<li>Film<br>
+</li>
+<li>Category<br>
+</li>
+<li>Actor<br>
+</li>
+<li>Store<br>
+</li>
+<li>Staff<br>
+</li>
+<li>Rental<br>
+</li>
+<li>Payment</li>
+</ul>
+</section>
+<section id="q8-why-do-we-not-immediately-create-tables" class="level3">
+<h3 class="anchored" data-anchor-id="q8-why-do-we-not-immediately-create-tables">Q8: Why do we not immediately create tables?</h3>
+<p>Because normalization starts with reasoning about dependencies, <strong>not writing SQL.</strong></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Database design is a <strong>logical process first</strong>, <strong>technical process second.</strong></p>
+</div>
+</div>
+</section>
+<section id="deriving-the-normalized-schema" class="level3">
+<h3 class="anchored" data-anchor-id="deriving-the-normalized-schema">Deriving the Normalized Schema</h3>
+<p>Now that we have <strong>logically identified the entities</strong>, we begin implementing the normalization process in SQL.</p>
+<p>We will move from stable dimensions to transactional tables.</p>
+<section id="geography-hierarchy" class="level4">
+<h4 class="anchored" data-anchor-id="geography-hierarchy">Geography Hierarchy</h4>
+<p><strong>Q9:</strong> Why start with geography? <strong>A9:</strong> This avoids transitive dependency inside customer:</p>
+<ul>
+<li>city <span class="math inline">\(\rightarrow\)</span> country<br>
+</li>
+<li>address <span class="math inline">\(\rightarrow\)</span> city</li>
+</ul>
+<p>This avoids transitive dependency inside customer.</p>
+<p><strong>add postgis extention</strong></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> EXTENSION <span class="cf">IF</span> <span class="kw">EXISTS</span> postgis <span class="kw">CASCADE</span>;</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> EXTENSION postgis;</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> PostGIS_Version();</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[\downarrow\]</span></p>
+<p><strong>this should return:</strong> <code>3.4 USE_GEOS=1 USE_PROJ=1 USE_STATS=1</code></p>
+</section>
+<section id="country" class="level4">
+<h4 class="anchored" data-anchor-id="country">Country</h4>
+<section id="create-country-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-country-table">Create <code>country</code> Table</h5>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.country <span class="kw">CASCADE</span>;</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.country (</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    country_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, <span class="co">--autoincrement</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    country_name <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- geometry </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-country-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-country-table">Insert Into <code>country</code> Table</h5>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.country (country_name)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">DISTINCT</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  a.customer_country,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  b.geometry</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster a</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> analytics._stg_countries b <span class="kw">on</span> (a.country_name<span class="op">=</span>b.country_name)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> customer_country <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="country-bounderies" class="level4">
+<h4 class="anchored" data-anchor-id="country-bounderies">Country Bounderies</h4>
+<p>Before running this, make sure to have in your <code>data folder</code> the <strong>country geojson</strong>, which you can <a href="https://raw.githubusercontent.com/hovhannisyan91/sql-analytics-portfolio/refs/heads/main/data/rockbuster/countries.geo.json">download from here.</a></p>
+<section id="create-_stg_world_countries-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-_stg_world_countries-table">Create <code>_stg_world_countries</code> Table</h5>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics._stg_world_countries (</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    country_name TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    country_code TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    geom geometry(MULTIPOLYGON, <span class="dv">4326</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-_stg_world_countries-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-_stg_world_countries-table">Insert Into <code>_stg_world_countries</code> Table</h5>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics._stg_world_countries (country_name, country_code, geom)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    feature<span class="op">-&gt;</span><span class="st">'properties'</span><span class="op">-&gt;&gt;</span><span class="st">'name'</span> <span class="kw">AS</span> country_name,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    feature<span class="op">-&gt;&gt;</span><span class="st">'id'</span> <span class="kw">AS</span> country_code,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    ST_SetSRID(</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        ST_Multi(</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            ST_CollectionExtract(</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                ST_Force2D(</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                    ST_MakeValid(</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>                        ST_GeomFromGeoJSON(feature<span class="op">-&gt;&gt;</span><span class="st">'geometry'</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                    )</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                ),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>            <span class="dv">3</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        <span class="dv">4326</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="kw">AS</span> geom</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> jsonb_array_elements(<span class="kw">data</span><span class="op">-&gt;</span><span class="st">'features'</span>) <span class="kw">AS</span> feature</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> (</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">SELECT</span> pg_read_file(<span class="st">'/docker-entrypoint-initdb.d/data/rockbuster/countries.geo.json'</span>):<span class="ch">:jsonb</span> <span class="kw">AS</span> <span class="kw">data</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    ) f</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>) sub;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-_stg_world_countries-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-_stg_world_countries-table">View <code>_stg_world_countries</code> Table</h5>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_world_countries </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="city" class="level4">
+<h4 class="anchored" data-anchor-id="city">City</h4>
+<section id="create-city-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-city-table">Create <code>city</code> Table</h5>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.city <span class="kw">CASCADE</span>;</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.city (</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    city_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    city_name <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    country_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.country(country_id),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span> (city_name, country_id)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-city-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-city-table">Insert Into <code>city</code> Table</h5>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.city (city_name, country_id)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    s.customer_city,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    c.country_id</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.country c</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> c.country_name <span class="op">=</span> s.customer_country;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-city-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-city-table">View <code>city</code> Table</h5>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.city </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="address" class="level4">
+<h4 class="anchored" data-anchor-id="address">Address</h4>
+<section id="create-address-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-address-table">Create <code>address</code> Table</h5>
+<div class="sourceCode" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.address <span class="kw">CASCADE</span>;</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.address (</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    address_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    address <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    address2 <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    district <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    postal_code <span class="dt">VARCHAR</span>(<span class="dv">10</span>),</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    phone <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    city_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.city(city_id),</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span>(address, postal_code, city_id)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-address-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-address-table">Insert Into <code>address</code> Table</h5>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.address (</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    address,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    address2,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    district,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    postal_code,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    phone,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    city_id</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    s.customer_address,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    s.customer_address2,</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    s.customer_district,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    s.customer_postal_code,</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    s.customer_phone,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    c.city_id</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.city c</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> c.city_name <span class="op">=</span> s.customer_city;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-address-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-address-table">View <code>address</code> Table</h5>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.address </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="customer-entity" class="level4">
+<h4 class="anchored" data-anchor-id="customer-entity">Customer Entity</h4>
+<p><strong>Q10:</strong> What uniquely identifies a customer?</p>
+<p><strong>A1:</strong> <code>customer_email</code> (natural key assumption for this exercise).</p>
+<section id="create-customer-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-customer-table">Create <code>customer</code> Table</h5>
+<div class="sourceCode" id="cb30"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.customer <span class="kw">CASCADE</span>;</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.customer (</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    customer_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    first_name <span class="dt">VARCHAR</span>(<span class="dv">45</span>),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    last_name <span class="dt">VARCHAR</span>(<span class="dv">45</span>),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    email <span class="dt">VARCHAR</span>(<span class="dv">50</span>) <span class="kw">UNIQUE</span>,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    active <span class="dt">BOOLEAN</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    create_date <span class="dt">DATE</span>,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    address_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.address(address_id)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-customer-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-customer-table">Insert Into <code>customer</code> Table</h5>
+<div class="sourceCode" id="cb31"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.customer (</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    first_name,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    last_name,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    email,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    active,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    create_date,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    address_id</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    s.customer_first_name,</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    s.customer_last_name,</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    s.customer_email,</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    s.customer_active,</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    s.customer_create_date,</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    a.address_id</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.address a</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> a.address <span class="op">=</span> s.customer_address;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-customer-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-customer-table">View <code>customer</code> Table</h5>
+<div class="sourceCode" id="cb32"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.customer </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="language" class="level4">
+<h4 class="anchored" data-anchor-id="language">Language</h4>
+<p><strong>Q11:</strong> What determines film attributes?</p>
+<p><strong>A11:</strong> <code>title</code> determines all film-related descriptive attributes.</p>
+<ol type="1">
+<li>Language</li>
+<li></li>
+</ol>
+<section id="create-language-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-language-table">Create <code>language</code> Table</h5>
+<div class="sourceCode" id="cb33"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.language <span class="kw">CASCADE</span>;</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.language (</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    language_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    language_name <span class="dt">VARCHAR</span>(<span class="dv">20</span>) <span class="kw">UNIQUE</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-language-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-language-table">Insert Into <code>language</code> Table</h5>
+<div class="sourceCode" id="cb34"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.language (language_name)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> language_name</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-language-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-language-table">View <code>language</code> Table</h5>
+<div class="sourceCode" id="cb35"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.language </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="film" class="level4">
+<h4 class="anchored" data-anchor-id="film">Film</h4>
+<section id="create-film-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-film-table">Create <code>film</code> Table</h5>
+<div class="sourceCode" id="cb36"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.film <span class="kw">CASCADE</span>;</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.film (</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    film_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    title <span class="dt">VARCHAR</span>(<span class="dv">255</span>),</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    description TEXT,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    release_year <span class="dt">INT</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    rental_duration <span class="dt">INT</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    rental_rate <span class="dt">NUMERIC</span>(<span class="dv">4</span>,<span class="dv">2</span>),</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span> <span class="dt">INT</span>,</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    replacement_cost <span class="dt">NUMERIC</span>(<span class="dv">5</span>,<span class="dv">2</span>),</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    rating <span class="dt">VARCHAR</span>(<span class="dv">10</span>),</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    language_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.language(language_id),</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span>(title, release_year)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-film-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-film-table">Insert Into <code>film</code> Table</h5>
+<div class="sourceCode" id="cb37"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.film (</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    title,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    description,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    release_year,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    rental_duration,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    rental_rate,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    replacement_cost,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    rating,</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    language_id</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    s.title,</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    s.description,</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    s.release_year,</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    s.rental_duration,</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    s.rental_rate,</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>    s.<span class="fu">length</span>,</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>    s.replacement_cost,</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>    s.rating,</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>    l.language_id</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.language l</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> l.language_name <span class="op">=</span> s.language_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-film-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-film-table">View <code>film</code> Table</h5>
+<div class="sourceCode" id="cb38"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.film</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="category" class="level4">
+<h4 class="anchored" data-anchor-id="category">Category</h4>
+<section id="create-category-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-category-table">Create <code>category</code> Table</h5>
+<div class="sourceCode" id="cb39"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.<span class="kw">category</span> <span class="kw">CASCADE</span>;</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.<span class="kw">category</span> (</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    category_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    category_name <span class="dt">VARCHAR</span>(<span class="dv">25</span>) <span class="kw">UNIQUE</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-category-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-category-table">Insert Into <code>category</code> Table</h5>
+<div class="sourceCode" id="cb40"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.<span class="kw">category</span> (category_name)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> category_name</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-category-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-category-table">View <code>category</code> Table</h5>
+<div class="sourceCode" id="cb41"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.<span class="kw">category</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="actor" class="level4">
+<h4 class="anchored" data-anchor-id="actor">Actor</h4>
+<section id="create-actor-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-actor-table">Create <code>actor</code> Table</h5>
+<div class="sourceCode" id="cb42"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.actor <span class="kw">CASCADE</span>;</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.actor (</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    actor_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    first_name <span class="dt">VARCHAR</span>(<span class="dv">45</span>),</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    last_name <span class="dt">VARCHAR</span>(<span class="dv">45</span>),</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNIQUE</span>(first_name, last_name)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-actor-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-actor-table">Insert Into <code>actor</code> Table</h5>
+<div class="sourceCode" id="cb43"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.actor (first_name, last_name)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    actor_first_name,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    actor_last_name</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-actor-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-actor-table">View <code>actor</code> Table</h5>
+<div class="sourceCode" id="cb44"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.actor</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="film-category-bridge" class="level4">
+<h4 class="anchored" data-anchor-id="film-category-bridge">Film Category Bridge</h4>
+<section id="create-film_category-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-film_category-table">Create <code>film_category</code> Table</h5>
+<p><strong>Many-to-Many Relationships</strong> <code>Film-Category</code> Bridge</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.film_category;</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.film_category (</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    film_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.film(film_id),</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    category_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.<span class="kw">category</span>(category_id),</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (film_id, category_id)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-film_category-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-film_category-table">Insert Into <code>film_category</code> Table</h5>
+<div class="sourceCode" id="cb46"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.film_category</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    f.film_id,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    c.category_id</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.film f</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> f.title <span class="op">=</span> s.title</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.<span class="kw">category</span> c</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> c.category_name <span class="op">=</span> s.category_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-film_category-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-film_category-table">View <code>film_category</code> Table</h5>
+<div class="sourceCode" id="cb47"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.film_category</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="film-actor-bridge" class="level4">
+<h4 class="anchored" data-anchor-id="film-actor-bridge">Film Actor Bridge</h4>
+<section id="create-film_actor-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-film_actor-table">Create <code>film_actor</code> Table</h5>
+<div class="sourceCode" id="cb48"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.film_actor;</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.film_actor (</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    film_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.film(film_id),</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    actor_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.actor(actor_id),</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (film_id, actor_id)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-film_actor-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-film_actor-table">Insert Into <code>film_actor</code> Table</h5>
+<div class="sourceCode" id="cb49"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.film_actor</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    f.film_id,</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    a.actor_id</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.film f</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> f.title <span class="op">=</span> s.title</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.actor a</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> a.first_name <span class="op">=</span> s.actor_first_name</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a> <span class="kw">AND</span> a.last_name  <span class="op">=</span> s.actor_last_name;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-film_actor-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-film_actor-table">View <code>film_actor</code> Table</h5>
+<div class="sourceCode" id="cb50"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.film_actor</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="store" class="level4">
+<h4 class="anchored" data-anchor-id="store">Store</h4>
+<section id="create-store-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-store-table">Create <code>store</code> Table</h5>
+<div class="sourceCode" id="cb51"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.<span class="kw">store</span> <span class="kw">CASCADE</span>;</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.<span class="kw">store</span> (</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    store_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    store_number <span class="dt">INT</span> <span class="kw">UNIQUE</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-store-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-store-table">Insert Into <code>store</code> Table</h5>
+<div class="sourceCode" id="cb52"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.<span class="kw">store</span> (store_number)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> store_number</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-store-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-store-table">View <code>store</code> Table</h5>
+<div class="sourceCode" id="cb53"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.<span class="kw">store</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="staff" class="level4">
+<h4 class="anchored" data-anchor-id="staff">Staff</h4>
+<section id="create-staff-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-staff-table">Create <code>staff</code> Table</h5>
+<div class="sourceCode" id="cb54"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.staff <span class="kw">CASCADE</span>;</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.staff (</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    staff_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    first_name <span class="dt">VARCHAR</span>(<span class="dv">45</span>),</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    last_name <span class="dt">VARCHAR</span>(<span class="dv">45</span>),</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    email <span class="dt">VARCHAR</span>(<span class="dv">50</span>),</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    store_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.<span class="kw">store</span>(store_id)</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-staff-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-staff-table">Insert Into <code>staff</code> Table</h5>
+<div class="sourceCode" id="cb55"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.staff (</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    first_name,</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    last_name,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    email,</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    store_id</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    s.staff_first_name,</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    s.staff_last_name,</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    s.staff_email,</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    st.store_id</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.<span class="kw">store</span> st</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> st.store_number <span class="op">=</span> s.store_number;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-staff-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-staff-table">View <code>staff</code> Table</h5>
+<div class="sourceCode" id="cb56"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.staff</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="rental" class="level4">
+<h4 class="anchored" data-anchor-id="rental">Rental</h4>
+<section id="create-rental-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-rental-table">Create <code>rental</code> Table</h5>
+<div class="sourceCode" id="cb57"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.rental <span class="kw">CASCADE</span>;</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.rental (</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    rental_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    rental_date <span class="dt">TIMESTAMP</span>,</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    return_date <span class="dt">TIMESTAMP</span>,</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>    customer_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.customer(customer_id),</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>    film_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.film(film_id),</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>    staff_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.staff(staff_id)</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-rental-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-rental-table">Insert Into <code>rental</code> Table</h5>
+<div class="sourceCode" id="cb58"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.rental (</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    rental_date,</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    return_date,</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    customer_id,</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    film_id,</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>    staff_id</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>    s.rental_date,</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>    s.return_date,</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>    c.customer_id,</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>    f.film_id,</span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>    st.staff_id</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.customer c <span class="kw">ON</span> c.email <span class="op">=</span> s.customer_email</span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.film f <span class="kw">ON</span> f.title <span class="op">=</span> s.title</span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.staff st <span class="kw">ON</span> st.email <span class="op">=</span> s.staff_email;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-rental-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-rental-table">View <code>rental</code> Table</h5>
+<div class="sourceCode" id="cb59"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.rental</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="payment" class="level4">
+<h4 class="anchored" data-anchor-id="payment">Payment</h4>
+<section id="create-payment-table" class="level5">
+<h5 class="anchored" data-anchor-id="create-payment-table">Create <code>payment</code> Table</h5>
+<div class="sourceCode" id="cb60"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-payment-table" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-payment-table">Insert Into <code>payment</code> Table</h5>
+<div class="sourceCode" id="cb61"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-payment-table" class="level5">
+<h5 class="anchored" data-anchor-id="view-payment-table">View <code>payment</code> Table</h5>
+<div class="sourceCode" id="cb62"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.payment</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="payment-1" class="level4">
+<h4 class="anchored" data-anchor-id="payment-1">Payment</h4>
+<section id="create-payment-table-1" class="level5">
+<h5 class="anchored" data-anchor-id="create-payment-table-1">Create <code>payment</code> Table</h5>
+<div class="sourceCode" id="cb63"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> analytics.payment <span class="kw">CASCADE</span>;</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> analytics.payment (</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    payment_id SERIAL <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>    rental_id <span class="dt">INT</span> <span class="kw">REFERENCES</span> analytics.rental(rental_id),</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>    amount <span class="dt">NUMERIC</span>(<span class="dv">5</span>,<span class="dv">2</span>),</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    payment_date <span class="dt">TIMESTAMP</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="insert-into-payment-table-1" class="level5">
+<h5 class="anchored" data-anchor-id="insert-into-payment-table-1">Insert Into <code>payment</code> Table</h5>
+<div class="sourceCode" id="cb64"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> analytics.payment (</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    rental_id,</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    amount,</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    payment_date</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>    r.rental_id,</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>    s.amount,</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>    s.payment_date</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics._stg_rockbuster s</span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.rental r</span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ON</span> r.rental_date <span class="op">=</span> s.rental_date;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="view-payment-table-1" class="level5">
+<h5 class="anchored" data-anchor-id="view-payment-table-1">View <code>payment</code> Table</h5>
+<div class="sourceCode" id="cb65"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> </span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> </span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.payment</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="final-checks" class="level3">
+<h3 class="anchored" data-anchor-id="final-checks">Final Checks</h3>
+<div class="sourceCode" id="cb66"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> analytics.customer;</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> analytics.film;</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> analytics.actor;</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> analytics.rental;</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> analytics.payment;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reflection" class="level3">
+<h3 class="anchored" data-anchor-id="reflection">Reflection</h3>
+<p><strong>Q12:</strong> What normalization level did we reach?</p>
+<p><strong>A12:</strong></p>
+<ul>
+<li>1NF <span class="math inline">\(\rightarrow\)</span> Atomic attributes<br>
+</li>
+<li>2NF <span class="math inline">\(\rightarrow\)</span> No partial dependencies<br>
+</li>
+<li>3NF <span class="math inline">\(\rightarrow\)</span> No transitive dependencies</li>
+</ul>
+<p><strong>We have successfully derived a normalized relational schema directly from a flat CSV dataset.</strong></p>
+</section>
+<section id="erd" class="level3">
+<h3 class="anchored" data-anchor-id="erd">ERD</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../img/sql/13/rockbuster3.png" class="img-fluid figure-img"></p>
+<figcaption>alt</figcaption>
+</figure>
+</div>
+</section>
+<section id="what-is-the-general-statistical-summary-of-movie-rental-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-general-statistical-summary-of-movie-rental-conditions">What is the general statistical summary of movie rental conditions?</h3>
+<div class="sourceCode" id="cb67"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> r.rental_id) <span class="kw">AS</span> total_rentals,</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(p.amount) <span class="kw">AS</span> total_revenue,</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(p.amount) <span class="kw">AS</span> avg_payment,</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MIN</span>(p.amount) <span class="kw">AS</span> min_payment,</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MAX</span>(p.amount) <span class="kw">AS</span> max_payment,</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(<span class="fu">EXTRACT</span>(EPOCH <span class="kw">FROM</span> (r.return_date <span class="op">-</span> r.rental_date))<span class="op">/</span><span class="dv">86400</span>)  <span class="kw">AS</span> avg_rental_days</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.rental r</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.payment pON p.rental_id <span class="op">=</span> r.rental_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[\downarrow\]</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Total Rentals</td>
+<td>29,108</td>
+</tr>
+<tr class="even">
+<td>Total Revenue</td>
+<td>139,312.68</td>
+</tr>
+<tr class="odd">
+<td>Average Payment</td>
+<td>4.28</td>
+</tr>
+<tr class="even">
+<td>Minimum Payment</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Maximum Payment</td>
+<td>11.99</td>
+</tr>
+<tr class="even">
+<td>Average Rental Duration</td>
+<td>5.03 days</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>The core pricing likely centers around the 3.99–4.99 range.<br>
+</li>
+<li>11.99 suggests penalties or late fees.<br>
+</li>
+<li>0.00 likely represents free rentals, promotions, or data anomalies.</li>
+</ul>
+<p><strong>Average rental duration:</strong> 5.03 days</p>
+<p><strong>This suggests:</strong></p>
+<ul>
+<li>Most customers keep movies for approximately 5 days.<br>
+</li>
+<li>This is slightly above typical 3–4 day rental policies, possibly indicating late returns.</li>
+</ul>
+</section>
+<section id="how-many-customers-are-there-per-country" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-customers-are-there-per-country">How many customers are there per country?</h3>
+<div class="sourceCode" id="cb68"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>    co.country_name,</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(c.customer_id) <span class="kw">AS</span> total_customers</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.customer c</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.address a   <span class="kw">ON</span> a.address_id <span class="op">=</span> c.address_id</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.city ci     <span class="kw">ON</span> ci.city_id <span class="op">=</span> a.city_id</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.country co  <span class="kw">ON</span> co.country_id <span class="op">=</span> ci.country_id</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> co.country_name</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_customers <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="how-much-revenue-does-each-country-generate" class="level3">
+<h3 class="anchored" data-anchor-id="how-much-revenue-does-each-country-generate">How much revenue does each country generate?</h3>
+<div class="sourceCode" id="cb69"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>    co.country_name,</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(p.amount) <span class="kw">AS</span> total_revenue,</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> c.customer_id) <span class="kw">AS</span> total_customers</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.payment p</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.rental r     <span class="kw">ON</span> r.rental_id <span class="op">=</span> p.rental_id</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.customer c   <span class="kw">ON</span> c.customer_id <span class="op">=</span> r.customer_id</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.address a    <span class="kw">ON</span> a.address_id <span class="op">=</span> c.address_id</span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.city ci      <span class="kw">ON</span> ci.city_id <span class="op">=</span> a.city_id</span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.country co   <span class="kw">ON</span> co.country_id <span class="op">=</span> ci.country_id</span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> co.country_name</span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_revenue <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="how-much-revenue-does-each-country-generate-1" class="level3">
+<h3 class="anchored" data-anchor-id="how-much-revenue-does-each-country-generate-1">How much revenue does each country generate?</h3>
+<div class="sourceCode" id="cb70"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>    co.country_name,</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(p.amount) <span class="kw">AS</span> total_revenue,</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> c.customer_id) <span class="kw">AS</span> total_customers</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.payment p</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.rental r     <span class="kw">ON</span> r.rental_id <span class="op">=</span> p.rental_id</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.customer c   <span class="kw">ON</span> c.customer_id <span class="op">=</span> r.customer_id</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.address a    <span class="kw">ON</span> a.address_id <span class="op">=</span> c.address_id</span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.city ci      <span class="kw">ON</span> ci.city_id <span class="op">=</span> a.city_id</span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.country co   <span class="kw">ON</span> co.country_id <span class="op">=</span> ci.country_id</span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> co.country_name</span>
+<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> total_revenue <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="what-is-the-average-revenue-per-customer-by-country" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-the-average-revenue-per-customer-by-country">What is the average revenue per customer by country?</h3>
+<div class="sourceCode" id="cb71"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>    co.country_name,</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(p.amount) <span class="op">/</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> c.customer_id) <span class="kw">AS</span> avg_revenue_per_customer</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> analytics.payment p</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.rental r     <span class="kw">ON</span> r.rental_id <span class="op">=</span> p.rental_id</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.customer c   <span class="kw">ON</span> c.customer_id <span class="op">=</span> r.customer_id</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.address a    <span class="kw">ON</span> a.address_id <span class="op">=</span> c.address_id</span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.city ci      <span class="kw">ON</span> ci.city_id <span class="op">=</span> a.city_id</span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> analytics.country co   <span class="kw">ON</span> co.country_id <span class="op">=</span> ci.country_id</span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> co.country_name</span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> avg_revenue_per_customer <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,3652 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../../../img/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.39">
+
+  <meta name="author" content="Karen Hovhannisyan">
+  <meta name="dcterms.date" content="2026-08-16">
+  <title>Data Analytics Bootcamp – Advanced SQL Functions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-bbe7401fe57d4b791b917637bb662036.css">
+  <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .icon-xxl { font-size: 84px; }
+    .icon-xl  { font-size: 64px; }
+    .icon-lg  { font-size: 48px; }
+    .muted { opacity: .8 }
+    .pill { border-radius: 10px; }
+    .circle { border-radius: 50%; }
+    .small-table table {font-size: 0.6em;}
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Advanced SQL Functions</h1>
+  <p class="subtitle">Window Functions</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Karen Hovhannisyan 
+</div>
+</div>
+</div>
+
+  <p class="date">2026-08-16</p>
+</section>
+<section id="transition-to-window-functions" class="slide level2 smaller">
+<h2>Transition to Window Functions</h2>
+<p><strong>CTEs</strong> define <strong>what</strong> is computed and <strong>in what order</strong>.</p>
+<div class="fragment">
+<p><code>Window Functions</code> define <strong>how rows are compared</strong>.</p>
+</div>
+</section>
+<section>
+<section id="window-functions" class="title-slide slide level1 center">
+<h1>Window Functions</h1>
+
+</section>
+<section id="core-idea-syntax-skeleton" class="slide level2 smaller">
+<h2>Core Idea (Syntax Skeleton)</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a></a>function_name(expression)</span>
+<span id="cb1-2"><a></a><span class="kw">OVER</span> (</span>
+<span id="cb1-3"><a></a>    <span class="kw">PARTITION</span> <span class="kw">BY</span> <span class="op">..</span>.</span>
+<span id="cb1-4"><a></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> <span class="op">..</span>.</span>
+<span id="cb1-5"><a></a>    <span class="kw">ROWS</span> | <span class="kw">RANGE</span> <span class="op">..</span>.</span>
+<span id="cb1-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="window-functions-vs-aggregations" class="slide level2 smaller">
+<h2>Window Functions vs Aggregations</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>GROUP BY</th>
+<th>Window Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rows preserved</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Aggregation scope</td>
+<td>Entire group</td>
+<td>Sliding / contextual</td>
+</tr>
+<tr class="odd">
+<td>Output rows</td>
+<td>Fewer</td>
+<td>Same as input</td>
+</tr>
+<tr class="even">
+<td>Analytical use</td>
+<td>Summaries</td>
+<td>Comparisons, trends</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simple-conceptual-example" class="slide level2 smaller">
+<h2>Simple Conceptual Example</h2>
+<p><strong>Input Table: <code>sales</code></strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">order_id</th>
+<th style="text-align: right;">customer_id</th>
+<th style="text-align: right;">order_date</th>
+<th style="text-align: right;">revenue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2024-01-01</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2024-01-05</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">2024-01-03</td>
+<td style="text-align: right;">200</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>Question:</strong> Show each order <strong>and</strong> the total revenue per customer.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb2-2"><a></a>    order_id,</span>
+<span id="cb2-3"><a></a>    customer_id,</span>
+<span id="cb2-4"><a></a>    revenue,</span>
+<span id="cb2-5"><a></a>    <span class="fu">SUM</span>(revenue) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id) <span class="kw">AS</span> total_customer_revenue</span>
+<span id="cb2-6"><a></a><span class="kw">FROM</span> sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">order_id</th>
+<th style="text-align: right;">customer_id</th>
+<th style="text-align: right;">revenue</th>
+<th style="text-align: right;">total_customer_revenue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">250</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">200</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="analytical-value-of-window-functions" class="slide level2 smaller">
+<h2>Analytical Value of Window Functions</h2>
+<div>
+<ul>
+<li class="fragment">Comparing rows to group averages<br>
+</li>
+<li class="fragment">Ranking and ordering observations<br>
+</li>
+<li class="fragment">Measuring change over time<br>
+</li>
+<li class="fragment">Calculating running totals<br>
+</li>
+<li class="fragment">Detecting trends and anomalies</li>
+</ul>
+</div>
+</section>
+<section id="window-functions-in-data-aalytics" class="slide level2 smaller">
+<h2>Window Functions in Data Aalytics</h2>
+<div>
+<ul>
+<li class="fragment">Customer lifetime analysis<br>
+</li>
+<li class="fragment">Time-series trend comparison<br>
+</li>
+<li class="fragment">Cohort analysis<br>
+</li>
+<li class="fragment">Funnel progression<br>
+</li>
+<li class="fragment">Ranking and segmentation</li>
+</ul>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Window functions are a cornerstone of <strong>modern analytical SQL</strong>.</p>
+</blockquote>
+</div>
+</section>
+<section class="slide level2">
+
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Construct</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Temporary Tables</td>
+<td>Reuse intermediate results</td>
+</tr>
+<tr class="even">
+<td>Subqueries</td>
+<td>Inline conditions and metrics</td>
+</tr>
+<tr class="odd">
+<td>Derived Tables</td>
+<td>Inline datasets</td>
+</tr>
+<tr class="even">
+<td>CTEs</td>
+<td>Named pipelines</td>
+</tr>
+<tr class="odd">
+<td><strong>Window Functions</strong></td>
+<td>Context-aware row analytics</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="temporary-table" class="slide level2 smaller">
+<h2>Temporary Table</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="kw">CREATE</span> TEMP <span class="kw">TABLE</span> tmp_sales <span class="kw">AS</span></span>
+<span id="cb3-2"><a></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb3-3"><a></a><span class="kw">FROM</span> (</span>
+<span id="cb3-4"><a></a>    <span class="kw">VALUES</span></span>
+<span id="cb3-5"><a></a>        </span>
+<span id="cb3-6"><a></a>        (<span class="dv">1</span>,  <span class="st">'A'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-01'</span>, <span class="dv">100</span>, <span class="st">'online'</span>),</span>
+<span id="cb3-7"><a></a>        (<span class="dv">2</span>,  <span class="st">'A'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-02'</span>, <span class="dv">120</span>, <span class="st">'store'</span>),</span>
+<span id="cb3-8"><a></a>        (<span class="dv">3</span>,  <span class="st">'A'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-03'</span>, <span class="dv">90</span>,  <span class="st">'online'</span>),</span>
+<span id="cb3-9"><a></a>        (<span class="dv">4</span>,  <span class="st">'A'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-04'</span>, <span class="dv">130</span>, <span class="st">'store'</span>),</span>
+<span id="cb3-10"><a></a></span>
+<span id="cb3-11"><a></a>        </span>
+<span id="cb3-12"><a></a>        (<span class="dv">5</span>,  <span class="st">'B'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-01'</span>, <span class="dv">180</span>, <span class="st">'store'</span>),</span>
+<span id="cb3-13"><a></a>        (<span class="dv">6</span>,  <span class="st">'B'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-02'</span>, <span class="dv">200</span>, <span class="st">'online'</span>),</span>
+<span id="cb3-14"><a></a>        (<span class="dv">7</span>,  <span class="st">'B'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-03'</span>, <span class="dv">220</span>, <span class="st">'online'</span>),</span>
+<span id="cb3-15"><a></a>        (<span class="dv">8</span>,  <span class="st">'B'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-04'</span>, <span class="dv">200</span>, <span class="st">'store'</span>),</span>
+<span id="cb3-16"><a></a></span>
+<span id="cb3-17"><a></a>        </span>
+<span id="cb3-18"><a></a>        (<span class="dv">9</span>,  <span class="st">'C'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-01'</span>, <span class="dv">150</span>, <span class="st">'online'</span>),</span>
+<span id="cb3-19"><a></a>        (<span class="dv">10</span>, <span class="st">'C'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-02'</span>, <span class="dv">150</span>, <span class="st">'online'</span>),</span>
+<span id="cb3-20"><a></a>        (<span class="dv">11</span>, <span class="st">'C'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-03'</span>, <span class="dv">170</span>, <span class="st">'online'</span>),</span>
+<span id="cb3-21"><a></a></span>
+<span id="cb3-22"><a></a>        </span>
+<span id="cb3-23"><a></a>        (<span class="dv">12</span>, <span class="st">'D'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-01'</span>, <span class="dv">90</span>,  <span class="st">'store'</span>),</span>
+<span id="cb3-24"><a></a>        (<span class="dv">13</span>, <span class="st">'D'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-02'</span>, <span class="dv">110</span>, <span class="st">'store'</span>),</span>
+<span id="cb3-25"><a></a></span>
+<span id="cb3-26"><a></a>        </span>
+<span id="cb3-27"><a></a>        (<span class="dv">14</span>, <span class="st">'E'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-01'</span>, <span class="dv">140</span>, <span class="st">'store'</span>),</span>
+<span id="cb3-28"><a></a>        (<span class="dv">15</span>, <span class="st">'E'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-02'</span>, <span class="dv">160</span>, <span class="st">'online'</span>),</span>
+<span id="cb3-29"><a></a>        (<span class="dv">16</span>, <span class="st">'E'</span>, <span class="dt">DATE</span> <span class="st">'2024-01-03'</span>, <span class="dv">155</span>, <span class="st">'store'</span>)</span>
+<span id="cb3-30"><a></a>) <span class="kw">AS</span> t(</span>
+<span id="cb3-31"><a></a>    sale_id,</span>
+<span id="cb3-32"><a></a>    customer_id,</span>
+<span id="cb3-33"><a></a>    sale_date,</span>
+<span id="cb3-34"><a></a>    amount,</span>
+<span id="cb3-35"><a></a>    channel</span>
+<span id="cb3-36"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="window-function-layers" class="slide level2 smaller">
+<h2>Window Function Layers</h2>
+<div>
+<ol type="1">
+<li class="fragment">Aggregate over a window (e.g., <code>SUM()</code>, <code>AVG()</code>, <code>COUNT()</code>)<br>
+</li>
+<li class="fragment">Navigational &amp; Value from another row (e.g., <code>LAG()</code>, <code>LEAD()</code>, <code>FIRST_VALUE()</code>, <code>LAST_VALUE()</code>)<br>
+</li>
+<li class="fragment">Ranking functions (e.g., <code>ROW_NUMBER()</code>, <code>RANK()</code>, <code>DENSE_RANK()</code>)<br>
+</li>
+<li class="fragment">Cumulative distributions (e.g., <code>CUME_DIST()</code>, <code>PERCENT_RANK()</code>)<br>
+</li>
+<li class="fragment">String aggregation (e.g., <code>STRING_AGG()</code>)</li>
+<li class="fragment">Framing &amp; Advanced Window Control (Advanced)</li>
+</ol>
+</div>
+</section></section>
+<section>
+<section id="simple-aggregate-window-functions" class="title-slide slide level1 smaller center">
+<h1>Simple Aggregate Window Functions</h1>
+
+</section>
+<section id="concept" class="slide level2 smaller">
+<h2>Concept</h2>
+<p>Simple aggregate window functions apply <strong>classical aggregation logic</strong> (such as <code>SUM</code>, <code>AVG</code>, <code>COUNT</code>, <code>MIN</code>, <code>MAX</code>) <strong>without collapsing rows</strong>.</p>
+<p><strong>They answer the question:</strong></p>
+<blockquote>
+<p>How does this row relate to an aggregate of its group/partition?</p>
+</blockquote>
+</section>
+<section id="common-functions-in-this-layer" class="slide level2 smaller">
+<h2>Common Functions in This Layer</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a>AGGREGATE_FUNCTION(<span class="kw">column</span>)</span>
+<span id="cb4-2"><a></a><span class="kw">OVER</span> (</span>
+<span id="cb4-3"><a></a>    <span class="kw">PARTITION</span> <span class="kw">BY</span> grouping_column</span>
+<span id="cb4-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>SUM()</code><br>
+</li>
+<li><code>AVG()</code><br>
+</li>
+<li><code>COUNT()</code><br>
+</li>
+<li><code>MIN()</code><br>
+</li>
+<li><code>MAX()</code></li>
+</ul>
+<p>All of them become window functions when combined with <code>OVER(...)</code>.</p>
+</section>
+<section id="example-average-amount-per-customer" class="slide level2 smaller">
+<h2>Example: Average Amount per Customer</h2>
+<p><strong>Business intuition:</strong> <em>“How much does this sale differ from the customer’s typical behavior?”</em></p>
+<div class="fragment">
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb5-2"><a></a>    sale_id,</span>
+<span id="cb5-3"><a></a>    customer_id,</span>
+<span id="cb5-4"><a></a>    sale_date,</span>
+<span id="cb5-5"><a></a>    amount,</span>
+<span id="cb5-6"><a></a>    <span class="fu">AVG</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb5-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb5-8"><a></a>    ) <span class="kw">AS</span> avg_customer_amount</span>
+<span id="cb5-9"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">avg_customer_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">110.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">110.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">200.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">200.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">200.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">200.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">156.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">156.67</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section></section>
+<section>
+<section id="statistical-window-functions" class="title-slide slide level1 center">
+<h1>Statistical Window Functions</h1>
+
+</section>
+<section id="concept-1" class="slide level2 smaller">
+<h2>Concept</h2>
+<p>Statistical window functions extend simple aggregates by answering <strong>distributional questions</strong> instead of basic totals or averages.</p>
+<p><strong>They answer the question:</strong></p>
+<blockquote>
+<p>Where does this row stand within the distribution of its group?</p>
+</blockquote>
+</section>
+<section id="common-functions-in-this-layer-1" class="slide level2 smaller">
+<h2>Common Functions in This Layer</h2>
+<ul>
+<li><code>PERCENTILE_CONT()</code><br>
+</li>
+<li><code>PERCENTILE_DISC()</code><br>
+</li>
+<li><code>PERCENT_RANK()</code><br>
+</li>
+<li><code>CUME_DIST()</code></li>
+</ul>
+</section>
+<section id="generic-pattern" class="slide level2 smaller">
+<h2>Generic Pattern</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a>STAT_FUNCTION(<span class="op">..</span>.)</span>
+<span id="cb6-2"><a></a><span class="kw">OVER</span> (</span>
+<span id="cb6-3"><a></a>    <span class="kw">PARTITION</span> <span class="kw">BY</span> grouping_column</span>
+<span id="cb6-4"><a></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> ordering_column</span>
+<span id="cb6-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-1-percentile_cont-of-sale-amount" class="slide level2 smaller">
+<h2>Example 1: <code>PERCENTILE_CONT()</code> of Sale Amount</h2>
+<p><strong>Business intuition:</strong> “What is the typical (middle) transaction size for this customer?”</p>
+<div class="fragment">
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb7-2"><a></a>    customer_id,</span>
+<span id="cb7-3"><a></a>    <span class="fu">PERCENTILE_CONT</span>(<span class="fl">0.5</span>) WITHIN <span class="kw">GROUP</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> amount)  <span class="kw">AS</span> median_amount</span>
+<span id="cb7-4"><a></a><span class="kw">FROM</span> tmp_sales</span>
+<span id="cb7-5"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> customer_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>median_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>150</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>E</td>
+<td>155</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="example-2-percent-rank-of-each-transaction" class="slide level2 smaller">
+<h2>Example 2: Percent Rank of Each Transaction</h2>
+<p><code>PERCENT_RANK()</code> shows <strong>relative position</strong> between 0 and 1.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb8-2"><a></a>    sale_id,</span>
+<span id="cb8-3"><a></a>    customer_id,</span>
+<span id="cb8-4"><a></a>    amount,</span>
+<span id="cb8-5"><a></a>    <span class="fu">PERCENT_RANK</span>() <span class="kw">OVER</span> (</span>
+<span id="cb8-6"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb8-7"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> amount</span>
+<span id="cb8-8"><a></a>    ) <span class="kw">AS</span> <span class="fu">percent_rank</span></span>
+<span id="cb8-9"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">percent_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">0.667</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;"><strong>1.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">0.333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">0.333</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;"><strong>1.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;"><strong>1.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;"><strong>1.00</strong>0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;"><strong>1.000</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="example-3-cumulative-distribution" class="slide level2 smaller">
+<h2>Example 3: Cumulative Distribution</h2>
+<p><code>CUME_DIST()</code> shows the <strong>share of rows less than or equal to the current row</strong>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb9-2"><a></a>    sale_id,</span>
+<span id="cb9-3"><a></a>    customer_id,</span>
+<span id="cb9-4"><a></a>    amount,</span>
+<span id="cb9-5"><a></a>    <span class="fu">CUME_DIST</span>() <span class="kw">OVER</span> (</span>
+<span id="cb9-6"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb9-7"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> amount</span>
+<span id="cb9-8"><a></a>    ) <span class="kw">AS</span> cumulative_distribution</span>
+<span id="cb9-9"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">cumulative_distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.25</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">0.75</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">0.25</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">0.75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">0.75</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">0.666</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">0.666</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">0.333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">0.666</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="important" class="slide level2 smaller">
+<h2>Important</h2>
+<ul>
+<li>Statistical window functions are <strong>order-sensitive</strong></li>
+<li>They expose <strong>distribution shape</strong></li>
+<li>Results are <strong>relative</strong>, not absolute</li>
+<li>They are <strong>critical</strong> for:
+<ul>
+<li>Outlier detection<br>
+</li>
+<li>Segmentation<br>
+</li>
+<li>Threshold-based decisions</li>
+</ul></li>
+</ul>
+<!-- todo one more options -->
+</section></section>
+<section>
+<section id="value-from-another-row-functions" class="title-slide slide level1 smaller center">
+<h1>Value from Another Row Functions</h1>
+
+</section>
+<section id="concept-2" class="slide level2 smaller">
+<h2>Concept</h2>
+<blockquote>
+<p>How does this row relate to <strong>previous</strong> or <strong>next</strong> rows in sequence?</p>
+</blockquote>
+<div class="fragment">
+<p>Value-from-another-row functions enable <strong>row-to-row comparisons</strong> within a defined order, facilitating trend analysis and change detection.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>These functions are inherently <strong>time-aware</strong> and <strong>sequence-aware</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="generic-pattern-1" class="slide level2 smaller">
+<h2>Generic Pattern</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a></a>VALUE_FUNCTION(<span class="kw">column</span> [, offset])</span>
+<span id="cb10-2"><a></a><span class="kw">OVER</span> (</span>
+<span id="cb10-3"><a></a>    <span class="kw">PARTITION</span> <span class="kw">BY</span> grouping_column</span>
+<span id="cb10-4"><a></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> ordering_column</span>
+<span id="cb10-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>offset</code> (optional) defines how many rows forward/backward to look</li>
+<li>Default offset is <code>1</code></li>
+</ul>
+</section>
+<section id="example-1-previous-transaction-amount-lag" class="slide level2 smaller">
+<h2>Example 1: Previous Transaction Amount (<code>LAG</code>)</h2>
+<p><strong>Business intuition:</strong><br>
+“How did this transaction change compared to the previous one?”</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb11-2"><a></a>    sale_id,</span>
+<span id="cb11-3"><a></a>    customer_id,</span>
+<span id="cb11-4"><a></a>    sale_date,</span>
+<span id="cb11-5"><a></a>    amount,</span>
+<span id="cb11-6"><a></a>    <span class="fu">LAG</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb11-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb11-8"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb11-9"><a></a>    ) <span class="kw">AS</span> previous_amount</span>
+<span id="cb11-10"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">previous_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">180</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">220</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">90</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">160</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="example-2-next-transaction-amount-lead" class="slide level2 smaller">
+<h2>Example 2: Next Transaction Amount (<code>LEAD</code>)</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb12-2"><a></a>    sale_id,</span>
+<span id="cb12-3"><a></a>    customer_id,</span>
+<span id="cb12-4"><a></a>    sale_date,</span>
+<span id="cb12-5"><a></a>    amount,</span>
+<span id="cb12-6"><a></a>    <span class="fu">LEAD</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb12-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb12-8"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb12-9"><a></a>    ) <span class="kw">AS</span> next_amount</span>
+<span id="cb12-10"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">next_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">130</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">220</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">170</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">110</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">155</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<!-- ##  Example 3:  {.smaller} -->
+</div>
+</section>
+<section id="example-3-first-transaction-amount-per-customer" class="slide level2">
+<h2>Example 3: First Transaction Amount per Customer</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb13-2"><a></a>    sale_id,</span>
+<span id="cb13-3"><a></a>    customer_id,</span>
+<span id="cb13-4"><a></a>    sale_date,</span>
+<span id="cb13-5"><a></a>    amount,</span>
+<span id="cb13-6"><a></a>    <span class="fu">FIRST_VALUE</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb13-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb13-8"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb13-9"><a></a>    ) <span class="kw">AS</span> first_amount</span>
+<span id="cb13-10"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">first_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">180</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">180</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">180</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">180</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">90</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">140</td>
+</tr>
+</tbody>
+</table>
+<!-- todo last value -->
+</section></section>
+<section>
+<section id="ranking-functions" class="title-slide slide level1 center">
+<h1>Ranking Functions</h1>
+
+</section>
+<section id="concept-3" class="slide level2 smaller">
+<h2>Concept</h2>
+<p><strong>They answer the question:</strong></p>
+<blockquote>
+<p>How does this row rank relative to other rows in its group?</p>
+</blockquote>
+<div class="fragment">
+<p><strong>Unlike statistical functions:</strong></p>
+<ul>
+<li>They produce <strong>discrete ranks</strong>, not continuous measures</li>
+<li>They are sensitive to <strong>ties</strong></li>
+<li>They are commonly used for <strong>top-N analysis</strong> and <strong>leaderboards</strong></li>
+</ul>
+</div>
+<div class="fragment">
+<p>Ranking functions do <strong>not aggregate values</strong>, instead they organize rows.</p>
+</div>
+</section>
+<section id="generic-pattern-2" class="slide level2 smaller">
+<h2>Generic Pattern</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a></a>RANKING_FUNCTION()</span>
+<span id="cb14-2"><a></a><span class="kw">OVER</span> (</span>
+<span id="cb14-3"><a></a>    <span class="kw">PARTITION</span> <span class="kw">BY</span> grouping_column</span>
+<span id="cb14-4"><a></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> ordering_column [<span class="kw">ASC</span> | <span class="kw">DESC</span>]</span>
+<span id="cb14-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="function-semantics" class="slide level2 smaller">
+<h2>Function Semantics</h2>
+<div title="Ranking Function Comparison | Interview Question">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ranking Function Comparison | Interview Question</strong></p>
+</div>
+<div class="callout-content">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Handles Ties</th>
+<th>Gaps in Ranking</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ROW_NUMBER()</code></td>
+<td>No</td>
+<td>Yes</td>
+<td>Unique ordering</td>
+</tr>
+<tr class="even">
+<td><code>RANK()</code></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Competition ranking</td>
+</tr>
+<tr class="odd">
+<td><code>DENSE_RANK()</code></td>
+<td>Yes</td>
+<td>No</td>
+<td>Tier-based ranking</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-1-sequential-ordering-row_number" class="slide level2 smaller">
+<h2>Example 1: Sequential Ordering (<code>ROW_NUMBER</code>)</h2>
+<p><strong>Business intuition:</strong><br>
+“What is the chronological position of each transaction?”</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb15-2"><a></a>    sale_id,</span>
+<span id="cb15-3"><a></a>    customer_id,</span>
+<span id="cb15-4"><a></a>    sale_date,</span>
+<span id="cb15-5"><a></a>    <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span> (</span>
+<span id="cb15-6"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb15-7"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb15-8"><a></a>    ) <span class="kw">AS</span> <span class="fu">row_number</span></span>
+<span id="cb15-9"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-1-output" class="slide level2 scrollable smaller">
+<h2>Example 1: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th style="text-align: right;">row_number</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-2-dense-ranking-by-amount-dense_rank" class="slide level2 smaller">
+<h2>Example 2: Dense Ranking by Amount (<code>DENSE_RANK</code>)</h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb16-2"><a></a>    sale_id,</span>
+<span id="cb16-3"><a></a>    customer_id,</span>
+<span id="cb16-4"><a></a>    amount,</span>
+<span id="cb16-5"><a></a>    <span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (</span>
+<span id="cb16-6"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb16-7"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> amount <span class="kw">DESC</span></span>
+<span id="cb16-8"><a></a>    ) <span class="kw">AS</span> dense_rank_amount</span>
+<span id="cb16-9"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-2-output" class="slide level2 scrollable smaller">
+<h2>Example 2: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">dense_rank_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td style="text-align: right;"><strong>200</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td style="text-align: right;"><strong>200</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td style="text-align: right;"><strong>150</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td style="text-align: right;"><strong>150</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-3-ranking-by-amount-with-gaps-rank" class="slide level2 smaller">
+<h2>Example 3: Ranking by Amount with Gaps (<code>RANK</code>)</h2>
+<p><strong>Business intuition:</strong> <em>“What is the spending rank of each transaction?”</em></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb17-2"><a></a>    sale_id,</span>
+<span id="cb17-3"><a></a>    customer_id,</span>
+<span id="cb17-4"><a></a>    amount,</span>
+<span id="cb17-5"><a></a>    <span class="fu">RANK</span>() <span class="kw">OVER</span> (</span>
+<span id="cb17-6"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb17-7"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> amount <span class="kw">DESC</span></span>
+<span id="cb17-8"><a></a>    ) <span class="kw">AS</span> rank_amount</span>
+<span id="cb17-9"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-3-output" class="slide level2 scrollable smaller">
+<h2>Example 3: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">rank_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td style="text-align: right;"><strong>200</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td style="text-align: right;"><strong>200</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td style="text-align: right;"><strong>150</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td style="text-align: right;"><strong>150</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-4-comparison" class="slide level2 smaller">
+<h2>Example 4: Comparison</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb18-2"><a></a>    sale_id,</span>
+<span id="cb18-3"><a></a>    customer_id,</span>
+<span id="cb18-4"><a></a>    amount,</span>
+<span id="cb18-5"><a></a>    <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span> (</span>
+<span id="cb18-6"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb18-7"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> amount <span class="kw">DESC</span></span>
+<span id="cb18-8"><a></a>    ) <span class="kw">AS</span> row_number_amount,</span>
+<span id="cb18-9"><a></a>    <span class="fu">RANK</span>() <span class="kw">OVER</span> (</span>
+<span id="cb18-10"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb18-11"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> amount <span class="kw">DESC</span></span>
+<span id="cb18-12"><a></a>    ) <span class="kw">AS</span> rank_amount,</span>
+<span id="cb18-13"><a></a>    <span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (</span>
+<span id="cb18-14"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb18-15"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> amount <span class="kw">DESC</span></span>
+<span id="cb18-16"><a></a>    ) <span class="kw">AS</span> dense_rank_amount</span>
+<span id="cb18-17"><a></a><span class="kw">FROM</span> tmp_sales</span>
+<span id="cb18-18"><a></a><span class="kw">ORDER</span> <span class="kw">BY</span> customer_id, amount <span class="kw">DESC</span>, sale_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-4-output" class="slide level2 scrollable smaller">
+<h2>Example 4: Output</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 23%">
+<col style="width: 16%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">row_number_amount</th>
+<th style="text-align: right;">rank_amount</th>
+<th style="text-align: right;">dense_rank_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><strong>6</strong></td>
+<td><strong>B</strong></td>
+<td style="text-align: right;"><strong>200</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><strong>8</strong></td>
+<td><strong>B</strong></td>
+<td style="text-align: right;"><strong>200</strong></td>
+<td style="text-align: right;"><strong>3</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><strong>5</strong></td>
+<td><strong>B</strong></td>
+<td style="text-align: right;"><strong>180</strong></td>
+<td style="text-align: right;"><strong>4</strong></td>
+<td style="text-align: right;"><strong>4</strong></td>
+<td style="text-align: right;"><strong>3</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><strong>9</strong></td>
+<td><strong>C</strong></td>
+<td style="text-align: right;"><strong>150</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><strong>10</strong></td>
+<td><strong>C</strong></td>
+<td style="text-align: right;"><strong>150</strong></td>
+<td style="text-align: right;"><strong>3</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+<td style="text-align: right;"><strong>2</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="string-aggregation" class="title-slide slide level1 center">
+<h1>String Aggregation</h1>
+
+</section>
+<section id="concept-4" class="slide level2 smaller">
+<h2>Concept</h2>
+<p><strong>They answer the question:</strong></p>
+<blockquote>
+<p>What sequence or collection of categorical values is associated with this row’s group?</p>
+</blockquote>
+<p>Unlike classic <code>GROUP BY STRING_AGG</code>:</p>
+<ul>
+<li>Rows are <strong>not reduced</strong></li>
+<li>The aggregated string is <strong>attached to each row</strong></li>
+<li>Ordering controls <strong>how the string is built</strong></li>
+</ul>
+<p>This makes string aggregation window functions especially useful for <strong>behavioral tracing</strong>, <strong>auditability</strong>, and <strong>sequence analysis</strong>.</p>
+</section>
+<section id="generic-pattern-3" class="slide level2">
+<h2>Generic Pattern</h2>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a></a>STRING_AGG(<span class="kw">column</span>, delimiter)</span>
+<span id="cb19-2"><a></a><span class="kw">OVER</span> (</span>
+<span id="cb19-3"><a></a>    <span class="kw">PARTITION</span> <span class="kw">BY</span> grouping_column</span>
+<span id="cb19-4"><a></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> ordering_column</span>
+<span id="cb19-5"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>delimiter</code> defines how values are separated</li>
+<li><code>ORDER BY</code> defines the <strong>sequence of concatenation</strong></li>
+<li>The result grows as the window progresses</li>
+</ul>
+</section>
+<section id="example-1-channels-used-by-each-customer-cumulative" class="slide level2">
+<h2>Example 1: Channels Used by Each Customer (Cumulative)</h2>
+<p><strong>Business intuition:</strong> <em>“What interaction channels has this customer used up to this point?”</em></p>
+<div class="fragment">
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb20-2"><a></a>    sale_id,</span>
+<span id="cb20-3"><a></a>    customer_id,</span>
+<span id="cb20-4"><a></a>    sale_date,</span>
+<span id="cb20-5"><a></a>    channel,</span>
+<span id="cb20-6"><a></a>    STRING_AGG(channel, <span class="st">', '</span>) <span class="kw">OVER</span> (</span>
+<span id="cb20-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb20-8"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb20-9"><a></a>    ) <span class="kw">AS</span> channels_used_so_far</span>
+<span id="cb20-10"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-1-output-1" class="slide level2 scrollable smaller">
+<h2>Example 1: Output</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 15%">
+<col style="width: 11%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th>channel</th>
+<th>channels_used_so_far</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td>online</td>
+<td>online</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td>store</td>
+<td>online, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td>online</td>
+<td>online, store, online</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td>store</td>
+<td>online, store, online, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td>store</td>
+<td>store</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td>online</td>
+<td>store, online</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td>online</td>
+<td>store, online, online</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td>store</td>
+<td>store, online, online, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td>online</td>
+<td>online</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td>online</td>
+<td>online, online</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td>online</td>
+<td>online, online, online</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td>store</td>
+<td>store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td>store</td>
+<td>store, store</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td>store</td>
+<td>store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td>online</td>
+<td>store, online</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td>store</td>
+<td>store, online, store</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-2-full-channel-history-per-customer" class="slide level2 smaller">
+<h2>Example 2: Full Channel History per Customer</h2>
+<p>To attach the <strong>complete history</strong> to every row, use an explicit frame.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb21-2"><a></a>    sale_id,</span>
+<span id="cb21-3"><a></a>    customer_id,</span>
+<span id="cb21-4"><a></a>    channel,</span>
+<span id="cb21-5"><a></a>    STRING_AGG(channel, <span class="st">', '</span>) <span class="kw">OVER</span> (</span>
+<span id="cb21-6"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb21-7"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb21-8"><a></a>        <span class="kw">ROWS</span> <span class="kw">BETWEEN</span> <span class="kw">UNBOUNDED</span> <span class="kw">PRECEDING</span> <span class="kw">AND</span> <span class="kw">UNBOUNDED</span> <span class="kw">FOLLOWING</span></span>
+<span id="cb21-9"><a></a>    ) <span class="kw">AS</span> full_channel_history</span>
+<span id="cb21-10"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code>:</p>
+<ul>
+<li><code>UNBOUNDED PRECEDING</code> → start from the first row in the partition</li>
+<li><code>UNBOUNDED FOLLOWING</code> → go until the last row in the partition</li>
+</ul>
+</section>
+<section id="example-2-output-1" class="slide level2 scrollable smaller">
+<h2>Example 2: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>channel</th>
+<th>full_channel_history</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>online</td>
+<td>online, store, online, store</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>store</td>
+<td>online, store, online, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>online</td>
+<td>online, store, online, store</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>store</td>
+<td>online, store, online, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>store</td>
+<td>store, online, online, store</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>online</td>
+<td>store, online, online, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>online</td>
+<td>store, online, online, store</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>store</td>
+<td>store, online, online, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>online</td>
+<td>online, online, online</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>online</td>
+<td>online, online, online</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>online</td>
+<td>online, online, online</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>store</td>
+<td>store, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>store</td>
+<td>store, store</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>store</td>
+<td>store, online, store</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>online</td>
+<td>store, online, store</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>store</td>
+<td>store, online, store</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-3-channel-combination-pattern-1" class="slide level2 smaller">
+<h2>Example 3: Channel Combination Pattern 1</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb22-2"><a></a>    customer_id,</span>
+<span id="cb22-3"><a></a>    STRING_AGG(channel, <span class="st">', '</span> <span class="kw">ORDER</span> <span class="kw">BY</span> channel) <span class="kw">AS</span> channel_pattern</span>
+<span id="cb22-4"><a></a>    </span>
+<span id="cb22-5"><a></a><span class="kw">FROM</span> tmp_sales</span>
+<span id="cb22-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>channel_pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>online, online, store, store</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>online, online, store, store</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>online, online, online</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>store, store</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>online, store, store</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>try without ORDER BY in STRING_AGG to see different results</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-4-channel-combination-pattern-2" class="slide level2 smaller">
+<h2>Example 4: Channel Combination Pattern 2</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb23-2"><a></a>    customer_id,</span>
+<span id="cb23-3"><a></a>    STRING_AGG(channel, <span class="st">', '</span> <span class="kw">ORDER</span> <span class="kw">BY</span> channel) <span class="kw">AS</span> channel_pattern,</span>
+<span id="cb23-4"><a></a>    STRING_AGG(<span class="kw">DISTINCT</span> channel, <span class="st">', '</span> <span class="kw">ORDER</span> <span class="kw">BY</span> channel) <span class="kw">AS</span> channel_pattern_distinct</span>
+<span id="cb23-5"><a></a><span class="kw">FROM</span> tmp_sales</span>
+<span id="cb23-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 43%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>customer_id</th>
+<th>channel_pattern</th>
+<th>channel_pattern_distinct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>online, online, store, store</td>
+<td>online, store</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>online, online, store, store</td>
+<td>online, store</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>online, online, online</td>
+<td>online</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>store, store</td>
+<td>store</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>online, store, store</td>
+<td>online, store</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-5-channel-combination-pattern-grouped" class="slide level2 smaller">
+<h2>Example 5: Channel Combination Pattern Grouped</h2>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a></a><span class="kw">WITH</span> customer_channels <span class="kw">AS</span> (</span>
+<span id="cb24-2"><a></a>    <span class="kw">SELECT</span></span>
+<span id="cb24-3"><a></a>        customer_id,</span>
+<span id="cb24-4"><a></a>        STRING_AGG(<span class="kw">DISTINCT</span> channel, <span class="st">', '</span> <span class="kw">ORDER</span> <span class="kw">BY</span> channel) <span class="kw">AS</span> channel_pattern</span>
+<span id="cb24-5"><a></a>    <span class="kw">FROM</span> tmp_sales</span>
+<span id="cb24-6"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb24-7"><a></a>)</span>
+<span id="cb24-8"><a></a><span class="kw">SELECT</span></span>
+<span id="cb24-9"><a></a>    channel_pattern,</span>
+<span id="cb24-10"><a></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> customer_count</span>
+<span id="cb24-11"><a></a><span class="kw">FROM</span> customer_channels</span>
+<span id="cb24-12"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> channel_pattern;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[\downarrow\]</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>channel_pattern</th>
+<th>customer_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>online</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>store</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>online, store</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="window-framing-advanced-window-control" class="title-slide slide level1 smaller center">
+<h1>Window Framing Advanced Window Control</h1>
+
+</section>
+<section id="concept-5" class="slide level2 smaller">
+<h2>Concept</h2>
+<p><strong>They answer the question:</strong></p>
+<blockquote>
+<p>Exactly <em>which subset of rows</em> should be used when computing the window value for this row?</p>
+</blockquote>
+<div class="fragment">
+<ul>
+<li><code>PARTITION BY</code> defines <strong>who belongs together</strong></li>
+<li><code>ORDER BY</code> defines <strong>sequence</strong></li>
+</ul>
+</div>
+<div class="fragment">
+<p>The <strong>frame</strong> defines <strong>how far backward and forward the window can see</strong>.</p>
+<p>Without an explicit frame, SQL engines apply <strong>default framing rules</strong>, which can lead to <strong>unexpected results</strong>, especially for cumulative and navigational functions.</p>
+</div>
+</section>
+<section id="frame-dimensions" class="slide level2 smaller">
+<h2>Frame Dimensions</h2>
+<p>A frame is defined using:</p>
+<ul>
+<li><strong>Frame type</strong></li>
+<li><strong>Frame boundaries</strong></li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a></a><span class="kw">ROWS</span> | <span class="kw">RANGE</span> <span class="kw">BETWEEN</span> <span class="op">&lt;</span><span class="kw">start</span><span class="op">&gt;</span> <span class="kw">AND</span> <span class="op">&lt;</span><span class="cf">end</span><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p><strong><code>ROWS</code></strong></p>
+<ul>
+<li>Frame is defined by <strong>physical row positions</strong></li>
+<li>Deterministic and predictable</li>
+<li>Preferred for analytics</li>
+</ul>
+<p><strong><code>RANGE</code></strong></p>
+<ul>
+<li>Frame is defined by <strong>logical value ranges</strong></li>
+<li>Can include multiple rows with the same ordering value</li>
+<li>More subtle and engine-dependent</li>
+</ul>
+</div>
+</section>
+<section id="common-frame-boundaries" class="slide level2 smaller">
+<h2>Common Frame Boundaries</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Boundary</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>UNBOUNDED PRECEDING</code></td>
+<td>From the first row in the partition</td>
+</tr>
+<tr class="even">
+<td><code>CURRENT ROW</code></td>
+<td>The current row</td>
+</tr>
+<tr class="odd">
+<td><code>UNBOUNDED FOLLOWING</code></td>
+<td>Until the last row in the partition</td>
+</tr>
+<tr class="even">
+<td><code>n PRECEDING</code></td>
+<td>n rows before</td>
+</tr>
+<tr class="odd">
+<td><code>n FOLLOWING</code></td>
+<td>n rows after</td>
+</tr>
+</tbody>
+</table>
+
+<img data-src="../../../img/sql/10/frame_boundaries.png" class="r-stretch"></section>
+<section id="example-1-running-total-explicit-frame" class="slide level2 smaller">
+<h2>Example 1: Running Total (Explicit Frame)</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb26-2"><a></a>    sale_id,</span>
+<span id="cb26-3"><a></a>    customer_id,</span>
+<span id="cb26-4"><a></a>    sale_date,</span>
+<span id="cb26-5"><a></a>    amount,</span>
+<span id="cb26-6"><a></a>    <span class="fu">SUM</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb26-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb26-8"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb26-9"><a></a>        <span class="kw">ROWS</span> <span class="kw">BETWEEN</span> <span class="kw">UNBOUNDED</span> <span class="kw">PRECEDING</span> <span class="kw">AND</span> <span class="kw">CURRENT</span> <span class="kw">ROW</span></span>
+<span id="cb26-10"><a></a>    ) <span class="kw">AS</span> running_total</span>
+<span id="cb26-11"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-1-output-2" class="slide level2 smaller scrollable">
+<h2>Example 1: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">running_total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;"><strong>100</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;"><strong>220</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;"><strong>310</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;"><strong>440</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;"><strong>180</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;"><strong>380</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;"><strong>600</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;"><strong>800</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;"><strong>150</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;"><strong>300</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;"><strong>470</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;"><strong>90</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;"><strong>200</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;"><strong>140</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;"><strong>300</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;"><strong>455</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-2-full-partition-aggregate-stable-value" class="slide level2">
+<h2>Example 2: Full-Partition Aggregate (Stable Value)</h2>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb27-2"><a></a>    sale_id,</span>
+<span id="cb27-3"><a></a>    customer_id,</span>
+<span id="cb27-4"><a></a>    amount,</span>
+<span id="cb27-5"><a></a>    <span class="fu">AVG</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb27-6"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb27-7"><a></a>        <span class="kw">ROWS</span> <span class="kw">BETWEEN</span> <span class="kw">UNBOUNDED</span> <span class="kw">PRECEDING</span> <span class="kw">AND</span> <span class="kw">UNBOUNDED</span> <span class="kw">FOLLOWING</span></span>
+<span id="cb27-8"><a></a>    ) <span class="kw">AS</span> full_partition_avg</span>
+<span id="cb27-9"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-2-output-2" class="slide level2 scrollable smaller">
+<h2>Example 2: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">full_partition_avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">110.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">110.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">110.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">110.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">200.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">200.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">200.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">200.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">156.667</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">156.667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">156.667</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">100.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">100.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">151.667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">151.667</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">151.667</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-3-moving-window-last-2-transactions" class="slide level2 smaller">
+<h2>Example 3: Moving Window (Last 2 Transactions)</h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb28-2"><a></a>    sale_id,</span>
+<span id="cb28-3"><a></a>    customer_id,</span>
+<span id="cb28-4"><a></a>    sale_date,</span>
+<span id="cb28-5"><a></a>    amount,</span>
+<span id="cb28-6"><a></a>    <span class="fu">AVG</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb28-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb28-8"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb28-9"><a></a>        <span class="kw">ROWS</span> <span class="kw">BETWEEN</span> <span class="dv">1</span> <span class="kw">PRECEDING</span> <span class="kw">AND</span> <span class="kw">CURRENT</span> <span class="kw">ROW</span></span>
+<span id="cb28-10"><a></a>    ) <span class="kw">AS</span> moving_avg_2</span>
+<span id="cb28-11"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Here we can us any aggregate function: <code>SUM()</code>, <code>MAX()</code></p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-3-output-1" class="slide level2 scrollable smaller">
+<h2>Example 3: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">moving_avg_2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;"><strong>100.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;"><strong>110.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;"><strong>105.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;"><strong>110.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;"><strong>180.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;"><strong>190.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;"><strong>210.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;"><strong>210.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;"><strong>150.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;"><strong>150.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;"><strong>160.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;"><strong>90.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;"><strong>100.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;"><strong>140.000</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;"><strong>150.000</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;"><strong>157.500</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-4-forward-looking-average" class="slide level2 smaller">
+<h2>Example 4: Forward-Looking Average</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb29-2"><a></a>    sale_id,</span>
+<span id="cb29-3"><a></a>    customer_id,</span>
+<span id="cb29-4"><a></a>    sale_date,</span>
+<span id="cb29-5"><a></a>    amount,</span>
+<span id="cb29-6"><a></a>    <span class="fu">AVG</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb29-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb29-8"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb29-9"><a></a>        <span class="kw">ROWS</span> <span class="kw">BETWEEN</span> <span class="kw">CURRENT</span> <span class="kw">ROW</span> <span class="kw">AND</span> <span class="dv">1</span> <span class="kw">FOLLOWING</span></span>
+<span id="cb29-10"><a></a>    ) <span class="kw">AS</span> forward_avg_2</span>
+<span id="cb29-11"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-4-output-1" class="slide level2 scrollable smaller">
+<h2>Example 4: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">forward_avg_2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">110.0000000000000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">105.0000000000000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">110.0000000000000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">130.0000000000000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">190.0000000000000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">210.0000000000000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">210.0000000000000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">200.0000000000000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150.0000000000000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">160.0000000000000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">170.0000000000000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">100.0000000000000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">110.0000000000000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">150.0000000000000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">157.5000000000000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">155.0000000000000000</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-5-centered-moving-average-previous-current-next" class="slide level2 smaller scrollable">
+<h2>Example 5: Centered Moving Average (Previous + Current + Next)</h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb30-1"><a></a><span class="kw">SELECT</span></span>
+<span id="cb30-2"><a></a>    sale_id,</span>
+<span id="cb30-3"><a></a>    customer_id,</span>
+<span id="cb30-4"><a></a>    sale_date,</span>
+<span id="cb30-5"><a></a>    amount,</span>
+<span id="cb30-6"><a></a>    <span class="fu">AVG</span>(amount) <span class="kw">OVER</span> (</span>
+<span id="cb30-7"><a></a>        <span class="kw">PARTITION</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb30-8"><a></a>        <span class="kw">ORDER</span> <span class="kw">BY</span> sale_date</span>
+<span id="cb30-9"><a></a>        <span class="kw">ROWS</span> <span class="kw">BETWEEN</span> <span class="dv">1</span> <span class="kw">PRECEDING</span> <span class="kw">AND</span> <span class="dv">1</span> <span class="kw">FOLLOWING</span></span>
+<span id="cb30-10"><a></a>    ) <span class="kw">AS</span> centered_avg_3</span>
+<span id="cb30-11"><a></a><span class="kw">FROM</span> tmp_sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-5-output" class="slide level2 smaller scrollable">
+<h2>Example 5: Output</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">sale_id</th>
+<th>customer_id</th>
+<th>sale_date</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: right;">centered_avg_3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;"><strong>110.00</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>A</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;"><strong>103.33</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>A</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;"><strong>113.33</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>A</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;"><strong>110.00</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>B</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;"><strong>190.00</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>B</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;"><strong>200.00</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>B</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;"><strong>206.67</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>B</td>
+<td>2024-01-04</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;"><strong>210.00</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>C</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;"><strong>150.00</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>C</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;"><strong>156.67</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>C</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;"><strong>160.00</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>D</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;"><strong>100.00</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>D</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;"><strong>100.00</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td>E</td>
+<td>2024-01-01</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;"><strong>150.00</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td>E</td>
+<td>2024-01-02</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;"><strong>151.67</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td>E</td>
+<td>2024-01-03</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;"><strong>157.50</strong></td>
+</tr>
+</tbody>
+</table>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../../../img/favicon.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="../../../materials/sql/session10.html" target="_blank">Back to Session 10</a></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1500,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

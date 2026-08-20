@@ -1,0 +1,4464 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Session 14: Clustering – Data Analytics Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../img/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-29574c2ad9c7fe2279cf41f25198438f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-4d1c39a9b3d53dfc5345e203ea289592.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../img/favicon.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Data Analytics Bootcamp</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../materials/syllabus.html" aria-current="page"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/statistics/index.html"> 
+<span class="menu-text">Statistical Thinking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/sql/index.html"> 
+<span class="menu-text">SQL</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/python/index.html"> 
+<span class="menu-text">Python</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/tableau/index.html"> 
+<span class="menu-text">Tableau</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/lab/index.html"> 
+<span class="menu-text">Lab</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/capstone/index.html"> 
+<span class="menu-text">Capstone</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/hovhannisyan91"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../materials/python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../materials/python/session14.html">Session 14: Clustering</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical Thinking</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Data Layers and Bias in Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Types of Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 02: Data Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 03: Probabilistic Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 04: Probabilistic Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 05: Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 06: Inferential Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Descriptive Stats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hypothesis Testing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/sql/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/sql/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analytics with SQL</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Intro to Relational Databases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Intro to PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: DA with SQL | Data Types &amp; Constraints</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: DA with SQL | Filtering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: DA with SQL | Numeric Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: DA with SQL | String Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: DA with SQL | Date Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08: DA with SQL | JOINs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09: DA with SQL | Advanced SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10: DA with SQL | Advanced SQL Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11: DA with SQL | UDFs, Stored Procedures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 12: DA with SQL | Advanced Aggregations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 13: DA with SQL | Final Project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Relational Databases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic Queries: DDL DLM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Filtering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numeric Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">String Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Date Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normalization and JOINs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temporary Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced SQL Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reporting and Analysis with SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Aggregations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Programming for Data Analysts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Python basic Syntax, Data Structures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: Introduction to Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: Advanced Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: Intro to Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: Working with Dates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08: Data Visualization | Plotly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09: Customer Segmentation | RFM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10: A/B Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11: Cohort Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 12: Simple Linear Regression and Forecasting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 13: Logistic Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session14.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Session 14: Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 15: Geoanalytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 16: SQLAlchemy with Dockerized PostGIS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/slides/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grammar of Graphics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/tableau/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tableau</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/tableau/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tableau</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Introduction to Tableau</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Intermediate Visual Analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: Advanced Analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: Dashboard Design &amp; Performance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: Sales Analysis Dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: Customer Analysis Dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: Tableau with SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#customer-segmentation" id="toc-customer-segmentation" class="nav-link" data-scroll-target="#customer-segmentation">Customer Segmentation</a>
+  <ul class="collapse">
+  <li><a href="#why-segment-customers" id="toc-why-segment-customers" class="nav-link" data-scroll-target="#why-segment-customers">Why Segment Customers?</a></li>
+  </ul></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a>
+  <ul class="collapse">
+  <li><a href="#similarity-and-distance" id="toc-similarity-and-distance" class="nav-link" data-scroll-target="#similarity-and-distance">Similarity and Distance</a></li>
+  <li><a href="#performance-of-clustering-algorithms" id="toc-performance-of-clustering-algorithms" class="nav-link" data-scroll-target="#performance-of-clustering-algorithms">Performance of Clustering Algorithms</a></li>
+  </ul></li>
+  <li><a href="#clustering-set-up" id="toc-clustering-set-up" class="nav-link" data-scroll-target="#clustering-set-up">Clustering Set-Up</a></li>
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering">K-Means Clustering</a>
+  <ul class="collapse">
+  <li><a href="#k-means-steps" id="toc-k-means-steps" class="nav-link" data-scroll-target="#k-means-steps">K-Means Steps</a></li>
+  <li><a href="#with-fake-data" id="toc-with-fake-data" class="nav-link" data-scroll-target="#with-fake-data">With Fake Data</a></li>
+  <li><a href="#fake-data" id="toc-fake-data" class="nav-link" data-scroll-target="#fake-data">Fake Data</a></li>
+  <li><a href="#k-means-fit" id="toc-k-means-fit" class="nav-link" data-scroll-target="#k-means-fit">K-Means Fit</a></li>
+  <li><a href="#optimal-number-of-clusters" id="toc-optimal-number-of-clusters" class="nav-link" data-scroll-target="#optimal-number-of-clusters">Optimal Number of Clusters</a></li>
+  <li><a href="#elbow-method" id="toc-elbow-method" class="nav-link" data-scroll-target="#elbow-method">Elbow Method</a></li>
+  <li><a href="#silhouette-analysis" id="toc-silhouette-analysis" class="nav-link" data-scroll-target="#silhouette-analysis">Silhouette Analysis</a></li>
+  </ul></li>
+  <li><a href="#other-clusering-methods" id="toc-other-clusering-methods" class="nav-link" data-scroll-target="#other-clusering-methods">Other Clusering Methods</a>
+  <ul class="collapse">
+  <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering">Hierarchical Clustering</a></li>
+  </ul></li>
+  <li><a href="#dbscan" id="toc-dbscan" class="nav-link" data-scroll-target="#dbscan">DBSCAN</a>
+  <ul class="collapse">
+  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works">How it works?</a></li>
+  </ul></li>
+  <li><a href="#case-study" id="toc-case-study" class="nav-link" data-scroll-target="#case-study">Case Study</a>
+  <ul class="collapse">
+  <li><a href="#clusering-travel-agency-booking-data" id="toc-clusering-travel-agency-booking-data" class="nav-link" data-scroll-target="#clusering-travel-agency-booking-data">Clusering Travel Agency Booking Data</a></li>
+  <li><a href="#downloading-the-data" id="toc-downloading-the-data" class="nav-link" data-scroll-target="#downloading-the-data">Downloading The Data</a></li>
+  <li><a href="#feature-descritpion" id="toc-feature-descritpion" class="nav-link" data-scroll-target="#feature-descritpion">Feature Descritpion</a></li>
+  <li><a href="#dataframe-size" id="toc-dataframe-size" class="nav-link" data-scroll-target="#dataframe-size">Dataframe Size</a></li>
+  <li><a href="#information-about-df" id="toc-information-about-df" class="nav-link" data-scroll-target="#information-about-df">Information About df</a></li>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values">Missing Values</a></li>
+  <li><a href="#correlation-matrix" id="toc-correlation-matrix" class="nav-link" data-scroll-target="#correlation-matrix">Correlation Matrix</a></li>
+  <li><a href="#distributions" id="toc-distributions" class="nav-link" data-scroll-target="#distributions">Distributions</a></li>
+  <li><a href="#is_booking" id="toc-is_booking" class="nav-link" data-scroll-target="#is_booking"><code>is_booking</code></a></li>
+  <li><a href="#merge-with-the-original-data" id="toc-merge-with-the-original-data" class="nav-link" data-scroll-target="#merge-with-the-original-data">Merge with the Original Data</a></li>
+  <li><a href="#logical-check" id="toc-logical-check" class="nav-link" data-scroll-target="#logical-check">Logical Check</a></li>
+  <li><a href="#feature-enrichment" id="toc-feature-enrichment" class="nav-link" data-scroll-target="#feature-enrichment">Feature Enrichment</a></li>
+  <li><a href="#statistical-analysis-of-booking-channels" id="toc-statistical-analysis-of-booking-channels" class="nav-link" data-scroll-target="#statistical-analysis-of-booking-channels">Statistical Analysis of Booking Channels</a></li>
+  <li><a href="#clustering-1" id="toc-clustering-1" class="nav-link" data-scroll-target="#clustering-1">Clustering</a></li>
+  <li><a href="#standardize-our-data" id="toc-standardize-our-data" class="nav-link" data-scroll-target="#standardize-our-data">Standardize our Data</a></li>
+  <li><a href="#k-means-clustering-1" id="toc-k-means-clustering-1" class="nav-link" data-scroll-target="#k-means-clustering-1">K-means Clustering</a></li>
+  <li><a href="#principal-component-analysis-pca" id="toc-principal-component-analysis-pca" class="nav-link" data-scroll-target="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a></li>
+  <li><a href="#with-2-clusters" id="toc-with-2-clusters" class="nav-link" data-scroll-target="#with-2-clusters">with <code>2</code> clusters</a></li>
+  <li><a href="#with-4-clusters" id="toc-with-4-clusters" class="nav-link" data-scroll-target="#with-4-clusters">with <code>4</code> clusters</a></li>
+  </ul></li>
+  <li><a href="#extra-reading" id="toc-extra-reading" class="nav-link" data-scroll-target="#extra-reading">Extra Reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../materials/python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../materials/python/session14.html">Session 14: Clustering</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Session 14: Clustering</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Clustering</div>
+    <div class="quarto-category">k-means</div>
+    <div class="quarto-category">Segmentation</div>
+    <div class="quarto-category">PCA</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h2>
+<ul>
+<li>Segmentation</li>
+<li>Clustering
+<ul>
+<li>K-means</li>
+<li>Hierarchical</li>
+<li>DBSCAN</li>
+</ul></li>
+<li>Distance Metrics
+<ul>
+<li>Euclidean</li>
+<li>Manhattan</li>
+<li>Pearson Correlation</li>
+</ul></li>
+<li>Evaluation Metrics
+<ul>
+<li>Elbow Method</li>
+<li>Silhouette analysis</li>
+</ul></li>
+<li>Case Study</li>
+</ul>
+</section>
+<section id="customer-segmentation" class="level2">
+<h2 class="anchored" data-anchor-id="customer-segmentation">Customer Segmentation</h2>
+<p>Customer segmentation can be defined as the practice of dividing a customer base into groups of individuals that are similar in specific ways relevant to <strong><code>Marketing</code></strong></p>
+<p><img src="../../img/python/14/Bases.png" class="img-fluid"></p>
+<section id="why-segment-customers" class="level3">
+<h3 class="anchored" data-anchor-id="why-segment-customers">Why Segment Customers?</h3>
+<blockquote class="blockquote">
+<p>In one word: for <em>differentiation!</em></p>
+</blockquote>
+<ul>
+<li><strong>Marketing and Service:</strong>
+<ul>
+<li>Make more focused/targeted marketing</li>
+<li>Identify the most profitable and at-risk customers</li>
+<li>Build relationships</li>
+<li>Create user personas</li>
+</ul></li>
+<li><strong>Pruduct and Brand:</strong>
+<ul>
+<li>Brand to appeal to particular segments</li>
+<li>Customize products and services</li>
+<li>Predict future purchasing patterns</li>
+</ul></li>
+<li><strong>Pricing:</strong>
+<ul>
+<li>Pricing products by groups</li>
+<li>Determine Willingness to pay for optimal value</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are number of ways for the customer segmentation, here we are going to do one using Clustering algorithms.</p>
+</div>
+</div>
+<div id="96bd5d35" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<p>Customer segmentation can be achieved by using ML <code>unsupervised learning algorithms</code></p>
+<p><strong>Unsupervised learning:</strong> No target variable, the goal is to discover <code>patterns</code> in data.</p>
+<p>We are not going to discuss detailed technical aspects of the algorithms in the scope of the course, however the intuition and some evaluation metrics will be covered.</p>
+<p>Apart from Customer Segmentation, the clustering algorithms are also used in:</p>
+<ul>
+<li>Dimensionality Reduction</li>
+<li>Feature Generation</li>
+<li>Recommendation</li>
+<li>Splitting Supervised ML algorithms</li>
+</ul>
+<blockquote class="blockquote">
+<p>Clustering Algorithms are based on <code>geometrical distances</code></p>
+</blockquote>
+<p><img src="../../img/python/14/clustering.png" class="img-fluid"></p>
+<section id="similarity-and-distance" class="level3">
+<h3 class="anchored" data-anchor-id="similarity-and-distance">Similarity and Distance</h3>
+<p>High level idea of clustering is to identify <strong>closest points.</strong> “The closeness” can be measured by number of distance metrics.</p>
+<p>Those Distances could be in different types. The mose popular ones are:</p>
+<ol type="1">
+<li>Euclidean Distance</li>
+<li>Manhattan Distance</li>
+<li>Pearson Correlation Distance</li>
+</ol>
+<section id="euclidean-distance" class="level4">
+<h4 class="anchored" data-anchor-id="euclidean-distance">Euclidean distance</h4>
+<p><img src="../../img/python/14/ed.png" class="img-fluid"></p>
+<p><span class="math display">\[d_{euc}(x,y)=\sqrt{\sum_{i-1}^n(x_i-y_i)^2}\]</span></p>
+</section>
+<section id="manhattan-distance" class="level4">
+<h4 class="anchored" data-anchor-id="manhattan-distance">Manhattan distance</h4>
+<p><span class="math display">\[d_{man}(x,y)=\sum_{i-1}^n|x_i-y_i|\]</span></p>
+<p><img src="../../img/python/14/md.png" class="img-fluid"></p>
+</section>
+<section id="pearson-correlation-distance" class="level4">
+<h4 class="anchored" data-anchor-id="pearson-correlation-distance">Pearson correlation distance:</h4>
+<p><span class="math display">\[d_{p.corr}(x,y)=1-\frac{\sum_{i-1}^n(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_{i-1}^n(x_i-\bar x)^2 \sum_{i-1}^n(y_i-\bar y)^2 }}\]</span></p>
+<p><img src="../../img/python/14/pd.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="performance-of-clustering-algorithms" class="level3">
+<h3 class="anchored" data-anchor-id="performance-of-clustering-algorithms">Performance of Clustering Algorithms</h3>
+<p><strong>There are 2 main groups of evaluation metrics:</strong></p>
+<ol type="1">
+<li><strong>External Measures:</strong> comparing with the <strong>ground truth</strong> labels
+<ul>
+<li><code>Accuracy:</code> <span class="math inline">\(acc(y,\hat y)=\frac{1}{n}\sum_{i=1}^{n-1}(\hat y_i=y_i)\)</span></li>
+<li><code>Homogeneity:</code> A homogeneous clustering is one where each cluster has samples belonging the same class labels <span class="math inline">\(h=\frac{H(C/k)}{H(C)}\)</span></li>
+<li><code>Completeness:</code> A complete clustering is one where all samples belonging to the same class as grouped into the same cluster <span class="math inline">\(c=\frac{H(K/C)}{H(K)}\)</span></li>
+<li><code>V-Measure:</code> the harmonic mean between homogeneity and completeness: <span class="math inline">\(2\frac{hc}{h+c}\)</span></li>
+</ul></li>
+<li><strong>Internal Measures:</strong> <code>quality</code> of separation based on geometrical properties:
+<ul>
+<li>Elbow Method</li>
+<li>Silhouette Coefficient</li>
+</ul></li>
+</ol>
+<hr>
+<p><strong>Cohesion:</strong> measures the distance of a point from the rest of the points within the cluster</p>
+<p><strong>Separation:</strong> measures the distance of point from cluster to the all points from other clusters</p>
+</section>
+</section>
+<section id="clustering-set-up" class="level2">
+<h2 class="anchored" data-anchor-id="clustering-set-up">Clustering Set-Up</h2>
+<p>Problem set-up:</p>
+<ul>
+<li><strong>Result:</strong> assignment to clusters</li>
+<li><strong>Predictors:</strong> numerical and categorical</li>
+</ul>
+<p><img src="../../img/python/14/clustering.png" class="img-fluid"></p>
+<p>As mentioned there are lots of clustering algorithms, in the scope of the program we are going to work with <code>K-Means</code> Clustering.</p>
+<p><img src="../../img/python/14/Kmeans_dbscan.png" class="img-fluid"></p>
+</section>
+<section id="k-means-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="k-means-clustering">K-Means Clustering</h2>
+<p>The most famous clustering algorithm.</p>
+<p><strong>Problem set-up:</strong></p>
+<ul>
+<li><strong>Result: </strong>assignment to clusters (each observation to a single cluster)</li>
+<li><strong>Predictors:</strong> numerical</li>
+<li>Pre-specified number of clusters!</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled" title="Goal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Goal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Minimizing total within-cluster Euclidean distances:</p>
+<p><span class="math display">\[W(C_k)=\sum_{x_i \in C_k}(x_i-\mu_k)^2\]</span> <span class="math display">\[minimize(\sum_{k=1}^k W(C_k))\]</span></p>
+</div>
+</div>
+<section id="k-means-steps" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-steps">K-Means Steps</h3>
+<div class="smaller">
+<div class="columns">
+<div class="column" style="width:60%;">
+<ol type="1">
+<li>Choose the number <span class="math inline">\(K\)</span> of clusters.</li>
+<li>Select at random <span class="math inline">\(K\)</span> points, the centroids, not necessarily from your data.</li>
+<li>Assign each data point to the closest centroid.</li>
+<li>Compute and place the new centroid of each cluster.</li>
+<li>Reassign each data point to the new closest centroid. If any assignment took place, go to <em>step 4</em>; otherwise, <em>finish</em>.</li>
+</ol>
+</div><div class="column" style="width:40%;">
+<p><img src="../../img/python/14/kmeans_steps.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>Checkout also the graphical explanation of the <code>KMeans</code> clustering below</p>
+<p><img src="../../img/python/14/kmeans_steps.webp" class="img-fluid"></p>
+</section>
+<section id="with-fake-data" class="level3">
+<h3 class="anchored" data-anchor-id="with-fake-data">With Fake Data</h3>
+</section>
+<section id="fake-data" class="level3">
+<h3 class="anchored" data-anchor-id="fake-data">Fake Data</h3>
+<p>Let’s use <code>make_blobs</code> to create a 200 samples, of two classes with 3 centers</p>
+<div id="932d29c8" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>X, Y <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">200</span>, n_features<span class="op">=</span><span class="dv">2</span>, centers<span class="op">=</span><span class="dv">3</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        cluster_std<span class="op">=</span><span class="dv">1</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8741e754" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">70</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session14_files/figure-html/cell-4-output-1.png" width="558" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="k-means-fit" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-fit">K-Means Fit</h3>
+<div id="583bfe90" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>km <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, max_iter<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>y_km <span class="op">=</span> km.fit_predict(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<div id="b2f8ff5a" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the 3 clusters</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[y_km <span class="op">==</span> <span class="dv">0</span>, <span class="dv">0</span>], X[y_km <span class="op">==</span> <span class="dv">0</span>, <span class="dv">1</span>], c<span class="op">=</span><span class="st">'lightgreen'</span>, label<span class="op">=</span><span class="st">'cluster 1'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[y_km <span class="op">==</span> <span class="dv">1</span>, <span class="dv">0</span>], X[y_km <span class="op">==</span> <span class="dv">1</span>, <span class="dv">1</span>], c<span class="op">=</span><span class="st">'orange'</span>,  label<span class="op">=</span><span class="st">'cluster 2'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[y_km <span class="op">==</span> <span class="dv">2</span>, <span class="dv">0</span>], X[y_km <span class="op">==</span> <span class="dv">2</span>, <span class="dv">1</span>], c<span class="op">=</span><span class="st">'lightblue'</span>,  label<span class="op">=</span><span class="st">'cluster 3'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the centroids</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(km.cluster_centers_[:, <span class="dv">0</span>], km.cluster_centers_[:, <span class="dv">1</span>],</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span><span class="dv">250</span>, marker<span class="op">=</span><span class="st">'*'</span>,c<span class="op">=</span><span class="st">'red'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>,label<span class="op">=</span><span class="st">'centroids'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.legend(scatterpoints<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.grid()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session14_files/figure-html/cell-6-output-1.png" width="558" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="optimal-number-of-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="optimal-number-of-clusters">Optimal Number of Clusters</h3>
+<p>How to find out the optimal number of clusters, when there is <strong>no ground truth?</strong></p>
+<p>The only option is to use geometric properties of cluster:</p>
+<ul>
+<li><strong>Elbow method:</strong> Running the algorithm multiple times over a loop, with an increasing number of cluster choice and then plotting a <code>*clustering score*</code> as a function of the number of clusters. The point with Elbow like shape will show the optimal number of cluster.</li>
+<li><strong>Silhouette Analysis:</strong> the normalized average distance between points.</li>
+</ul>
+<blockquote class="blockquote">
+<p>In the scope of segmentation, we are going to observe only those metrics.</p>
+</blockquote>
+</section>
+<section id="elbow-method" class="level3">
+<h3 class="anchored" data-anchor-id="elbow-method">Elbow Method</h3>
+<div id="942a47bc" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Sum_of_squared_distances <span class="op">=</span> []</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">15</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> K:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    km <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k, init<span class="op">=</span><span class="st">'random'</span>, n_init<span class="op">=</span><span class="dv">10</span>, max_iter<span class="op">=</span><span class="dv">500</span>,  tol<span class="op">=</span><span class="fl">1e-04</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    km <span class="op">=</span> km.fit(X)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    Sum_of_squared_distances.append(km.inertia_)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Results</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.plot(K, Sum_of_squared_distances, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'k'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Sum_of_squared_distances'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Elbow Method For Optimal k'</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session14_files/figure-html/cell-7-output-1.png" width="602" height="451" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="silhouette-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="silhouette-analysis">Silhouette Analysis</h3>
+<p>Clusters could be evaluated based on similarity or dissimilarity measure such as the distance between cluster point.</p>
+<p>Silhouette Coefficient:</p>
+<p><span class="math display">\[s=\frac{b-a}{max(a,b)}; [-1,1]\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(a:\)</span> the average distance from a point to other points within a cluster (intra-cluster)</li>
+<li><span class="math inline">\(b:\)</span> the average distance from a point to the other closest cluster (extra-cluster)</li>
+</ul>
+<p>when:</p>
+<ul>
+<li><span class="math inline">\(s=-1:\)</span> misclassified</li>
+<li><span class="math inline">\(s=0:\)</span> there is no difference between clusters</li>
+<li><span class="math inline">\(s=1:\)</span> ideal split</li>
+</ul>
+<p>Selecting the one which has the highest average silhouette score:</p>
+<div id="3d8620cb" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n_clusters <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>,<span class="dv">10</span>):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    clusterer <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>n_clusters, random_state<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    cluster_labels <span class="op">=</span> clusterer.fit_predict(X)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    silhouette_avg <span class="op">=</span> silhouette_score(X, cluster_labels)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"For n_clusters ="</span>, n_clusters,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">"The average silhouette_score is: </span><span class="sc">{:4f}</span><span class="st">"</span>.<span class="bu">format</span>(silhouette_avg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>For n_clusters = 2 The average silhouette_score is: 0.748643
+For n_clusters = 3 The average silhouette_score is: 0.785358
+For n_clusters = 4 The average silhouette_score is: 0.641820
+For n_clusters = 5 The average silhouette_score is: 0.461010
+For n_clusters = 6 The average silhouette_score is: 0.477107
+For n_clusters = 7 The average silhouette_score is: 0.325233
+For n_clusters = 8 The average silhouette_score is: 0.478205
+For n_clusters = 9 The average silhouette_score is: 0.361148</code></pre>
+</div>
+</div>
+<p><img src="../../img/python/14/silhouette_analysis.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For more information you can visit <a href="https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html">here.</a></p>
+</div>
+</div>
+</section>
+</section>
+<section id="other-clusering-methods" class="level2">
+<h2 class="anchored" data-anchor-id="other-clusering-methods">Other Clusering Methods</h2>
+<section id="hierarchical-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchical-clustering">Hierarchical Clustering</h3>
+<ul>
+<li><strong>Agglomerative (bottom-up):</strong> each observation starts as . Based on the distance of those clusters (in this case observations) it will merge into one cluster.</li>
+<li><strong>Divisive (Top-Bottom):</strong> starts at the top with The cluster will be partitioned at a point where it splits the big cluster into two big ones. This will get to a point where the observations cannot be split any more since each observation becomes its own cluster.</li>
+</ul>
+<section id="steps" class="level4">
+<h4 class="anchored" data-anchor-id="steps">Steps</h4>
+<ol type="1">
+<li>Make each data point a single point cluster (forms <span class="math inline">\(N\)</span> cluster)</li>
+<li>Take the 2 closes data point and make them 1 cluster (forms <span class="math inline">\(N-1\)</span>)</li>
+<li>Take the 2 closest clusters and make them 1 cluster (<span class="math inline">\(N-2\)</span> clusters)</li>
+<li>Repeat step 3 until there is only 1 cluster</li>
+<li>Finish</li>
+</ol>
+<p><img src="../../img/python/14/dendogram.png" class="img-fluid"></p>
+<ul>
+<li><a href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrogram.html#sphx-glr-auto-examples-cluster-plot-agglomerative-dendrogram-py">Dendrogram</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html#sklearn.cluster.AgglomerativeClustering">Agglomerative Clustering</a></li>
+</ul>
+</section>
+<section id="intuition" class="level4">
+<h4 class="anchored" data-anchor-id="intuition">Intuition</h4>
+<p><img src="../../img/python/14/hierarchical_steps.gif" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="dbscan" class="level2">
+<h2 class="anchored" data-anchor-id="dbscan">DBSCAN</h2>
+<p><code>DBSCAN:</code> Density Based Spatial Clustering of Applications with Noise.</p>
+<p><img src="../../img/python/14/dbscan.png" class="img-fluid"></p>
+<section id="how-it-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-it-works">How it works?</h3>
+<p><img src="../../img/python/14/dbscan.gif" class="img-fluid"></p>
+<p><strong>Components:</strong></p>
+<ul>
+<li><span class="math inline">\(\pmb{\epsilon:}\)</span> indicates the radius of circular points</li>
+<li> considering minimum points within the <span class="math inline">\({\epsilon}\)</span></li>
+<li> In case of availability at least Min points, that point will be considered as Core Point</li>
+<li> In case of availability at least one core point within the radios of epsilon</li>
+<li> none of the above conditions are met</li>
+</ul>
+<p><strong>The algorithm works in a following way:</strong></p>
+<ol type="1">
+<li>Select a random starting point: p</li>
+<li>Finding Epsilon neighborhood of point p
+<ul>
+<li>if it turns out core point, then cluster is formed</li>
+<li>if it is a border point, search other points, until all points in data are processed</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="case-study" class="level2">
+<h2 class="anchored" data-anchor-id="case-study">Case Study</h2>
+<section id="clusering-travel-agency-booking-data" class="level3">
+<h3 class="anchored" data-anchor-id="clusering-travel-agency-booking-data">Clusering Travel Agency Booking Data</h3>
+<blockquote class="blockquote">
+<p>Our Goal is to find Customer Segments in order to help Marketing Team to target them more effectively!</p>
+</blockquote>
+</section>
+<section id="downloading-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="downloading-the-data">Downloading The Data</h3>
+<div id="2477a265" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/hovhannisyan91/data_analytics_with_python/refs/heads/main/data/clustering/travel.csv'</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>parse_dates <span class="op">=</span> [<span class="st">'date_time'</span>,<span class="st">'srch_ci'</span>,<span class="st">'srch_co'</span>])</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date_time</th>
+<th data-quarto-table-cell-role="th">site_name</th>
+<th data-quarto-table-cell-role="th">posa_continent</th>
+<th data-quarto-table-cell-role="th">user_location_country</th>
+<th data-quarto-table-cell-role="th">user_location_region</th>
+<th data-quarto-table-cell-role="th">user_location_city</th>
+<th data-quarto-table-cell-role="th">orig_destination_distance</th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">is_mobile</th>
+<th data-quarto-table-cell-role="th">is_package</th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">srch_ci</th>
+<th data-quarto-table-cell-role="th">srch_co</th>
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">srch_rm_cnt</th>
+<th data-quarto-table-cell-role="th">srch_destination_id</th>
+<th data-quarto-table-cell-role="th">srch_destination_type_id</th>
+<th data-quarto-table-cell-role="th">is_booking</th>
+<th data-quarto-table-cell-role="th">cnt</th>
+<th data-quarto-table-cell-role="th">hotel_continent</th>
+<th data-quarto-table-cell-role="th">hotel_country</th>
+<th data-quarto-table-cell-role="th">hotel_market</th>
+<th data-quarto-table-cell-role="th">hotel_cluster</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2014-11-03 16:02:00</td>
+<td>24</td>
+<td>2</td>
+<td>77</td>
+<td>871</td>
+<td>36643</td>
+<td>456.1151</td>
+<td>792280</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>2014-12-15</td>
+<td>2014-12-19</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>8286</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>63</td>
+<td>1258</td>
+<td>68</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2013-03-13 19:25:00</td>
+<td>11</td>
+<td>3</td>
+<td>205</td>
+<td>135</td>
+<td>38749</td>
+<td>232.4737</td>
+<td>961995</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>2013-03-13</td>
+<td>2013-03-14</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>1842</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>198</td>
+<td>786</td>
+<td>37</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2014-10-13 13:20:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>314</td>
+<td>48562</td>
+<td>4468.2720</td>
+<td>495669</td>
+<td>0</td>
+<td>1</td>
+<td>9</td>
+<td>2015-04-03</td>
+<td>2015-04-10</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>8746</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>6</td>
+<td>105</td>
+<td>29</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2013-11-05 10:40:00</td>
+<td>11</td>
+<td>3</td>
+<td>205</td>
+<td>411</td>
+<td>52752</td>
+<td>171.6021</td>
+<td>106611</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2013-11-07</td>
+<td>2013-11-08</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>6210</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>198</td>
+<td>1234</td>
+<td>42</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2014-06-10 13:34:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>174</td>
+<td>50644</td>
+<td>NaN</td>
+<td>596177</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>2014-08-03</td>
+<td>2014-08-08</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>12812</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>50</td>
+<td>368</td>
+<td>83</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Save">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Save
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do not forget to save the dataframe as <code>csv</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'../data/travel.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="feature-descritpion" class="level3">
+<h3 class="anchored" data-anchor-id="feature-descritpion">Feature Descritpion</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column Name</th>
+<th>Description</th>
+<th>Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>date_time</td>
+<td>Timestamp</td>
+<td>string</td>
+</tr>
+<tr class="even">
+<td>site_name</td>
+<td>ID of the Expedia point of sale</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>posa_continent</td>
+<td>ID of continent associated with <code>site_name</code></td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>user_location_country</td>
+<td>ID of the country the customer is located in</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>user_location_region</td>
+<td>ID of the region the customer is located in</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>user_location_city</td>
+<td>ID of the city the customer is located in</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>orig_destination_distance</td>
+<td>Physical distance between a hotel and a customer at the time of search</td>
+<td>double</td>
+</tr>
+<tr class="even">
+<td>user_id</td>
+<td>ID of user</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>is_mobile</td>
+<td>1 when a user connected from a mobile device, 0 otherwise</td>
+<td>tinyint</td>
+</tr>
+<tr class="even">
+<td>is_package</td>
+<td>1 if the click/booking was generated as part of a package, 0 otherwise</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>channel</td>
+<td>ID of a marketing channel</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>srch_ci</td>
+<td>Check-in date</td>
+<td>string</td>
+</tr>
+<tr class="odd">
+<td>srch_co</td>
+<td>Check-out date</td>
+<td>string</td>
+</tr>
+<tr class="even">
+<td>srch_adults_cnt</td>
+<td>Number of adults specified in the hotel room</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>srch_children_cnt</td>
+<td>Number of children specified in the hotel room</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>srch_rm_cnt</td>
+<td>Number of hotel rooms specified in the search</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>srch_destination_id</td>
+<td>ID of the destination where the hotel search was performed</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>srch_destination_type_id</td>
+<td>Type of destination</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>hotel_continent</td>
+<td>Hotel continent</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>hotel_country</td>
+<td>Hotel country</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>hotel_market</td>
+<td>Hotel market</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>cnt</td>
+<td>Number of similar events in the context of the same user session</td>
+<td>tinyint</td>
+</tr>
+<tr class="odd">
+<td>hotel_cluster</td>
+<td>ID of a hotel cluster</td>
+<td>bigint</td>
+</tr>
+<tr class="even">
+<td>is_booking</td>
+<td>1 if a booking, 0 if a click. This is what we are predicting</td>
+<td>int</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dataframe-size" class="level3">
+<h3 class="anchored" data-anchor-id="dataframe-size">Dataframe Size</h3>
+<div id="0bc2fe3e" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get some base information on our dataset</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"Rows:   "</span> , df.shape[<span class="dv">0</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"Columns: "</span> , df.shape[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows:    100000
+Columns:  24</code></pre>
+</div>
+</div>
+</section>
+<section id="information-about-df" class="level3">
+<h3 class="anchored" data-anchor-id="information-about-df">Information About df</h3>
+<div id="e10efa9e" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 100000 entries, 0 to 99999
+Data columns (total 24 columns):
+ #   Column                     Non-Null Count   Dtype         
+---  ------                     --------------   -----         
+ 0   date_time                  100000 non-null  datetime64[us]
+ 1   site_name                  100000 non-null  int64         
+ 2   posa_continent             100000 non-null  int64         
+ 3   user_location_country      100000 non-null  int64         
+ 4   user_location_region       100000 non-null  int64         
+ 5   user_location_city         100000 non-null  int64         
+ 6   orig_destination_distance  63915 non-null   float64       
+ 7   user_id                    100000 non-null  int64         
+ 8   is_mobile                  100000 non-null  int64         
+ 9   is_package                 100000 non-null  int64         
+ 10  channel                    100000 non-null  int64         
+ 11  srch_ci                    99878 non-null   datetime64[us]
+ 12  srch_co                    99878 non-null   datetime64[us]
+ 13  srch_adults_cnt            100000 non-null  int64         
+ 14  srch_children_cnt          100000 non-null  int64         
+ 15  srch_rm_cnt                100000 non-null  int64         
+ 16  srch_destination_id        100000 non-null  int64         
+ 17  srch_destination_type_id   100000 non-null  int64         
+ 18  is_booking                 100000 non-null  int64         
+ 19  cnt                        100000 non-null  int64         
+ 20  hotel_continent            100000 non-null  int64         
+ 21  hotel_country              100000 non-null  int64         
+ 22  hotel_market               100000 non-null  int64         
+ 23  hotel_cluster              100000 non-null  int64         
+dtypes: datetime64[us](3), float64(1), int64(20)
+memory usage: 18.3 MB</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="missing-values">Missing Values</h3>
+<p>As we can see <code>orig_destination_distance</code> column has large amount of missing values. Taking into account, that we cannot infer anything from other features, we will simply remove the feature from further analysis.</p>
+<div id="ade7b535" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get statistics for our Numerical Columns</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.isnull().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>date_time                        0
+site_name                        0
+posa_continent                   0
+user_location_country            0
+user_location_region             0
+user_location_city               0
+orig_destination_distance    36085
+user_id                          0
+is_mobile                        0
+is_package                       0
+channel                          0
+srch_ci                        122
+srch_co                        122
+srch_adults_cnt                  0
+srch_children_cnt                0
+srch_rm_cnt                      0
+srch_destination_id              0
+srch_destination_type_id         0
+is_booking                       0
+cnt                              0
+hotel_continent                  0
+hotel_country                    0
+hotel_market                     0
+hotel_cluster                    0
+dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="correlation-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-matrix">Correlation Matrix</h3>
+<p>Let’s see whic features are correlated. First we should build <code>corr</code> object and then visualize using heatmap from <code>seaborn</code>.</p>
+<p><strong>What could you infer?</strong></p>
+<div id="f16396b1" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create our Corelation Matrix</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df.corr()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>corr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date_time</th>
+<th data-quarto-table-cell-role="th">site_name</th>
+<th data-quarto-table-cell-role="th">posa_continent</th>
+<th data-quarto-table-cell-role="th">user_location_country</th>
+<th data-quarto-table-cell-role="th">user_location_region</th>
+<th data-quarto-table-cell-role="th">user_location_city</th>
+<th data-quarto-table-cell-role="th">orig_destination_distance</th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">is_mobile</th>
+<th data-quarto-table-cell-role="th">is_package</th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">srch_ci</th>
+<th data-quarto-table-cell-role="th">srch_co</th>
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">srch_rm_cnt</th>
+<th data-quarto-table-cell-role="th">srch_destination_id</th>
+<th data-quarto-table-cell-role="th">srch_destination_type_id</th>
+<th data-quarto-table-cell-role="th">is_booking</th>
+<th data-quarto-table-cell-role="th">cnt</th>
+<th data-quarto-table-cell-role="th">hotel_continent</th>
+<th data-quarto-table-cell-role="th">hotel_country</th>
+<th data-quarto-table-cell-role="th">hotel_market</th>
+<th data-quarto-table-cell-role="th">hotel_cluster</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">date_time</td>
+<td>1.000000</td>
+<td>-0.024018</td>
+<td>-0.010503</td>
+<td>-0.021281</td>
+<td>-0.012536</td>
+<td>-0.004335</td>
+<td>-0.002967</td>
+<td>-0.017718</td>
+<td>0.023642</td>
+<td>-0.001773</td>
+<td>-0.059976</td>
+<td>0.952221</td>
+<td>0.951117</td>
+<td>0.013011</td>
+<td>-0.075139</td>
+<td>-0.004368</td>
+<td>0.011650</td>
+<td>-0.040562</td>
+<td>-0.032699</td>
+<td>-0.089140</td>
+<td>-0.008460</td>
+<td>-0.005722</td>
+<td>0.003028</td>
+<td>-0.000059</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">site_name</td>
+<td>-0.024018</td>
+<td>1.000000</td>
+<td>-0.637743</td>
+<td>0.159283</td>
+<td>0.130818</td>
+<td>-0.013471</td>
+<td>0.027609</td>
+<td>0.030404</td>
+<td>-0.005418</td>
+<td>0.048820</td>
+<td>-0.027780</td>
+<td>-0.001569</td>
+<td>-0.001054</td>
+<td>-0.013405</td>
+<td>-0.031962</td>
+<td>0.016585</td>
+<td>0.034895</td>
+<td>-0.006934</td>
+<td>-0.013460</td>
+<td>0.022274</td>
+<td>0.201760</td>
+<td>0.263167</td>
+<td>-0.068316</td>
+<td>-0.026689</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">posa_continent</td>
+<td>-0.010503</td>
+<td>-0.637743</td>
+<td>1.000000</td>
+<td>0.179726</td>
+<td>-0.034647</td>
+<td>0.039227</td>
+<td>0.049808</td>
+<td>-0.015209</td>
+<td>0.016331</td>
+<td>-0.093459</td>
+<td>0.089680</td>
+<td>-0.026851</td>
+<td>-0.027669</td>
+<td>0.012350</td>
+<td>0.034453</td>
+<td>-0.033712</td>
+<td>-0.015535</td>
+<td>0.037172</td>
+<td>0.013319</td>
+<td>-0.018952</td>
+<td>-0.333578</td>
+<td>-0.156578</td>
+<td>0.049214</td>
+<td>0.018297</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">user_location_country</td>
+<td>-0.021281</td>
+<td>0.159283</td>
+<td>0.179726</td>
+<td>1.000000</td>
+<td>0.058496</td>
+<td>0.122686</td>
+<td>0.047689</td>
+<td>-0.021091</td>
+<td>0.003728</td>
+<td>-0.025284</td>
+<td>0.109999</td>
+<td>-0.020851</td>
+<td>-0.020539</td>
+<td>0.042526</td>
+<td>0.037101</td>
+<td>0.000858</td>
+<td>0.013486</td>
+<td>0.028888</td>
+<td>0.001284</td>
+<td>0.003539</td>
+<td>-0.063744</td>
+<td>0.097624</td>
+<td>0.015569</td>
+<td>-0.011876</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">user_location_region</td>
+<td>-0.012536</td>
+<td>0.130818</td>
+<td>-0.034647</td>
+<td>0.058496</td>
+<td>1.000000</td>
+<td>0.132457</td>
+<td>0.136560</td>
+<td>0.002225</td>
+<td>0.016982</td>
+<td>0.040482</td>
+<td>-0.001600</td>
+<td>0.009723</td>
+<td>0.010378</td>
+<td>0.005487</td>
+<td>0.014009</td>
+<td>0.000254</td>
+<td>0.022567</td>
+<td>0.001376</td>
+<td>0.000253</td>
+<td>-0.007570</td>
+<td>0.043027</td>
+<td>-0.050301</td>
+<td>0.040367</td>
+<td>0.004984</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">user_location_city</td>
+<td>-0.004335</td>
+<td>-0.013471</td>
+<td>0.039227</td>
+<td>0.122686</td>
+<td>0.132457</td>
+<td>1.000000</td>
+<td>0.014178</td>
+<td>-0.007989</td>
+<td>-0.003741</td>
+<td>0.013032</td>
+<td>0.023497</td>
+<td>-0.004184</td>
+<td>-0.003894</td>
+<td>0.006628</td>
+<td>0.002638</td>
+<td>-0.000694</td>
+<td>0.000786</td>
+<td>-0.004399</td>
+<td>-0.002655</td>
+<td>-0.002175</td>
+<td>0.007759</td>
+<td>-0.001987</td>
+<td>0.008558</td>
+<td>0.000102</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">orig_destination_distance</td>
+<td>-0.002967</td>
+<td>0.027609</td>
+<td>0.049808</td>
+<td>0.047689</td>
+<td>0.136560</td>
+<td>0.014178</td>
+<td>1.000000</td>
+<td>0.017015</td>
+<td>-0.059464</td>
+<td>0.041991</td>
+<td>-0.000398</td>
+<td>0.080935</td>
+<td>0.083821</td>
+<td>-0.024039</td>
+<td>-0.059722</td>
+<td>-0.012484</td>
+<td>-0.036314</td>
+<td>-0.042859</td>
+<td>-0.033480</td>
+<td>0.009483</td>
+<td>0.416180</td>
+<td>0.254321</td>
+<td>-0.090112</td>
+<td>0.003624</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">user_id</td>
+<td>-0.017718</td>
+<td>0.030404</td>
+<td>-0.015209</td>
+<td>-0.021091</td>
+<td>0.002225</td>
+<td>-0.007989</td>
+<td>0.017015</td>
+<td>1.000000</td>
+<td>-0.011439</td>
+<td>-0.018901</td>
+<td>-0.003593</td>
+<td>-0.014944</td>
+<td>-0.014900</td>
+<td>-0.007370</td>
+<td>0.002983</td>
+<td>-0.001625</td>
+<td>0.002716</td>
+<td>0.007133</td>
+<td>0.001561</td>
+<td>0.001355</td>
+<td>0.002447</td>
+<td>0.008707</td>
+<td>-0.002463</td>
+<td>0.003202</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">is_mobile</td>
+<td>0.023642</td>
+<td>-0.005418</td>
+<td>0.016331</td>
+<td>0.003728</td>
+<td>0.016982</td>
+<td>-0.003741</td>
+<td>-0.059464</td>
+<td>-0.011439</td>
+<td>1.000000</td>
+<td>0.046903</td>
+<td>-0.030770</td>
+<td>0.024625</td>
+<td>0.024727</td>
+<td>0.016661</td>
+<td>0.018211</td>
+<td>-0.022565</td>
+<td>-0.007140</td>
+<td>-0.016039</td>
+<td>-0.028623</td>
+<td>0.008084</td>
+<td>-0.024144</td>
+<td>-0.029574</td>
+<td>0.007644</td>
+<td>0.012145</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">is_package</td>
+<td>-0.001773</td>
+<td>0.048820</td>
+<td>-0.093459</td>
+<td>-0.025284</td>
+<td>0.040482</td>
+<td>0.013032</td>
+<td>0.041991</td>
+<td>-0.018901</td>
+<td>0.046903</td>
+<td>1.000000</td>
+<td>-0.011269</td>
+<td>0.057690</td>
+<td>0.061811</td>
+<td>-0.024097</td>
+<td>-0.037673</td>
+<td>-0.036653</td>
+<td>-0.146647</td>
+<td>-0.224422</td>
+<td>-0.081307</td>
+<td>0.126500</td>
+<td>0.108993</td>
+<td>-0.044426</td>
+<td>-0.014636</td>
+<td>0.031399</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">channel</td>
+<td>-0.059976</td>
+<td>-0.027780</td>
+<td>0.089680</td>
+<td>0.109999</td>
+<td>-0.001600</td>
+<td>0.023497</td>
+<td>-0.000398</td>
+<td>-0.003593</td>
+<td>-0.030770</td>
+<td>-0.011269</td>
+<td>1.000000</td>
+<td>-0.071740</td>
+<td>-0.071888</td>
+<td>-0.014931</td>
+<td>0.004202</td>
+<td>0.010191</td>
+<td>-0.000392</td>
+<td>0.021612</td>
+<td>0.025697</td>
+<td>-0.010248</td>
+<td>-0.022241</td>
+<td>-0.001217</td>
+<td>0.006164</td>
+<td>0.002596</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">srch_ci</td>
+<td>0.952221</td>
+<td>-0.001569</td>
+<td>-0.026851</td>
+<td>-0.020851</td>
+<td>0.009723</td>
+<td>-0.004184</td>
+<td>0.080935</td>
+<td>-0.014944</td>
+<td>0.024625</td>
+<td>0.057690</td>
+<td>-0.071740</td>
+<td>1.000000</td>
+<td>0.999897</td>
+<td>0.042944</td>
+<td>-0.054173</td>
+<td>0.002106</td>
+<td>-0.002510</td>
+<td>-0.055652</td>
+<td>-0.057114</td>
+<td>-0.077000</td>
+<td>0.029544</td>
+<td>0.002502</td>
+<td>-0.003590</td>
+<td>0.008987</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">srch_co</td>
+<td>0.951117</td>
+<td>-0.001054</td>
+<td>-0.027669</td>
+<td>-0.020539</td>
+<td>0.010378</td>
+<td>-0.003894</td>
+<td>0.083821</td>
+<td>-0.014900</td>
+<td>0.024727</td>
+<td>0.061811</td>
+<td>-0.071888</td>
+<td>0.999897</td>
+<td>1.000000</td>
+<td>0.043023</td>
+<td>-0.053617</td>
+<td>0.001894</td>
+<td>-0.003656</td>
+<td>-0.056945</td>
+<td>-0.058378</td>
+<td>-0.076339</td>
+<td>0.030990</td>
+<td>0.002533</td>
+<td>-0.003720</td>
+<td>0.009516</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">srch_adults_cnt</td>
+<td>0.013011</td>
+<td>-0.013405</td>
+<td>0.012350</td>
+<td>0.042526</td>
+<td>0.005487</td>
+<td>0.006628</td>
+<td>-0.024039</td>
+<td>-0.007370</td>
+<td>0.016661</td>
+<td>-0.024097</td>
+<td>-0.014931</td>
+<td>0.042944</td>
+<td>0.043023</td>
+<td>1.000000</td>
+<td>0.107061</td>
+<td>0.525970</td>
+<td>0.005651</td>
+<td>-0.012119</td>
+<td>-0.046350</td>
+<td>0.014024</td>
+<td>-0.019355</td>
+<td>-0.018169</td>
+<td>0.010203</td>
+<td>0.006482</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">srch_children_cnt</td>
+<td>-0.075139</td>
+<td>-0.031962</td>
+<td>0.034453</td>
+<td>0.037101</td>
+<td>0.014009</td>
+<td>0.002638</td>
+<td>-0.059722</td>
+<td>0.002983</td>
+<td>0.018211</td>
+<td>-0.037673</td>
+<td>0.004202</td>
+<td>-0.054173</td>
+<td>-0.053617</td>
+<td>0.107061</td>
+<td>1.000000</td>
+<td>0.091711</td>
+<td>-0.008784</td>
+<td>-0.007217</td>
+<td>-0.023228</td>
+<td>0.019242</td>
+<td>-0.061707</td>
+<td>-0.045921</td>
+<td>0.005056</td>
+<td>0.021477</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">srch_rm_cnt</td>
+<td>-0.004368</td>
+<td>0.016585</td>
+<td>-0.033712</td>
+<td>0.000858</td>
+<td>0.000254</td>
+<td>-0.000694</td>
+<td>-0.012484</td>
+<td>-0.001625</td>
+<td>-0.022565</td>
+<td>-0.036653</td>
+<td>0.010191</td>
+<td>0.002106</td>
+<td>0.001894</td>
+<td>0.525970</td>
+<td>0.091711</td>
+<td>1.000000</td>
+<td>0.018139</td>
+<td>0.013618</td>
+<td>0.009454</td>
+<td>-0.000487</td>
+<td>0.019150</td>
+<td>0.011055</td>
+<td>0.000104</td>
+<td>-0.012177</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">srch_destination_id</td>
+<td>0.011650</td>
+<td>0.034895</td>
+<td>-0.015535</td>
+<td>0.013486</td>
+<td>0.022567</td>
+<td>0.000786</td>
+<td>-0.036314</td>
+<td>0.002716</td>
+<td>-0.007140</td>
+<td>-0.146647</td>
+<td>-0.000392</td>
+<td>-0.002510</td>
+<td>-0.003656</td>
+<td>0.005651</td>
+<td>-0.008784</td>
+<td>0.018139</td>
+<td>1.000000</td>
+<td>0.435605</td>
+<td>0.027674</td>
+<td>-0.021947</td>
+<td>0.030365</td>
+<td>0.053862</td>
+<td>0.081240</td>
+<td>-0.010406</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">srch_destination_type_id</td>
+<td>-0.040562</td>
+<td>-0.006934</td>
+<td>0.037172</td>
+<td>0.028888</td>
+<td>0.001376</td>
+<td>-0.004399</td>
+<td>-0.042859</td>
+<td>0.007133</td>
+<td>-0.016039</td>
+<td>-0.224422</td>
+<td>0.021612</td>
+<td>-0.055652</td>
+<td>-0.056945</td>
+<td>-0.012119</td>
+<td>-0.007217</td>
+<td>0.013618</td>
+<td>0.435605</td>
+<td>1.000000</td>
+<td>0.037398</td>
+<td>-0.024544</td>
+<td>-0.035655</td>
+<td>-0.021522</td>
+<td>0.035783</td>
+<td>-0.033039</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">is_booking</td>
+<td>-0.032699</td>
+<td>-0.013460</td>
+<td>0.013319</td>
+<td>0.001284</td>
+<td>0.000253</td>
+<td>-0.002655</td>
+<td>-0.033480</td>
+<td>0.001561</td>
+<td>-0.028623</td>
+<td>-0.081307</td>
+<td>0.025697</td>
+<td>-0.057114</td>
+<td>-0.058378</td>
+<td>-0.046350</td>
+<td>-0.023228</td>
+<td>0.009454</td>
+<td>0.027674</td>
+<td>0.037398</td>
+<td>1.000000</td>
+<td>-0.108628</td>
+<td>-0.025629</td>
+<td>-0.004763</td>
+<td>0.012633</td>
+<td>-0.018192</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">cnt</td>
+<td>-0.089140</td>
+<td>0.022274</td>
+<td>-0.018952</td>
+<td>0.003539</td>
+<td>-0.007570</td>
+<td>-0.002175</td>
+<td>0.009483</td>
+<td>0.001355</td>
+<td>0.008084</td>
+<td>0.126500</td>
+<td>-0.010248</td>
+<td>-0.077000</td>
+<td>-0.076339</td>
+<td>0.014024</td>
+<td>0.019242</td>
+<td>-0.000487</td>
+<td>-0.021947</td>
+<td>-0.024544</td>
+<td>-0.108628</td>
+<td>1.000000</td>
+<td>0.020670</td>
+<td>0.001443</td>
+<td>-0.008747</td>
+<td>-0.000607</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">hotel_continent</td>
+<td>-0.008460</td>
+<td>0.201760</td>
+<td>-0.333578</td>
+<td>-0.063744</td>
+<td>0.043027</td>
+<td>0.007759</td>
+<td>0.416180</td>
+<td>0.002447</td>
+<td>-0.024144</td>
+<td>0.108993</td>
+<td>-0.022241</td>
+<td>0.029544</td>
+<td>0.030990</td>
+<td>-0.019355</td>
+<td>-0.061707</td>
+<td>0.019150</td>
+<td>0.030365</td>
+<td>-0.035655</td>
+<td>-0.025629</td>
+<td>0.020670</td>
+<td>1.000000</td>
+<td>0.295991</td>
+<td>-0.096278</td>
+<td>-0.015632</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">hotel_country</td>
+<td>-0.005722</td>
+<td>0.263167</td>
+<td>-0.156578</td>
+<td>0.097624</td>
+<td>-0.050301</td>
+<td>-0.001987</td>
+<td>0.254321</td>
+<td>0.008707</td>
+<td>-0.029574</td>
+<td>-0.044426</td>
+<td>-0.001217</td>
+<td>0.002502</td>
+<td>0.002533</td>
+<td>-0.018169</td>
+<td>-0.045921</td>
+<td>0.011055</td>
+<td>0.053862</td>
+<td>-0.021522</td>
+<td>-0.004763</td>
+<td>0.001443</td>
+<td>0.295991</td>
+<td>1.000000</td>
+<td>0.017868</td>
+<td>-0.025002</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">hotel_market</td>
+<td>0.003028</td>
+<td>-0.068316</td>
+<td>0.049214</td>
+<td>0.015569</td>
+<td>0.040367</td>
+<td>0.008558</td>
+<td>-0.090112</td>
+<td>-0.002463</td>
+<td>0.007644</td>
+<td>-0.014636</td>
+<td>0.006164</td>
+<td>-0.003590</td>
+<td>-0.003720</td>
+<td>0.010203</td>
+<td>0.005056</td>
+<td>0.000104</td>
+<td>0.081240</td>
+<td>0.035783</td>
+<td>0.012633</td>
+<td>-0.008747</td>
+<td>-0.096278</td>
+<td>0.017868</td>
+<td>1.000000</td>
+<td>0.037060</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">hotel_cluster</td>
+<td>-0.000059</td>
+<td>-0.026689</td>
+<td>0.018297</td>
+<td>-0.011876</td>
+<td>0.004984</td>
+<td>0.000102</td>
+<td>0.003624</td>
+<td>0.003202</td>
+<td>0.012145</td>
+<td>0.031399</td>
+<td>0.002596</td>
+<td>0.008987</td>
+<td>0.009516</td>
+<td>0.006482</td>
+<td>0.021477</td>
+<td>-0.012177</td>
+<td>-0.010406</td>
+<td>-0.033039</td>
+<td>-0.018192</td>
+<td>-0.000607</td>
+<td>-0.015632</td>
+<td>-0.025002</td>
+<td>0.037060</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="013a8cd1" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr,xticklabels<span class="op">=</span>corr.columns.values,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>           yticklabels<span class="op">=</span>corr.columns.values,vmax<span class="op">=</span><span class="fl">.3</span>, center<span class="op">=</span><span class="dv">0</span>, square<span class="op">=</span><span class="va">True</span>, linewidths<span class="op">=</span><span class="fl">.5</span>, cbar_kws<span class="op">=</span>{<span class="st">"shrink"</span>: <span class="fl">.82</span>})</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Heatmap of Correlation Matrix'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session14_files/figure-html/cell-14-output-1.png" width="909" height="819" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="distributions" class="level3">
+<h3 class="anchored" data-anchor-id="distributions">Distributions</h3>
+<p>What could you say about this?</p>
+<div id="730a4662" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'channel'</span>, <span class="st">'is_booking'</span>, <span class="st">'is_mobile'</span>, <span class="st">'orig_destination_distance'</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">'srch_rm_cnt'</span>, <span class="st">'srch_adults_cnt'</span>, <span class="st">'srch_children_cnt'</span>]].hist(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>array([[&lt;Axes: title={'center': 'channel'}&gt;,
+        &lt;Axes: title={'center': 'is_booking'}&gt;,
+        &lt;Axes: title={'center': 'is_mobile'}&gt;],
+       [&lt;Axes: title={'center': 'orig_destination_distance'}&gt;,
+        &lt;Axes: title={'center': 'srch_rm_cnt'}&gt;,
+        &lt;Axes: title={'center': 'srch_adults_cnt'}&gt;],
+       [&lt;Axes: title={'center': 'srch_children_cnt'}&gt;, &lt;Axes: &gt;,
+        &lt;Axes: &gt;]], dtype=object)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session14_files/figure-html/cell-15-output-2.png" width="821" height="949" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="is_booking" class="level3">
+<h3 class="anchored" data-anchor-id="is_booking"><code>is_booking</code></h3>
+<div id="3fea879d" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To view the bookings made per user</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>booking_count_per_user<span class="op">=</span>df.groupby(<span class="st">'user_id'</span>)[<span class="st">'is_booking'</span>].agg(num_of_bookings<span class="op">=</span><span class="st">'count'</span>).reset_index()</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>booking_count_per_user.groupby(<span class="st">'num_of_bookings'</span>)[<span class="st">'user_id'</span>].agg(<span class="st">'count'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>num_of_bookings
+1    79189
+2     8423
+3     1065
+4      161
+5       24
+6        1
+Name: user_id, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="merge-with-the-original-data" class="level3">
+<h3 class="anchored" data-anchor-id="merge-with-the-original-data">Merge with the Original Data</h3>
+<div id="282d3f2a" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.merge(df.groupby(<span class="st">'user_id'</span>)[<span class="st">'is_booking'</span>].agg([<span class="st">'count'</span>]).reset_index())</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date_time</th>
+<th data-quarto-table-cell-role="th">site_name</th>
+<th data-quarto-table-cell-role="th">posa_continent</th>
+<th data-quarto-table-cell-role="th">user_location_country</th>
+<th data-quarto-table-cell-role="th">user_location_region</th>
+<th data-quarto-table-cell-role="th">user_location_city</th>
+<th data-quarto-table-cell-role="th">orig_destination_distance</th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">is_mobile</th>
+<th data-quarto-table-cell-role="th">is_package</th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">srch_ci</th>
+<th data-quarto-table-cell-role="th">srch_co</th>
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">srch_rm_cnt</th>
+<th data-quarto-table-cell-role="th">srch_destination_id</th>
+<th data-quarto-table-cell-role="th">srch_destination_type_id</th>
+<th data-quarto-table-cell-role="th">is_booking</th>
+<th data-quarto-table-cell-role="th">cnt</th>
+<th data-quarto-table-cell-role="th">hotel_continent</th>
+<th data-quarto-table-cell-role="th">hotel_country</th>
+<th data-quarto-table-cell-role="th">hotel_market</th>
+<th data-quarto-table-cell-role="th">hotel_cluster</th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2014-11-03 16:02:00</td>
+<td>24</td>
+<td>2</td>
+<td>77</td>
+<td>871</td>
+<td>36643</td>
+<td>456.1151</td>
+<td>792280</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>2014-12-15</td>
+<td>2014-12-19</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>8286</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>63</td>
+<td>1258</td>
+<td>68</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2013-03-13 19:25:00</td>
+<td>11</td>
+<td>3</td>
+<td>205</td>
+<td>135</td>
+<td>38749</td>
+<td>232.4737</td>
+<td>961995</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>2013-03-13</td>
+<td>2013-03-14</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>1842</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>198</td>
+<td>786</td>
+<td>37</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2014-10-13 13:20:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>314</td>
+<td>48562</td>
+<td>4468.2720</td>
+<td>495669</td>
+<td>0</td>
+<td>1</td>
+<td>9</td>
+<td>2015-04-03</td>
+<td>2015-04-10</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>8746</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>6</td>
+<td>105</td>
+<td>29</td>
+<td>22</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2013-11-05 10:40:00</td>
+<td>11</td>
+<td>3</td>
+<td>205</td>
+<td>411</td>
+<td>52752</td>
+<td>171.6021</td>
+<td>106611</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2013-11-07</td>
+<td>2013-11-08</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>6210</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>198</td>
+<td>1234</td>
+<td>42</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2014-06-10 13:34:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>174</td>
+<td>50644</td>
+<td>NaN</td>
+<td>596177</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>2014-08-03</td>
+<td>2014-08-08</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>12812</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>50</td>
+<td>368</td>
+<td>83</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="logical-check" class="level3">
+<h3 class="anchored" data-anchor-id="logical-check">Logical Check</h3>
+<p>Remember, Data Analysts cannot take data and immidetly start modeling. It is expected from the data professioanl to acquire domain knowledge.</p>
+<section id="available-travelers" class="level4">
+<h4 class="anchored" data-anchor-id="available-travelers">Available Travelers</h4>
+<p>Taking into account that number of travelers should be greater then <code>0</code>, we must remove <code>174</code> cases fro the data. Let’s drop such cases.</p>
+<div id="1525622c" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df[<span class="st">'srch_adults_cnt'</span>], df[<span class="st">'srch_children_cnt'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">6</th>
+<th data-quarto-table-cell-role="th">7</th>
+<th data-quarto-table-cell-role="th">8</th>
+<th data-quarto-table-cell-role="th">9</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>174</td>
+<td>2</td>
+<td>3</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>18749</td>
+<td>2137</td>
+<td>523</td>
+<td>117</td>
+<td>11</td>
+<td>1</td>
+<td>9</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>50736</td>
+<td>7093</td>
+<td>6529</td>
+<td>972</td>
+<td>208</td>
+<td>14</td>
+<td>7</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3645</td>
+<td>1131</td>
+<td>469</td>
+<td>131</td>
+<td>27</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>3933</td>
+<td>690</td>
+<td>494</td>
+<td>77</td>
+<td>83</td>
+<td>9</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>535</td>
+<td>131</td>
+<td>41</td>
+<td>20</td>
+<td>6</td>
+<td>4</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>669</td>
+<td>73</td>
+<td>53</td>
+<td>28</td>
+<td>18</td>
+<td>13</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>99</td>
+<td>20</td>
+<td>5</td>
+<td>8</td>
+<td>6</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>183</td>
+<td>12</td>
+<td>13</td>
+<td>2</td>
+<td>6</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>24</td>
+<td>5</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Let’s view those cases</p>
+<div id="c690233a" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df[(df[<span class="st">'srch_adults_cnt'</span>]<span class="op">==</span><span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">'srch_children_cnt'</span>]<span class="op">==</span><span class="dv">0</span>)].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date_time</th>
+<th data-quarto-table-cell-role="th">site_name</th>
+<th data-quarto-table-cell-role="th">posa_continent</th>
+<th data-quarto-table-cell-role="th">user_location_country</th>
+<th data-quarto-table-cell-role="th">user_location_region</th>
+<th data-quarto-table-cell-role="th">user_location_city</th>
+<th data-quarto-table-cell-role="th">orig_destination_distance</th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">is_mobile</th>
+<th data-quarto-table-cell-role="th">is_package</th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">srch_ci</th>
+<th data-quarto-table-cell-role="th">srch_co</th>
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">srch_rm_cnt</th>
+<th data-quarto-table-cell-role="th">srch_destination_id</th>
+<th data-quarto-table-cell-role="th">srch_destination_type_id</th>
+<th data-quarto-table-cell-role="th">is_booking</th>
+<th data-quarto-table-cell-role="th">cnt</th>
+<th data-quarto-table-cell-role="th">hotel_continent</th>
+<th data-quarto-table-cell-role="th">hotel_country</th>
+<th data-quarto-table-cell-role="th">hotel_market</th>
+<th data-quarto-table-cell-role="th">hotel_cluster</th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">115</td>
+<td>2014-10-07 14:43:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>293</td>
+<td>52284</td>
+<td>NaN</td>
+<td>909952</td>
+<td>0</td>
+<td>1</td>
+<td>9</td>
+<td>2015-01-10</td>
+<td>2015-01-15</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>8250</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>50</td>
+<td>628</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">496</td>
+<td>2013-06-15 19:12:00</td>
+<td>29</td>
+<td>1</td>
+<td>52</td>
+<td>40</td>
+<td>29080</td>
+<td>NaN</td>
+<td>150434</td>
+<td>0</td>
+<td>1</td>
+<td>9</td>
+<td>2013-09-16</td>
+<td>2013-09-20</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>25408</td>
+<td>6</td>
+<td>0</td>
+<td>2</td>
+<td>6</td>
+<td>15</td>
+<td>1534</td>
+<td>46</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1261</td>
+<td>2014-10-26 10:20:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>220</td>
+<td>22648</td>
+<td>5148.4830</td>
+<td>588617</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>2015-08-24</td>
+<td>2015-09-03</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>8746</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>6</td>
+<td>105</td>
+<td>29</td>
+<td>78</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1428</td>
+<td>2014-11-16 10:21:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>174</td>
+<td>53801</td>
+<td>1638.7472</td>
+<td>207522</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2015-04-18</td>
+<td>2015-04-25</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>8810</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+<td>8</td>
+<td>1532</td>
+<td>52</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1539</td>
+<td>2014-12-28 19:16:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>363</td>
+<td>31138</td>
+<td>1526.8518</td>
+<td>938404</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>8277</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>50</td>
+<td>412</td>
+<td>9</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="ad17e30a" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df[(df[<span class="st">'srch_adults_cnt'</span>]<span class="op">==</span><span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">'srch_children_cnt'</span>]<span class="op">==</span><span class="dv">0</span>)].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>(174, 25)</code></pre>
+</div>
+</div>
+<p>Once we got confirmed that everything is correct and working, we can drop those rows with <code>inplace = True</code></p>
+<div id="4e105ae1" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df.drop(df[df[<span class="st">'srch_adults_cnt'</span>] <span class="op">+</span> df[<span class="st">'srch_children_cnt'</span>]<span class="op">==</span><span class="dv">0</span>].index, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dates" class="level4">
+<h4 class="anchored" data-anchor-id="dates">Dates</h4>
+<p>Converting string objects into datatime objects. And creating new <strong>date</strong> column from <strong>date_time.</strong> (We did this during the import )</p>
+<p><strong>The chronology:</strong> Booking <span class="math inline">\(\rightarrow\)</span> Check-In <span class="math inline">\(\rightarrow\)</span> Check-out</p>
+<ul>
+<li>Check-out date need to be later than check-in date</li>
+<li>Check-in date need to be later than booking date</li>
+</ul>
+<p>Change the timestamp of ‘date_time’ <code>(2014-11-03 16:02:28)</code> to simply <code>"2014-11-03"</code></p>
+<div id="893a05d2" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'date_time'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.date()))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date_time</th>
+<th data-quarto-table-cell-role="th">site_name</th>
+<th data-quarto-table-cell-role="th">posa_continent</th>
+<th data-quarto-table-cell-role="th">user_location_country</th>
+<th data-quarto-table-cell-role="th">user_location_region</th>
+<th data-quarto-table-cell-role="th">user_location_city</th>
+<th data-quarto-table-cell-role="th">orig_destination_distance</th>
+<th data-quarto-table-cell-role="th">user_id</th>
+<th data-quarto-table-cell-role="th">is_mobile</th>
+<th data-quarto-table-cell-role="th">is_package</th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">srch_ci</th>
+<th data-quarto-table-cell-role="th">srch_co</th>
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">srch_rm_cnt</th>
+<th data-quarto-table-cell-role="th">srch_destination_id</th>
+<th data-quarto-table-cell-role="th">srch_destination_type_id</th>
+<th data-quarto-table-cell-role="th">is_booking</th>
+<th data-quarto-table-cell-role="th">cnt</th>
+<th data-quarto-table-cell-role="th">hotel_continent</th>
+<th data-quarto-table-cell-role="th">hotel_country</th>
+<th data-quarto-table-cell-role="th">hotel_market</th>
+<th data-quarto-table-cell-role="th">hotel_cluster</th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2014-11-03 16:02:00</td>
+<td>24</td>
+<td>2</td>
+<td>77</td>
+<td>871</td>
+<td>36643</td>
+<td>456.1151</td>
+<td>792280</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>2014-12-15</td>
+<td>2014-12-19</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>8286</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>63</td>
+<td>1258</td>
+<td>68</td>
+<td>2</td>
+<td>2014-11-03</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2013-03-13 19:25:00</td>
+<td>11</td>
+<td>3</td>
+<td>205</td>
+<td>135</td>
+<td>38749</td>
+<td>232.4737</td>
+<td>961995</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>2013-03-13</td>
+<td>2013-03-14</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>1842</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>198</td>
+<td>786</td>
+<td>37</td>
+<td>1</td>
+<td>2013-03-13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2014-10-13 13:20:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>314</td>
+<td>48562</td>
+<td>4468.2720</td>
+<td>495669</td>
+<td>0</td>
+<td>1</td>
+<td>9</td>
+<td>2015-04-03</td>
+<td>2015-04-10</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>8746</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>6</td>
+<td>105</td>
+<td>29</td>
+<td>22</td>
+<td>1</td>
+<td>2014-10-13</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2013-11-05 10:40:00</td>
+<td>11</td>
+<td>3</td>
+<td>205</td>
+<td>411</td>
+<td>52752</td>
+<td>171.6021</td>
+<td>106611</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2013-11-07</td>
+<td>2013-11-08</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>6210</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>198</td>
+<td>1234</td>
+<td>42</td>
+<td>2</td>
+<td>2013-11-05</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2014-06-10 13:34:00</td>
+<td>2</td>
+<td>3</td>
+<td>66</td>
+<td>174</td>
+<td>50644</td>
+<td>NaN</td>
+<td>596177</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>2014-08-03</td>
+<td>2014-08-08</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>12812</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>50</td>
+<td>368</td>
+<td>83</td>
+<td>1</td>
+<td>2014-06-10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Checking the logic between the <code>check-ins</code> and <code>check-outs</code></p>
+<div id="4af2a99c" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'srch_co'</span>] <span class="op">&lt;</span> df[<span class="st">'srch_ci'</span>]][[<span class="st">'srch_co'</span>, <span class="st">'srch_ci'</span>]].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>(2, 2)</code></pre>
+</div>
+</div>
+<p>Checkin the logic between the <code>book_date</code> and <code>check-in</code></p>
+<div id="38dfd04c" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'srch_ci'</span>] <span class="op">&lt;</span> df[<span class="st">'date'</span>]][[<span class="st">'srch_ci'</span>, <span class="st">'date'</span>]].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>(25, 2)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="feature-enrichment" class="level3">
+<h3 class="anchored" data-anchor-id="feature-enrichment">Feature Enrichment</h3>
+<p>In order to get to remove thos cases, first let’s create two important (at least from business perspective) features from existing date columns, by applying <code>duration()</code> function:</p>
+<ul>
+<li><code>duration</code></li>
+<li><code>days_in_advance</code></li>
+</ul>
+<p>Creating <code>duration()</code> function</p>
+<div id="311a8a6a" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> duration(row,start, end):</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    delta<span class="op">=</span>(row[end]<span class="op">-</span>row[start])<span class="op">/</span>np.timedelta64(<span class="dv">1</span>,<span class="st">'D'</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> delta<span class="op">&lt;=</span><span class="dv">0</span>:</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> delta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Duration is finds the length of stay by substracting the checkout day from the checkin day</em></p>
+<div id="70edc339" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'duration'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(duration, args<span class="op">=</span>(<span class="st">'srch_ci'</span>,<span class="st">'srch_co'</span>),axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Shows how long in advance the booking was made. Done by substracting the checkin date from the booking date</em></p>
+<div id="8e785f77" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'days_in_advance'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(duration,args<span class="op">=</span>(<span class="st">'date'</span>,<span class="st">'srch_ci'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="statistical-analysis-of-booking-channels" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-analysis-of-booking-channels">Statistical Analysis of Booking Channels</h3>
+<p>Let’s look at how each channel performs by seeing the booking rate for each channel type.</p>
+<p><code>booking rate</code> per <code>channel</code></p>
+<div id="5cac593b" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>(df</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'channel'</span>)[<span class="st">'is_booking'</span>]</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    .agg(booking_rate<span class="op">=</span> <span class="st">'mean'</span>, num_of_bookings<span class="op">=</span> <span class="st">'count'</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    .sort_values(by<span class="op">=</span><span class="st">'channel'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">channel</th>
+<th data-quarto-table-cell-role="th">booking_rate</th>
+<th data-quarto-table-cell-role="th">num_of_bookings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>0.072184</td>
+<td>12482</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>0.069568</td>
+<td>10249</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>0.060583</td>
+<td>7824</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>0.060482</td>
+<td>4398</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>0.120438</td>
+<td>2192</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>5</td>
+<td>0.094533</td>
+<td>6146</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>6</td>
+<td>0.068323</td>
+<td>161</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>7</td>
+<td>0.043263</td>
+<td>809</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>8</td>
+<td>0.051852</td>
+<td>270</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>9</td>
+<td>0.085365</td>
+<td>55280</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>10</td>
+<td>0.200000</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="clustering-1" class="level3">
+<h3 class="anchored" data-anchor-id="clustering-1">Clustering</h3>
+<p>Let’s choose some features using our business domain knowledge and explore these. After selecting features, let’s create two new dataframes with our new data called:</p>
+<ul>
+<li><code>df_clustering</code></li>
+<li><code>df_clustering_groups</code> grouped by <code>user_location_city</code></li>
+</ul>
+<p><strong>Note:</strong> you’re free to add and remove</p>
+<section id="feature-selection" class="level4">
+<h4 class="anchored" data-anchor-id="feature-selection">Feature Selection</h4>
+<div id="d7c3e206" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Our selected features</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>features_to_explore <span class="op">=</span> [<span class="st">'duration'</span>, <span class="st">'days_in_advance'</span>, <span class="st">'orig_destination_distance'</span>, <span class="st">'is_mobile'</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">'is_package'</span>, <span class="st">'srch_adults_cnt'</span>, <span class="st">'srch_children_cnt'</span>, <span class="st">'srch_rm_cnt'</span>]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>df_clustering <span class="op">=</span> df[features_to_explore <span class="op">+</span> [<span class="st">'user_location_city'</span>]]</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>df_clustering_groups <span class="op">=</span> (df_clustering</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                            .groupby(<span class="st">'user_location_city'</span>)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>                            .mean()</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>                            .reset_index()</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>                            .dropna(axis<span class="op">=</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="standardize-our-data" class="level3">
+<h3 class="anchored" data-anchor-id="standardize-our-data">Standardize our Data</h3>
+<p>Let’s keep copy <code>df_clustering_groups</code> dataset, in order to keep the original one for post-analysis.</p>
+<p>Clustering algorithms try to group similar observations together. To do this, they usually measure the <strong>distance</strong> between data points.</p>
+<p>The problem is that different variables can have very different scales.</p>
+<p>For example, imagine we are clustering customers using two columns:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Customer</th>
+<th style="text-align: right;">Age</th>
+<th style="text-align: right;">Annual Income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">20,000</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">80,000</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">85,000</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here, <strong>age</strong> ranges from around 20 to 60, while <strong>income</strong> ranges from thousands to tens of thousands.</p>
+<p>Without standardization, the clustering algorithm may think that <strong>income is much more important</strong> than age simply because the numbers are larger.</p>
+</div>
+</div>
+<p><strong>Suppose we compare two customers:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th style="text-align: right;">Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Age difference</td>
+<td style="text-align: right;">10 years</td>
+</tr>
+<tr class="even">
+<td>Income difference</td>
+<td style="text-align: right;">30,000</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The algorithm sees:</strong> <span class="math inline">\(30,000 \gg 10\)</span></p>
+<p>So the income difference dominates the distance calculation.</p>
+<blockquote class="blockquote">
+<p>But this does not necessarily mean income is more important. It only means income is measured on a larger scale.</p>
+</blockquote>
+<section id="what-standardization-does" class="level4">
+<h4 class="anchored" data-anchor-id="what-standardization-does">What Standardization Does</h4>
+<p>Standardization transforms each numeric column so that it has:</p>
+<ul>
+<li>mean equal to <span class="math inline">\(0\)</span></li>
+<li>standard deviation equal to <span class="math inline">\(1\)</span></li>
+</ul>
+<p><strong>The common formula is:</strong></p>
+<p><span class="math display">\[
+z = \frac{x - \mu}{\sigma}
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(x\)</span> is the original value</li>
+<li><span class="math inline">\(\mu\)</span> is the mean of the column</li>
+<li><span class="math inline">\(\sigma\)</span> is the standard deviation of the column</li>
+</ul>
+<p>After standardization, all numeric variables are put on a comparable scale.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Thus, standardization helps clustering algorithms treat variables more fairly.</p>
+<p><strong>Without standardization:</strong></p>
+<ul>
+<li>variables with large values dominate the clustering</li>
+<li>distance calculations become misleading</li>
+<li>clusters may reflect scale, not real similarity</li>
+<li>the results may be hard to interpret correctly</li>
+</ul>
+<p><strong>With standardization:</strong></p>
+<ul>
+<li>each variable contributes more equally</li>
+<li>distance calculations become more meaningful</li>
+<li>clusters are based on patterns, not just large numbers</li>
+<li>the algorithm can better identify real groups in the data</li>
+</ul>
+</div>
+</div>
+<div id="b76d2766" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> preprocessing</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df_clustering_std <span class="op">=</span> df_clustering_groups.copy()</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>df_clustering_std[features_to_explore] <span class="op">=</span> preprocessing.scale(df_clustering_std[features_to_explore])</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>df_clustering_std.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_location_city</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">days_in_advance</th>
+<th data-quarto-table-cell-role="th">orig_destination_distance</th>
+<th data-quarto-table-cell-role="th">is_mobile</th>
+<th data-quarto-table-cell-role="th">is_package</th>
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">srch_rm_cnt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>-0.685258</td>
+<td>0.447140</td>
+<td>0.314747</td>
+<td>-0.619979</td>
+<td>-0.023150</td>
+<td>-0.511139</td>
+<td>-0.704997</td>
+<td>-0.331661</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>0.564013</td>
+<td>0.651185</td>
+<td>1.020233</td>
+<td>-0.347544</td>
+<td>0.125553</td>
+<td>-0.207376</td>
+<td>0.201429</td>
+<td>-0.331661</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7</td>
+<td>5.164984</td>
+<td>-0.007237</td>
+<td>2.600430</td>
+<td>-0.619979</td>
+<td>2.504801</td>
+<td>-0.113910</td>
+<td>-0.704997</td>
+<td>-0.331661</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>14</td>
+<td>1.752343</td>
+<td>-0.500401</td>
+<td>2.195332</td>
+<td>-0.619979</td>
+<td>-0.865800</td>
+<td>-0.113910</td>
+<td>0.739619</td>
+<td>-0.331661</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>21</td>
+<td>0.777303</td>
+<td>-0.594601</td>
+<td>0.221515</td>
+<td>-0.619979</td>
+<td>0.819500</td>
+<td>-0.908368</td>
+<td>1.221158</td>
+<td>-0.331661</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="k-means-clustering-1" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-clustering-1">K-means Clustering</h3>
+<p>Let’s start K-means clustering and initially select<code>K=3!</code></p>
+<p>Creating <code>cluster</code> column for the same dataset</p>
+<div id="1ac1be1f" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>km <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, max_iter<span class="op">=</span><span class="dv">300</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'cluster'</span>] <span class="op">=</span> km.fit_predict(df_clustering_std[features_to_explore])</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>df_clustering_std.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_location_city</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">days_in_advance</th>
+<th data-quarto-table-cell-role="th">orig_destination_distance</th>
+<th data-quarto-table-cell-role="th">is_mobile</th>
+<th data-quarto-table-cell-role="th">is_package</th>
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">srch_rm_cnt</th>
+<th data-quarto-table-cell-role="th">cluster</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>-0.685258</td>
+<td>0.447140</td>
+<td>0.314747</td>
+<td>-0.619979</td>
+<td>-0.023150</td>
+<td>-0.511139</td>
+<td>-0.704997</td>
+<td>-0.331661</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>0.564013</td>
+<td>0.651185</td>
+<td>1.020233</td>
+<td>-0.347544</td>
+<td>0.125553</td>
+<td>-0.207376</td>
+<td>0.201429</td>
+<td>-0.331661</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7</td>
+<td>5.164984</td>
+<td>-0.007237</td>
+<td>2.600430</td>
+<td>-0.619979</td>
+<td>2.504801</td>
+<td>-0.113910</td>
+<td>-0.704997</td>
+<td>-0.331661</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>14</td>
+<td>1.752343</td>
+<td>-0.500401</td>
+<td>2.195332</td>
+<td>-0.619979</td>
+<td>-0.865800</td>
+<td>-0.113910</td>
+<td>0.739619</td>
+<td>-0.331661</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>21</td>
+<td>0.777303</td>
+<td>-0.594601</td>
+<td>0.221515</td>
+<td>-0.619979</td>
+<td>0.819500</td>
+<td>-0.908368</td>
+<td>1.221158</td>
+<td>-0.331661</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="principal-component-analysis-pca" class="level3">
+<h3 class="anchored" data-anchor-id="principal-component-analysis-pca">Principal Component Analysis (PCA)</h3>
+<p>It is a technique used to reduce the number of variables in a dataset while keeping as much useful information as possible.</p>
+<p>In simple terms, PCA tries to find the most important directions in the data.</p>
+<p>These directions are called <strong>principal components</strong>.</p>
+<blockquote class="blockquote">
+<p><strong>PCA takes many related variables and creates a smaller number of new variables that still keep most of the important information.</strong></p>
+</blockquote>
+<p><img src="../../img/python/14/pca.png" class="img-fluid"></p>
+<p><strong>One common use of PCA is visualization.</strong></p>
+<p>If a dataset has <code>10</code> or <code>20</code> columns, we cannot easily plot it.</p>
+<p>But <code>PCA</code> can reduce the data into 2 components and we are going to do exactly the same!</p>
+<div id="3ac83bd1" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> decomposition</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> decomposition.PCA(n_components<span class="op">=</span><span class="dv">2</span>, whiten<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>pca_results <span class="op">=</span> pca.fit_transform(df_clustering_std[features_to_explore])</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>explained_variance <span class="op">=</span> pca.explained_variance_ratio_</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>cumulative_variance <span class="op">=</span> np.cumsum(explained_variance)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Comulative Variance:  </span><span class="sc">{</span>cumulative_variance<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>explained_variance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Comulative Variance:  [0.21982537 0.40991447]</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>array([0.21982537, 0.1900891 ])</code></pre>
+</div>
+</div>
+<p><code>40%</code> of the variance is explaned by two columns!</p>
+<div id="89cc90a3" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'x'</span>] <span class="op">=</span> pca_results[:,<span class="dv">0</span>]</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'y'</span>] <span class="op">=</span> pca_results[:,<span class="dv">1</span>]</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>df_clustering_std.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">user_location_city</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">days_in_advance</th>
+<th data-quarto-table-cell-role="th">orig_destination_distance</th>
+<th data-quarto-table-cell-role="th">is_mobile</th>
+<th data-quarto-table-cell-role="th">is_package</th>
+<th data-quarto-table-cell-role="th">srch_adults_cnt</th>
+<th data-quarto-table-cell-role="th">srch_children_cnt</th>
+<th data-quarto-table-cell-role="th">srch_rm_cnt</th>
+<th data-quarto-table-cell-role="th">cluster</th>
+<th data-quarto-table-cell-role="th">x</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>-0.685258</td>
+<td>0.447140</td>
+<td>0.314747</td>
+<td>-0.619979</td>
+<td>-0.023150</td>
+<td>-0.511139</td>
+<td>-0.704997</td>
+<td>-0.331661</td>
+<td>2</td>
+<td>0.095833</td>
+<td>-0.521284</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>0.564013</td>
+<td>0.651185</td>
+<td>1.020233</td>
+<td>-0.347544</td>
+<td>0.125553</td>
+<td>-0.207376</td>
+<td>0.201429</td>
+<td>-0.331661</td>
+<td>1</td>
+<td>0.929255</td>
+<td>-0.156800</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7</td>
+<td>5.164984</td>
+<td>-0.007237</td>
+<td>2.600430</td>
+<td>-0.619979</td>
+<td>2.504801</td>
+<td>-0.113910</td>
+<td>-0.704997</td>
+<td>-0.331661</td>
+<td>0</td>
+<td>3.937174</td>
+<td>-0.238704</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>14</td>
+<td>1.752343</td>
+<td>-0.500401</td>
+<td>2.195332</td>
+<td>-0.619979</td>
+<td>-0.865800</td>
+<td>-0.113910</td>
+<td>0.739619</td>
+<td>-0.331661</td>
+<td>1</td>
+<td>1.051649</td>
+<td>-0.087671</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>21</td>
+<td>0.777303</td>
+<td>-0.594601</td>
+<td>0.221515</td>
+<td>-0.619979</td>
+<td>0.819500</td>
+<td>-0.908368</td>
+<td>1.221158</td>
+<td>-0.331661</td>
+<td>0</td>
+<td>0.425947</td>
+<td>-0.558020</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Now we can visualize thos cluseters!</p>
+</blockquote>
+<div id="474f24ed" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(df_clustering_std[<span class="st">'x'</span>], df_clustering_std[<span class="st">'y'</span>], c<span class="op">=</span>df_clustering_std[<span class="st">'cluster'</span>])</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session14_files/figure-html/cell-34-output-1.png" width="569" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="with-2-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="with-2-clusters">with <code>2</code> clusters</h3>
+<div id="a230a126" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>km <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">2</span>, max_iter<span class="op">=</span><span class="dv">300</span>, random_state<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'cluster'</span>] <span class="op">=</span> km.fit_predict(df_clustering_std[features_to_explore])</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> decomposition.PCA(n_components<span class="op">=</span><span class="dv">2</span>, whiten<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>pca_results <span class="op">=</span> pca.fit_transform(df_clustering_std[features_to_explore])</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'x'</span>] <span class="op">=</span> pca_results[:,<span class="dv">0</span>]</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'y'</span>] <span class="op">=</span> pca_results[:,<span class="dv">1</span>]</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>plt.scatter(df_clustering_std[<span class="st">'x'</span>], df_clustering_std[<span class="st">'y'</span>], c<span class="op">=</span>df_clustering_std[<span class="st">'cluster'</span>])</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session14_files/figure-html/cell-35-output-1.png" width="569" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="with-4-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="with-4-clusters">with <code>4</code> clusters</h3>
+<div id="702981d8" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>km <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>, max_iter<span class="op">=</span><span class="dv">300</span>, random_state<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'cluster'</span>] <span class="op">=</span> km.fit_predict(df_clustering_std[features_to_explore])</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> decomposition.PCA(n_components<span class="op">=</span><span class="dv">2</span>, whiten<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>pca_results <span class="op">=</span> pca.fit_transform(df_clustering_std[features_to_explore])</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'x'</span>] <span class="op">=</span> pca_results[:,<span class="dv">0</span>]</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>df_clustering_std[<span class="st">'y'</span>] <span class="op">=</span> pca_results[:,<span class="dv">1</span>]</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>plt.scatter(df_clustering_std[<span class="st">'x'</span>], df_clustering_std[<span class="st">'y'</span>], c<span class="op">=</span>df_clustering_std[<span class="st">'cluster'</span>])</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session14_files/figure-html/cell-36-output-1.png" width="569" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="extra-reading" class="level2">
+<h2 class="anchored" data-anchor-id="extra-reading">Extra Reading</h2>
+<ul>
+<li><a href="https://dashee87.github.io/data%20science/general/Clustering-with-Scikit-with-GIFs/">Clustering Algorithms</a></li>
+<li><a href="https://www.youtube.com/watch?v=FgakZw6K1QQ">PCA Video</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

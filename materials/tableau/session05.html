@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Session 05: Sales Analysis Dashboard – Data Analytics Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../img/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d166b450ba5a8e9f7a0ab969bf6592c1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-29574c2ad9c7fe2279cf41f25198438f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-4d1c39a9b3d53dfc5345e203ea289592.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../img/favicon.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Data Analytics Bootcamp</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../materials/syllabus.html" aria-current="page"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/statistics/index.html"> 
+<span class="menu-text">Statistical Thinking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/sql/index.html"> 
+<span class="menu-text">SQL</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/python/index.html"> 
+<span class="menu-text">Python</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/tableau/index.html"> 
+<span class="menu-text">Tableau</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/lab/index.html"> 
+<span class="menu-text">Lab</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../materials/capstone/index.html"> 
+<span class="menu-text">Capstone</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/hovhannisyan91"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/tableau/index.html">Tableau</a></li><li class="breadcrumb-item"><a href="../../materials/tableau/index.html">Tableau</a></li><li class="breadcrumb-item"><a href="../../materials/tableau/session05.html">Session 05: Sales Analysis Dashboard</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistical Thinking</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Data Layers and Bias in Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Types of Bias</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 02: Data Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 03: Probabilistic Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 04: Probabilistic Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 05: Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistics Session 06: Inferential Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Descriptive Stats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/statistics/slides/session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hypothesis Testing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/sql/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/sql/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analytics with SQL</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Intro to Relational Databases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Intro to PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: DA with SQL | Data Types &amp; Constraints</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: DA with SQL | Filtering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: DA with SQL | Numeric Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: DA with SQL | String Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: DA with SQL | Date Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08: DA with SQL | JOINs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09: DA with SQL | Advanced SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10: DA with SQL | Advanced SQL Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11: DA with SQL | UDFs, Stored Procedures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 12: DA with SQL | Advanced Aggregations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/session13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 13: DA with SQL | Final Project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Relational Databases</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic Queries: DDL DLM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Filtering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numeric Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">String Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Date Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normalization and JOINs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temporary Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced SQL Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reporting and Analysis with SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/sql/slides/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced Aggregations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Programming for Data Analysts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Python basic Syntax, Data Structures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: Introduction to Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: Advanced Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 05: Intro to Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: Data Visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: Working with Dates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08: Data Visualization | Plotly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09: Customer Segmentation | RFM</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10: A/B Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11: Cohort Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 12: Simple Linear Regression and Forecasting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 13: Logistic Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 14: Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 15: Geoanalytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/session16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 16: SQLAlchemy with Dockerized PostGIS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/slides/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Grammar of Graphics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/python/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/tableau/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tableau</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../materials/tableau/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tableau</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01: Introduction to Tableau</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02: Intermediate Visual Analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03: Advanced Analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04: Dashboard Design &amp; Performance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session05.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Session 05: Sales Analysis Dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 06: Customer Analysis Dashboard</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07: Tableau with SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/tableau/slides/session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analyst</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dashboard-goal" id="toc-dashboard-goal" class="nav-link active" data-scroll-target="#dashboard-goal">Dashboard Goal</a></li>
+  <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview">Dataset Overview</a></li>
+  <li><a href="#dashboard-structure" id="toc-dashboard-structure" class="nav-link" data-scroll-target="#dashboard-structure">Dashboard Structure</a></li>
+  <li><a href="#recommended-dashboard-size" id="toc-recommended-dashboard-size" class="nav-link" data-scroll-target="#recommended-dashboard-size">Recommended Dashboard Size</a></li>
+  <li><a href="#dashboard-visual-hierarchy" id="toc-dashboard-visual-hierarchy" class="nav-link" data-scroll-target="#dashboard-visual-hierarchy">Dashboard Visual Hierarchy</a></li>
+  <li><a href="#step-0-calculated-fields-and-parameters" id="toc-step-0-calculated-fields-and-parameters" class="nav-link" data-scroll-target="#step-0-calculated-fields-and-parameters">Step 0 | Calculated Fields and Parameters</a>
+  <ul class="collapse">
+  <li><a href="#period" id="toc-period" class="nav-link" data-scroll-target="#period"><code>Period</code></a></li>
+  <li><a href="#is-canceled" id="toc-is-canceled" class="nav-link" data-scroll-target="#is-canceled">Is Canceled</a></li>
+  <li><a href="#valid-sale" id="toc-valid-sale" class="nav-link" data-scroll-target="#valid-sale"><code>Valid Sale</code></a></li>
+  <li><a href="#max-order-date" id="toc-max-order-date" class="nav-link" data-scroll-target="#max-order-date"><code>Max Order Date</code></a></li>
+  <li><a href="#sales" id="toc-sales" class="nav-link" data-scroll-target="#sales"><code>Sales</code></a></li>
+  </ul></li>
+  <li><a href="#step-1-kpi-section" id="toc-step-1-kpi-section" class="nav-link" data-scroll-target="#step-1-kpi-section">Step 1 | KPI Section</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-kpi-section" id="toc-purpose-of-kpi-section" class="nav-link" data-scroll-target="#purpose-of-kpi-section">Purpose of KPI Section</a></li>
+  <li><a href="#recommended-kpis" id="toc-recommended-kpis" class="nav-link" data-scroll-target="#recommended-kpis">Recommended KPIs</a></li>
+  <li><a href="#recommended-kpi-layout" id="toc-recommended-kpi-layout" class="nav-link" data-scroll-target="#recommended-kpi-layout">Recommended KPI Layout</a></li>
+  <li><a href="#related-calculated-fields" id="toc-related-calculated-fields" class="nav-link" data-scroll-target="#related-calculated-fields">Related Calculated Fields</a></li>
+  <li><a href="#kpi-card-design-rules" id="toc-kpi-card-design-rules" class="nav-link" data-scroll-target="#kpi-card-design-rules">KPI Card Design Rules</a></li>
+  <li><a href="#kpi-color-rules" id="toc-kpi-color-rules" class="nav-link" data-scroll-target="#kpi-color-rules">KPI Color Rules</a></li>
+  <li><a href="#kpi-card-size-recommendations" id="toc-kpi-card-size-recommendations" class="nav-link" data-scroll-target="#kpi-card-size-recommendations">KPI Card Size Recommendations</a></li>
+  <li><a href="#recommended-typography-hierarchy" id="toc-recommended-typography-hierarchy" class="nav-link" data-scroll-target="#recommended-typography-hierarchy">Recommended Typography Hierarchy</a></li>
+  <li><a href="#recommended-tableau-fonts" id="toc-recommended-tableau-fonts" class="nav-link" data-scroll-target="#recommended-tableau-fonts">Recommended Tableau Fonts</a></li>
+  </ul></li>
+  <li><a href="#step-2-sales-trend-analysis" id="toc-step-2-sales-trend-analysis" class="nav-link" data-scroll-target="#step-2-sales-trend-analysis">Step 2 | Sales Trend Analysis</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-sales-trend-chart" id="toc-purpose-of-sales-trend-chart" class="nav-link" data-scroll-target="#purpose-of-sales-trend-chart">Purpose of Sales Trend Chart</a></li>
+  <li><a href="#sales-trend-design-rules" id="toc-sales-trend-design-rules" class="nav-link" data-scroll-target="#sales-trend-design-rules">Sales Trend Design Rules</a></li>
+  <li><a href="#recommended-sales-trend-styling" id="toc-recommended-sales-trend-styling" class="nav-link" data-scroll-target="#recommended-sales-trend-styling">Recommended Sales Trend Styling</a></li>
+  <li><a href="#dual-axis-design" id="toc-dual-axis-design" class="nav-link" data-scroll-target="#dual-axis-design">Dual Axis Design</a></li>
+  <li><a href="#show-marks" id="toc-show-marks" class="nav-link" data-scroll-target="#show-marks">Show Marks</a></li>
+  <li><a href="#borders" id="toc-borders" class="nav-link" data-scroll-target="#borders">Borders</a></li>
+  </ul></li>
+  <li><a href="#step-3-geographic-analysis" id="toc-step-3-geographic-analysis" class="nav-link" data-scroll-target="#step-3-geographic-analysis">Step 3 | Geographic Analysis</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-geographic-analysis" id="toc-purpose-of-geographic-analysis" class="nav-link" data-scroll-target="#purpose-of-geographic-analysis">Purpose of Geographic Analysis</a></li>
+  <li><a href="#geographic-analysis-design-rules" id="toc-geographic-analysis-design-rules" class="nav-link" data-scroll-target="#geographic-analysis-design-rules">Geographic Analysis Design Rules</a></li>
+  <li><a href="#calculated-fields" id="toc-calculated-fields" class="nav-link" data-scroll-target="#calculated-fields">Calculated Fields</a></li>
+  <li><a href="#visualization-steps" id="toc-visualization-steps" class="nav-link" data-scroll-target="#visualization-steps">Visualization Steps</a></li>
+  </ul></li>
+  <li><a href="#step-4-product-performance-analysis" id="toc-step-4-product-performance-analysis" class="nav-link" data-scroll-target="#step-4-product-performance-analysis">Step 4 | Product Performance Analysis</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-product-analysis" id="toc-purpose-of-product-analysis" class="nav-link" data-scroll-target="#purpose-of-product-analysis">Purpose of Product Analysis</a></li>
+  <li><a href="#calculated-field" id="toc-calculated-field" class="nav-link" data-scroll-target="#calculated-field">Calculated Field</a></li>
+  <li><a href="#product-analysis-design-rules" id="toc-product-analysis-design-rules" class="nav-link" data-scroll-target="#product-analysis-design-rules">Product Analysis Design Rules</a></li>
+  <li><a href="#table-construction-steps" id="toc-table-construction-steps" class="nav-link" data-scroll-target="#table-construction-steps">Table Construction Steps</a></li>
+  </ul></li>
+  <li><a href="#step-5-sales-by-weekday-hour" id="toc-step-5-sales-by-weekday-hour" class="nav-link" data-scroll-target="#step-5-sales-by-weekday-hour">Step 5 | Sales By Weekday, Hour</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-time-analysis" id="toc-purpose-of-time-analysis" class="nav-link" data-scroll-target="#purpose-of-time-analysis">Purpose of Time Analysis</a></li>
+  <li><a href="#recommended-chart-types" id="toc-recommended-chart-types" class="nav-link" data-scroll-target="#recommended-chart-types">Recommended Chart Types</a></li>
+  <li><a href="#calculated-fields-1" id="toc-calculated-fields-1" class="nav-link" data-scroll-target="#calculated-fields-1">Calculated Fields</a></li>
+  </ul></li>
+  <li><a href="#step-7-clustering" id="toc-step-7-clustering" class="nav-link" data-scroll-target="#step-7-clustering">Step 7 | Clustering</a>
+  <ul class="collapse">
+  <li><a href="#purpose-of-clustering" id="toc-purpose-of-clustering" class="nav-link" data-scroll-target="#purpose-of-clustering">Purpose of Clustering</a></li>
+  <li><a href="#calculated-fields-2" id="toc-calculated-fields-2" class="nav-link" data-scroll-target="#calculated-fields-2">Calculated Fields</a></li>
+  <li><a href="#visualzing" id="toc-visualzing" class="nav-link" data-scroll-target="#visualzing">Visualzing</a></li>
+  <li><a href="#video" id="toc-video" class="nav-link" data-scroll-target="#video">Video</a></li>
+  </ul></li>
+  <li><a href="#step-8-return-value-by-order-month" id="toc-step-8-return-value-by-order-month" class="nav-link" data-scroll-target="#step-8-return-value-by-order-month">Step 8 | Return Value by Order Month</a>
+  <ul class="collapse">
+  <li><a href="#calculated-fields-3" id="toc-calculated-fields-3" class="nav-link" data-scroll-target="#calculated-fields-3">Calculated Fields</a></li>
+  <li><a href="#final-results" id="toc-final-results" class="nav-link" data-scroll-target="#final-results">Final Results</a></li>
+  </ul></li>
+  <li><a href="#step-9-retrun-value-by-product" id="toc-step-9-retrun-value-by-product" class="nav-link" data-scroll-target="#step-9-retrun-value-by-product">Step 9 | Retrun Value By Product</a></li>
+  <li><a href="#step-10-dashboard-development" id="toc-step-10-dashboard-development" class="nav-link" data-scroll-target="#step-10-dashboard-development">Step 10 | Dashboard Development</a>
+  <ul class="collapse">
+  <li><a href="#container-structure" id="toc-container-structure" class="nav-link" data-scroll-target="#container-structure">Container Structure</a></li>
+  <li><a href="#dashboard-design-principles" id="toc-dashboard-design-principles" class="nav-link" data-scroll-target="#dashboard-design-principles">Dashboard Design Principles</a></li>
+  <li><a href="#common-dashboard-mistakes" id="toc-common-dashboard-mistakes" class="nav-link" data-scroll-target="#common-dashboard-mistakes">Common Dashboard Mistakes</a></li>
+  <li><a href="#final-dashboard-checklist" id="toc-final-dashboard-checklist" class="nav-link" data-scroll-target="#final-dashboard-checklist">Final Dashboard Checklist</a></li>
+  </ul></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a>
+  <ul class="collapse">
+  <li><a href="#github" id="toc-github" class="nav-link" data-scroll-target="#github">GitHub</a></li>
+  <li><a href="#articles" id="toc-articles" class="nav-link" data-scroll-target="#articles">Articles</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../materials/tableau/index.html">Tableau</a></li><li class="breadcrumb-item"><a href="../../materials/tableau/index.html">Tableau</a></li><li class="breadcrumb-item"><a href="../../materials/tableau/session05.html">Session 05: Sales Analysis Dashboard</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Session 05: Sales Analysis Dashboard</h1>
+<p class="subtitle lead">Advanced Dashboards | 1</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">tableau</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In the comming two sessions we are going to build solid dashboards first of all to enrich our portfolio and obtain advanced dashboard development skills.</p>
+<section id="dashboard-goal" class="level3">
+<h3 class="anchored" data-anchor-id="dashboard-goal">Dashboard Goal</h3>
+<p><strong>The purpose of this dashboard is to analyze retail business performance using:</strong></p>
+<ul>
+<li>Sales trends</li>
+<li>Customer behavior</li>
+<li>Product performance</li>
+<li>Segmentation</li>
+<li>Geographic analysis</li>
+<li>Time-based purchasing behavior</li>
+</ul>
+<p><strong>The dashboard should help business users answer:</strong></p>
+<ul>
+<li>Are sales increasing over time?</li>
+<li>Which products generate the highest revenue?</li>
+<li>Which countries generate the most sales?</li>
+<li>Which weekday and time hour generates the most sales?</li>
+<li>Revenue vs Product</li>
+</ul>
+<p><strong>The dashboard should feel:</strong></p>
+<ul>
+<li>Modern</li>
+<li>Minimalistic</li>
+<li>Executive-level</li>
+<li>Professional</li>
+<li>Presentation-ready</li>
+</ul>
+<hr>
+</section>
+<section id="dataset-overview" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-overview">Dataset Overview</h3>
+<p>The Tableau workbook contains multiple analytical worksheets focused on retail performance analysis.</p>
+<div id="043df462" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 27%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">InvoiceNo</th>
+<th style="text-align: left;">StockCode</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: right;">Quantity</th>
+<th style="text-align: left;">InvoiceDate</th>
+<th style="text-align: left;">UnitPrice</th>
+<th style="text-align: right;">CustomerID</th>
+<th style="text-align: left;">Country</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">536365</td>
+<td style="text-align: left;">85123A</td>
+<td style="text-align: left;">WHITE HANGING HEART T-LIGHT HOLDER</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">1/12/10 8:26</td>
+<td style="text-align: left;">2,55</td>
+<td style="text-align: right;">17850</td>
+<td style="text-align: left;">United Kingdom</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">536365</td>
+<td style="text-align: left;">71053</td>
+<td style="text-align: left;">WHITE METAL LANTERN</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">1/12/10 8:26</td>
+<td style="text-align: left;">3,39</td>
+<td style="text-align: right;">17850</td>
+<td style="text-align: left;">United Kingdom</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">536365</td>
+<td style="text-align: left;">84406B</td>
+<td style="text-align: left;">CREAM CUPID HEARTS COAT HANGER</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">1/12/10 8:26</td>
+<td style="text-align: left;">2,75</td>
+<td style="text-align: right;">17850</td>
+<td style="text-align: left;">United Kingdom</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">536365</td>
+<td style="text-align: left;">84029G</td>
+<td style="text-align: left;">KNITTED UNION FLAG HOT WATER BOTTLE</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">1/12/10 8:26</td>
+<td style="text-align: left;">3,39</td>
+<td style="text-align: right;">17850</td>
+<td style="text-align: left;">United Kingdom</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">536365</td>
+<td style="text-align: left;">84029E</td>
+<td style="text-align: left;">RED WOOLLY HOTTIE WHITE HEART.</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">1/12/10 8:26</td>
+<td style="text-align: left;">3,39</td>
+<td style="text-align: right;">17850</td>
+<td style="text-align: left;">United Kingdom</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Main analytical areas include:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Analysis Area</th>
+<th>Business Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>KPI Section</td>
+<td>High-level business overview</td>
+</tr>
+<tr class="even">
+<td>Sales Trend</td>
+<td>Revenue trend analysis</td>
+</tr>
+<tr class="odd">
+<td>Geographic Analysis</td>
+<td>Country-level sales analysis</td>
+</tr>
+<tr class="even">
+<td>Product Performance</td>
+<td>Best-selling product analysis</td>
+</tr>
+<tr class="odd">
+<td>Time Analysis</td>
+<td>Purchase behavior analysis</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dashboard-structure" class="level3">
+<h3 class="anchored" data-anchor-id="dashboard-structure">Dashboard Structure</h3>
+<p><img src="../../img/tableau/05/retail_sales_analysis_dashboard.png" class="img-fluid"></p>
+</section>
+<section id="recommended-dashboard-size" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-dashboard-size">Recommended Dashboard Size</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dashboard Size</td>
+<td>1400 × 900</td>
+</tr>
+<tr class="even">
+<td>Layout</td>
+<td>Tiled</td>
+</tr>
+<tr class="odd">
+<td>Device Layout</td>
+<td>Desktop</td>
+</tr>
+<tr class="even">
+<td>Outer Padding</td>
+<td>20–30 px</td>
+</tr>
+<tr class="odd">
+<td>Space Between Containers</td>
+<td>10–20 px</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>A fixed dashboard size helps maintain alignment consistency and improves presentation quality.</p>
+</blockquote>
+<!-- todo: add color pallete  -->
+<hr>
+</section>
+<section id="dashboard-visual-hierarchy" class="level3">
+<h3 class="anchored" data-anchor-id="dashboard-visual-hierarchy">Dashboard Visual Hierarchy</h3>
+<p>The dashboard should follow a clear visual hierarchy.</p>
+<p>The user should first see:</p>
+<ol type="1">
+<li>KPI Section</li>
+<li>Sales Trends</li>
+<li>Geographic Analysis</li>
+<li>Product Analysis</li>
+</ol>
+<p>The layout should naturally guide the user from summary insights into deeper analytical exploration.</p>
+<hr>
+</section>
+<section id="step-0-calculated-fields-and-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="step-0-calculated-fields-and-parameters">Step 0 | Calculated Fields and Parameters</h2>
+<section id="period" class="level3">
+<h3 class="anchored" data-anchor-id="period"><code>Period</code></h3>
+<p>We need this, order to be able effectively analyzie sales by any predifined period first we need to create a Parameter named <code>Period</code></p>
+<p><img src="../../img/tableau/05/period_parameter.png" class="img-fluid"></p>
+<p>Once we have this, we can create the following metrics:</p>
+<ul>
+<li><code>Current Period Orders</code></li>
+<li><code>Current Period AVG Invoice</code></li>
+<li><code>Current Period Customers</code></li>
+<li><code>Current Period Sales</code></li>
+</ul>
+<hr>
+</section>
+<section id="is-canceled" class="level3">
+<h3 class="anchored" data-anchor-id="is-canceled">Is Canceled</h3>
+<p>This is useful because some invoice numbers may be stored as numbers, while cancelled invoices contain a letter such as <code>C536379</code></p>
+<p><code>C</code> means cancelled and we need to filter out them from further calculation, unless we are explicitly analyzing cancelled orders.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span>(STR([Invoice <span class="kw">No</span>]),<span class="dv">1</span>) <span class="op">=</span> <span class="ot">"C"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="valid-sale" class="level3">
+<h3 class="anchored" data-anchor-id="valid-sale"><code>Valid Sale</code></h3>
+<p><strong>Filter variable to test:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">NOT</span> [<span class="kw">Is</span> Cancelled]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> [Quantity] <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> [Unit Price] <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> <span class="kw">NOT</span> ISNULL([Customer <span class="kw">ID</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>We need this in order to clean the table</p>
+</blockquote>
+<hr>
+</section>
+<section id="max-order-date" class="level3">
+<h3 class="anchored" data-anchor-id="max-order-date"><code>Max Order Date</code></h3>
+<p>We need this in order to figure out the latest invoice date.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>{ FIXED : <span class="fu">MAX</span>(<span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>Remember the RFM analysis</p>
+</blockquote>
+</section>
+<section id="sales" class="level3">
+<h3 class="anchored" data-anchor-id="sales"><code>Sales</code></h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>[Unit Price]<span class="op">*</span> [Quantity]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="step-1-kpi-section" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-kpi-section">Step 1 | KPI Section</h2>
+<section id="purpose-of-kpi-section" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-of-kpi-section">Purpose of KPI Section</h3>
+<p>The KPI section provides an instant overview of overall business health.</p>
+<p>The KPI cards should be positioned at the top of the dashboard because they establish the business context before deeper analysis begins.</p>
+<p><img src="../../img/tableau/05/KPIs.png" class="img-fluid"></p>
+<p>We need to create <code>16</code> new calculated fields in meaning that for <code>Sales</code>, <code>Customers</code>, <code>Orders</code>, <code>Avg Invoice</code> we need</p>
+</section>
+<section id="recommended-kpis" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-kpis">Recommended KPIs</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>KPI</th>
+<th>Business Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Total Revenue</td>
+<td>Total generated sales</td>
+</tr>
+<tr class="even">
+<td>Total Orders</td>
+<td>Number of transactions</td>
+</tr>
+<tr class="odd">
+<td>Total Customers</td>
+<td>Unique customer count</td>
+</tr>
+<tr class="even">
+<td>AVG Revenue per Customer</td>
+<td>Customer value</td>
+</tr>
+<tr class="odd">
+<td>Growth %</td>
+<td>Performance comparison</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="recommended-kpi-layout" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-kpi-layout">Recommended KPI Layout</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Revenue KPI]
+    B[Orders KPI]
+    C[Customers KPI]
+    D[AVG Revenue KPI]
+
+    A --&gt; B
+    B --&gt; C
+    C --&gt; D
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="related-calculated-fields" class="level3">
+<h3 class="anchored" data-anchor-id="related-calculated-fields">Related Calculated Fields</h3>
+<section id="current-period-sales" class="level4">
+<h4 class="anchored" data-anchor-id="current-period-sales"><code>Current Period Sales</code></h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> [Period] <span class="op">=</span> <span class="ot">"Last Week"</span> <span class="cf">THEN</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'week'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'week'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'week'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Sales]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Month"</span> <span class="cf">THEN</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'month'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'month'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'month'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Sales]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Quarter"</span> <span class="cf">THEN</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'quarter'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'quarter'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'quarter'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Sales]</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Year"</span> <span class="cf">THEN</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'year'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'year'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'year'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Sales]</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="current-period-orders" class="level4">
+<h4 class="anchored" data-anchor-id="current-period-orders"><code>Current Period Orders</code></h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">INT</span>(<span class="cf">IF</span> [Period] <span class="op">=</span> <span class="ot">"Last Week"</span> <span class="cf">THEN</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'week'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'week'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'week'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Invoice <span class="kw">No</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Month"</span> <span class="cf">THEN</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'month'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'month'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'month'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Invoice <span class="kw">No</span>]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Quarter"</span> <span class="cf">THEN</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'quarter'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'quarter'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'quarter'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Invoice <span class="kw">No</span>]</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Year"</span> <span class="cf">THEN</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'year'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'year'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'year'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Invoice <span class="kw">No</span>]</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="current-period-customers" class="level4">
+<h4 class="anchored" data-anchor-id="current-period-customers"><code>Current Period Customers</code></h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> [Period] <span class="op">=</span> <span class="ot">"Last Week"</span> <span class="cf">THEN</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'week'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'week'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'week'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Customer <span class="kw">ID</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Month"</span> <span class="cf">THEN</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'month'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'month'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'month'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Customer <span class="kw">ID</span>]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Quarter"</span> <span class="cf">THEN</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'quarter'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'quarter'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'quarter'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Customer <span class="kw">ID</span>]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Year"</span> <span class="cf">THEN</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'year'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'year'</span>, <span class="op">-</span><span class="dv">1</span>, DATETRUNC(<span class="st">'year'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Customer <span class="kw">ID</span>]</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="current-period-avg-invoice" class="level4">
+<h4 class="anchored" data-anchor-id="current-period-avg-invoice"><code>Current Period AVG Invoice</code></h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> COUNTD([<span class="kw">Current</span> Period Orders]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="kw">NULL</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSE</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>([<span class="kw">Current</span> Period Sales]) <span class="op">/</span> COUNTD([<span class="kw">Current</span> Period Orders])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="previous-period-sales" class="level4">
+<h4 class="anchored" data-anchor-id="previous-period-sales"><code>Previous Period Sales</code></h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> [Period] <span class="op">=</span> <span class="ot">"Last Week"</span> <span class="cf">THEN</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'week'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'week'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'week'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Sales]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Month"</span> <span class="cf">THEN</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'month'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'month'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'month'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Sales]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Quarter"</span> <span class="cf">THEN</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'quarter'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'quarter'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'quarter'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Sales]</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Year"</span> <span class="cf">THEN</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'year'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'year'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'year'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Sales]</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="previous-period-orders" class="level4">
+<h4 class="anchored" data-anchor-id="previous-period-orders"><code>Previous Period Orders</code></h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">FLOAT</span>(<span class="cf">IF</span> [Period] <span class="op">=</span> <span class="ot">"Last Week"</span> <span class="cf">THEN</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'week'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'week'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'week'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Invoice <span class="kw">No</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Month"</span> <span class="cf">THEN</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'month'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'month'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'month'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Invoice <span class="kw">No</span>]</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Quarter"</span> <span class="cf">THEN</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'quarter'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'quarter'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'quarter'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Invoice <span class="kw">No</span>]</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Year"</span> <span class="cf">THEN</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'year'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'year'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'year'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Invoice <span class="kw">No</span>]</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="previous-period-customers" class="level4">
+<h4 class="anchored" data-anchor-id="previous-period-customers"><code>Previous Period Customers</code></h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> [Period] <span class="op">=</span> <span class="ot">"Last Week"</span> <span class="cf">THEN</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'week'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'week'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'week'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Customer <span class="kw">ID</span>]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Month"</span> <span class="cf">THEN</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'month'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'month'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'month'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Customer <span class="kw">ID</span>]</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Quarter"</span> <span class="cf">THEN</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'quarter'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'quarter'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'quarter'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Customer <span class="kw">ID</span>]</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Year"</span> <span class="cf">THEN</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">IF</span> DATETRUNC(<span class="st">'year'</span>, <span class="dt">DATE</span>([Invoice <span class="dt">Date</span>])) <span class="op">=</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>       DATEADD(<span class="st">'year'</span>, <span class="op">-</span><span class="dv">2</span>, DATETRUNC(<span class="st">'year'</span>, [<span class="fu">Max</span> <span class="kw">Order</span> <span class="dt">Date</span>]))</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">THEN</span> [Customer <span class="kw">ID</span>]</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="previous-period-avg-invoice" class="level4">
+<h4 class="anchored" data-anchor-id="previous-period-avg-invoice"><code>Previous Period AVG Invoice</code></h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> COUNTD([<span class="kw">Previous</span> Period Orders]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="kw">NULL</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSE</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>([<span class="kw">Previous</span> Period Sales]) <span class="op">/</span> COUNTD([<span class="kw">Previous</span> Period Orders])</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="sales-pop" class="level4">
+<h4 class="anchored" data-anchor-id="sales-pop"><code>Sales PoP %</code></h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> <span class="fu">SUM</span>([<span class="kw">Previous</span> Period Sales]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="kw">NULL</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSE</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">SUM</span>([<span class="kw">Current</span> Period Sales]) <span class="op">-</span> <span class="fu">SUM</span>([<span class="kw">Previous</span> Period Sales])) </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">/</span> <span class="fu">SUM</span>([<span class="kw">Previous</span> Period Sales])</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="orders-pop" class="level4">
+<h4 class="anchored" data-anchor-id="orders-pop"><code>Orders PoP %</code></h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> <span class="fu">COUNT</span>([<span class="kw">Previous</span> Period Orders]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="kw">NULL</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSE</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">COUNT</span>([<span class="kw">Current</span> Period Orders]) <span class="op">-</span> <span class="fu">COUNT</span>([<span class="kw">Previous</span> Period Orders]))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">/</span> <span class="fu">COUNT</span>([<span class="kw">Previous</span> Period Orders])</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="customers-pop" class="level4">
+<h4 class="anchored" data-anchor-id="customers-pop"><code>Customers PoP %</code></h4>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> COUNTD([<span class="kw">Previous</span> Period Customers]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="kw">NULL</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSE</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    (COUNTD([<span class="kw">Current</span> Period Customers]) <span class="op">-</span> COUNTD([<span class="kw">Previous</span> Period Customers]))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">/</span> COUNTD([<span class="kw">Previous</span> Period Customers])</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="avg-invoice-pop" class="level4">
+<h4 class="anchored" data-anchor-id="avg-invoice-pop"><code>AVG invoice PoP %</code></h4>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> [<span class="kw">Previous</span> Period <span class="fu">AVG</span> Invoice] <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="kw">NULL</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">ELSE</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    [<span class="kw">Current</span> Period <span class="fu">AVG</span> Invoice]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    [<span class="kw">Previous</span> Period <span class="fu">AVG</span> Invoice]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="op">/</span> [<span class="kw">Previous</span> Period <span class="fu">AVG</span> Invoice]</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sales-icon" class="level4">
+<h4 class="anchored" data-anchor-id="sales-icon"><code>Sales Icon</code></h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> ZN([Sales PoP %]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">""</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ELSEIF [Sales PoP %] <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">"▲"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ELSEIF [Sales PoP %] <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">"▼"</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="orders-icon" class="level4">
+<h4 class="anchored" data-anchor-id="orders-icon"><code>Orders Icon</code></h4>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> ZN([Orders PoP %]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">""</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ELSEIF [Orders PoP %] <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">"▲"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ELSEIF [Orders PoP %] <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">"▼"</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="customer-icon" class="level4">
+<h4 class="anchored" data-anchor-id="customer-icon"><code>Customer Icon</code></h4>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> ZN([Customers PoP %]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">""</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ELSEIF [Customers PoP %] <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">"▲"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ELSEIF [Customers PoP %] <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">"▼"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="avg-invoice-icon" class="level4">
+<h4 class="anchored" data-anchor-id="avg-invoice-icon"><code>AVG Invoice Icon</code></h4>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> ZN([<span class="fu">AVG</span> Invoice PoP %]) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">""</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>ELSEIF [<span class="fu">AVG</span> Invoice PoP %] <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">"▲"</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ELSEIF [<span class="fu">AVG</span> Invoice PoP %] <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="ot">"▼"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="kpi-card-design-rules" class="level3">
+<h3 class="anchored" data-anchor-id="kpi-card-design-rules">KPI Card Design Rules</h3>
+<p><strong>Each KPI card should contain:</strong></p>
+<ul>
+<li>Large KPI value</li>
+<li>KPI subtitle</li>
+<li>Growth percentage</li>
+<li>Previous period comparison</li>
+<li>Directional indicator</li>
+</ul>
+<p>The KPI value should always be visually dominant.</p>
+<section id="entire-view-format" class="level4">
+<h4 class="anchored" data-anchor-id="entire-view-format">Entire View &amp; Format</h4>
+<p>Choose the Entire View and navigate to the format sellect borders and change everything into <code>None</code>, as shown in the file.</p>
+<p><img src="../../img/tableau/05/format.png" class="img-fluid"></p>
+</section>
+<section id="currency" class="level4">
+<h4 class="anchored" data-anchor-id="currency">Currency</h4>
+<p>Right Click on the numbers choose the respective fields and choose the required currency.</p>
+<p><img src="../../img/tableau/05/currency_format.png" class="img-fluid"></p>
+<hr>
+</section>
+</section>
+<section id="kpi-color-rules" class="level3">
+<h3 class="anchored" data-anchor-id="kpi-color-rules">KPI Color Rules</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Growth</td>
+<td>Green</td>
+</tr>
+<tr class="even">
+<td>Negative Growth</td>
+<td>Red</td>
+</tr>
+<tr class="odd">
+<td>Neutral</td>
+<td>Gray</td>
+</tr>
+</tbody>
+</table>
+<p>Use directional arrows to reinforce performance visually.</p>
+</section>
+<section id="kpi-card-size-recommendations" class="level3">
+<h3 class="anchored" data-anchor-id="kpi-card-size-recommendations">KPI Card Size Recommendations</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Width</td>
+<td>240–280 px</td>
+</tr>
+<tr class="even">
+<td>Height</td>
+<td>120–150 px</td>
+</tr>
+<tr class="odd">
+<td>Inner Padding</td>
+<td>10–15 px</td>
+</tr>
+<tr class="even">
+<td>Space Between Cards</td>
+<td>15–20 px</td>
+</tr>
+</tbody>
+</table>
+<p>All KPI cards should maintain identical sizing for visual consistency.</p>
+<hr>
+</section>
+<section id="recommended-typography-hierarchy" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-typography-hierarchy">Recommended Typography Hierarchy</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Font Size</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dashboard Title</td>
+<td>24–32 px</td>
+<td>Bold</td>
+</tr>
+<tr class="even">
+<td>Section Titles</td>
+<td>16–20 px</td>
+<td>Semi-bold</td>
+</tr>
+<tr class="odd">
+<td>KPI Values</td>
+<td>28–40 px</td>
+<td>Bold</td>
+</tr>
+<tr class="even">
+<td>KPI Labels</td>
+<td>10–14 px</td>
+<td>Regular</td>
+</tr>
+<tr class="odd">
+<td>Growth %</td>
+<td>12–16 px</td>
+<td>Semi-bold</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>Try within the above mentioned sizing.</p>
+</blockquote>
+<hr>
+</section>
+<section id="recommended-tableau-fonts" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-tableau-fonts">Recommended Tableau Fonts</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Font</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tableau Book</td>
+<td>Default dashboard text</td>
+</tr>
+<tr class="even">
+<td>Tableau Medium</td>
+<td>KPI values and titles</td>
+</tr>
+<tr class="odd">
+<td>Arial</td>
+<td>Universal readability</td>
+</tr>
+<tr class="even">
+<td>Verdana</td>
+<td>Small dashboard labels</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="step-2-sales-trend-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-sales-trend-analysis">Step 2 | Sales Trend Analysis</h2>
+<section id="purpose-of-sales-trend-chart" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-of-sales-trend-chart">Purpose of Sales Trend Chart</h3>
+<p>The Sales Trend chart helps users understand how business performance changes over time.</p>
+<p>This is usually the primary analytical chart after the <code>KPI</code> section.</p>
+<p>The chart should help users identify:</p>
+<ul>
+<li>Growth trends</li>
+<li>Declines</li>
+<li>Seasonality</li>
+<li>Performance spikes</li>
+<li>Long-term business direction</li>
+</ul>
+<p><img src="../../img/tableau/05/Sales_Trend.png" class="img-fluid"></p>
+</section>
+<section id="sales-trend-design-rules" class="level3">
+<h3 class="anchored" data-anchor-id="sales-trend-design-rules">Sales Trend Design Rules</h3>
+<p><strong>Do:</strong></p>
+<ul>
+<li>Highlight latest point</li>
+<li>Use minimal gridlines</li>
+<li>Use one dominant color</li>
+<li>Keep labels minimal</li>
+<li>Maintain smooth visual flow</li>
+</ul>
+<p><strong>Avoid:</strong></p>
+<ul>
+<li>Too many colors</li>
+<li>Heavy formatting</li>
+<li>Excessive labels</li>
+<li>Too many trend lines</li>
+</ul>
+<hr>
+</section>
+<section id="recommended-sales-trend-styling" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-sales-trend-styling">Recommended Sales Trend Styling</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Line Width</td>
+<td>Medium</td>
+</tr>
+<tr class="even">
+<td>Gridlines</td>
+<td>Soft</td>
+</tr>
+<tr class="odd">
+<td>Labels</td>
+<td>Minimal</td>
+</tr>
+<tr class="even">
+<td>Colors</td>
+<td>Single dominant color</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dual-axis-design" class="level3">
+<h3 class="anchored" data-anchor-id="dual-axis-design">Dual Axis Design</h3>
+<p>Right click on the axis and choose <strong>dual axis</strong></p>
+<p><img src="../../img/tableau/05/Sales_Trend_Steps.png" class="img-fluid"></p>
+</section>
+<section id="show-marks" class="level3">
+<h3 class="anchored" data-anchor-id="show-marks">Show Marks</h3>
+<p><img src="../../img/tableau/05/Sales_Trend_Min_Max.png" class="img-fluid"></p>
+</section>
+<section id="borders" class="level3">
+<h3 class="anchored" data-anchor-id="borders">Borders</h3>
+<div class="columns">
+<div class="column">
+<p><img src="../../img/tableau/05/sales_trend_row_format.png" class="img-fluid"></p>
+</div><div class="column">
+<p><img src="../../img/tableau/05/sales_trend_column_format.png" class="img-fluid"></p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="step-3-geographic-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-geographic-analysis">Step 3 | Geographic Analysis</h2>
+<section id="purpose-of-geographic-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-of-geographic-analysis">Purpose of Geographic Analysis</h3>
+<p>The geographic analysis section helps users identify which countries or regions generate the highest revenue.</p>
+<p><strong>This analysis helps answer:</strong></p>
+<ul>
+<li>Which markets perform best?</li>
+<li>Which regions need attention?</li>
+<li>Where are business opportunities concentrated?</li>
+</ul>
+<p><img src="../../img/tableau/05/Sales_by_Country.png" class="img-fluid"></p>
+</section>
+<section id="geographic-analysis-design-rules" class="level3">
+<h3 class="anchored" data-anchor-id="geographic-analysis-design-rules">Geographic Analysis Design Rules</h3>
+<p><strong>If using maps:</strong></p>
+<ul>
+<li>Use soft color gradients</li>
+<li>Highlight key regions</li>
+<li>Keep labels minimal</li>
+</ul>
+<p><strong>If using bars:</strong></p>
+<ul>
+<li>Sort descending</li>
+<li>Show regional contribution %</li>
+</ul>
+<p>Maps should support analysis rather than decoration.</p>
+</section>
+<section id="calculated-fields" class="level3">
+<h3 class="anchored" data-anchor-id="calculated-fields">Calculated Fields</h3>
+<section id="valid_date" class="level4">
+<h4 class="anchored" data-anchor-id="valid_date"><code>valid_date</code></h4>
+<p>To validate the filter</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> [Period] <span class="op">=</span> <span class="ot">"Last Week"</span> <span class="cf">THEN</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    DATEDIFF(<span class="st">'week'</span>, [Invoice <span class="dt">Date</span>], { <span class="fu">MAX</span>([Invoice <span class="dt">Date</span>]) }) <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Month"</span> <span class="cf">THEN</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    DATEDIFF(<span class="st">'month'</span>, [Invoice <span class="dt">Date</span>], { <span class="fu">MAX</span>([Invoice <span class="dt">Date</span>]) }) <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Quarter"</span> <span class="cf">THEN</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    DATEDIFF(<span class="st">'quarter'</span>, [Invoice <span class="dt">Date</span>], { <span class="fu">MAX</span>([Invoice <span class="dt">Date</span>]) }) <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>ELSEIF [Period] <span class="op">=</span> <span class="ot">"Last Year"</span> <span class="cf">THEN</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    DATEDIFF(<span class="st">'year'</span>, [Invoice <span class="dt">Date</span>], { <span class="fu">MAX</span>([Invoice <span class="dt">Date</span>]) }) <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="valid_sale" class="level4">
+<h4 class="anchored" data-anchor-id="valid_sale"><code>valid_sale</code></h4>
+<p>To validate the filter</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">NOT</span> [<span class="kw">is</span> canceled]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> [Quantity] <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> [Unit Price] <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> <span class="kw">NOT</span> ISNULL([Customer <span class="kw">ID</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="log-sales" class="level4">
+<h4 class="anchored" data-anchor-id="log-sales"><code>Log Sales</code></h4>
+<p>In order to kind of zoom-in the differences there might be a need to use <strong>logarithmic scale</strong></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">LOG</span>(<span class="fu">SUM</span>([Sales]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>AS we can see the highest generated sales belong to the United Kingdom</p>
+</blockquote>
+</section>
+</section>
+<section id="visualization-steps" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-steps">Visualization Steps</h3>
+<p><img src="../../img/tableau/05/geographic.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember the effect of the logarithmic scale is to zoom in in order to see the difference more explicitly</p>
+</div>
+</div>
+</section>
+</section>
+<section id="step-4-product-performance-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-product-performance-analysis">Step 4 | Product Performance Analysis</h2>
+<section id="purpose-of-product-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-of-product-analysis">Purpose of Product Analysis</h3>
+<p>The product section identifies:</p>
+<ul>
+<li>Best-selling products</li>
+<li>Low-performing products</li>
+<li>Revenue contribution</li>
+<li>Product demand</li>
+</ul>
+<p>This section helps stakeholders identify opportunities and risks quickly.</p>
+<p><img src="../../img/tableau/05/Top_Products_by_Revenue.png" class="img-fluid"></p>
+</section>
+<section id="calculated-field" class="level3">
+<h3 class="anchored" data-anchor-id="calculated-field">Calculated Field</h3>
+<section id="index" class="level4">
+<h4 class="anchored" data-anchor-id="index">Index</h4>
+<p>Here we can also create an index column in order follow properly</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INDEX</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="product-analysis-design-rules" class="level3">
+<h3 class="anchored" data-anchor-id="product-analysis-design-rules">Product Analysis Design Rules</h3>
+<p>Do:</p>
+<ul>
+<li>Sort descending</li>
+<li>Highlight top products</li>
+<li>Keep labels readable</li>
+<li>Use consistent colors</li>
+</ul>
+<p>Avoid:</p>
+<ul>
+<li>Too many products displayed</li>
+<li>Tiny unreadable labels</li>
+<li>Excessive color variations</li>
+</ul>
+</section>
+<section id="table-construction-steps" class="level3">
+<h3 class="anchored" data-anchor-id="table-construction-steps">Table Construction Steps</h3>
+<section id="filters" class="level4">
+<h4 class="anchored" data-anchor-id="filters">Filters</h4>
+<p><img src="../../img/tableau/05/top_products_by_sale.png" class="img-fluid"></p>
+</section>
+<section id="marks" class="level4">
+<h4 class="anchored" data-anchor-id="marks">Marks</h4>
+<div class="sourceCode" id="cb25"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SUM</span>(Sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="format" class="level4">
+<h4 class="anchored" data-anchor-id="format">Format</h4>
+<p><img src="../../img/tableau/05/top_products_by_revenue_filter.png" class="img-fluid"></p>
+<hr>
+</section>
+</section>
+</section>
+<section id="step-5-sales-by-weekday-hour" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-sales-by-weekday-hour">Step 5 | Sales By Weekday, Hour</h2>
+<section id="purpose-of-time-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-of-time-analysis">Purpose of Time Analysis</h3>
+<p>This section helps identify purchasing behavior patterns.</p>
+<p>Possible analyses:</p>
+<ul>
+<li>Sales by Weekday</li>
+<li>Sales by Hour</li>
+<li>Peak purchasing periods</li>
+</ul>
+<hr>
+</section>
+<section id="recommended-chart-types" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-chart-types">Recommended Chart Types</h3>
+<p>Use:</p>
+<ul>
+<li>Heatmaps</li>
+<li>Line Charts</li>
+<li>Bar Charts</li>
+</ul>
+</section>
+<section id="calculated-fields-1" class="level3">
+<h3 class="anchored" data-anchor-id="calculated-fields-1">Calculated Fields</h3>
+<p>In order to be able to build the graph first wee need to create the following calculated fields:</p>
+<ul>
+<li><code>Order Hour</code></li>
+<li><code>Weekday</code></li>
+</ul>
+<section id="order-hour" class="level4">
+<h4 class="anchored" data-anchor-id="order-hour"><code>Order Hour</code></h4>
+<div class="sourceCode" id="cb26"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>DATEPART(<span class="st">'hour'</span>,[Invoice <span class="dt">Date</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="order-weekday" class="level4">
+<h4 class="anchored" data-anchor-id="order-weekday"><code>Order Weekday</code></h4>
+<div class="sourceCode" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>DATENAME(<span class="st">'weekday'</span>,[Invoice <span class="dt">Date</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="step-7-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-clustering">Step 7 | Clustering</h2>
+<section id="purpose-of-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-of-clustering">Purpose of Clustering</h3>
+<p>Automatically splits the data into multiple clusters.</p>
+<p>Navigate to Analytic <span class="math inline">\(\rightarrow\)</span> Cluster <span class="math inline">\(\rightarrow\)</span> drag into cluster</p>
+<p><img src="../../img/tableau/05/clustering.png" class="img-fluid"></p>
+<p><img src="../../img/tableau/05/cluster_final.png" class="img-fluid"></p>
+</section>
+<section id="calculated-fields-2" class="level3">
+<h3 class="anchored" data-anchor-id="calculated-fields-2">Calculated Fields</h3>
+<p>Here wee need to add RFM components in order to visualize, for the comming dashboard we will add a new representation for the calculated field.</p>
+<ul>
+<li><code>Product Orders</code></li>
+<li><code>Product Revenue</code></li>
+<li><code>Product Quantity Sold</code></li>
+</ul>
+<section id="product-orders" class="level4">
+<h4 class="anchored" data-anchor-id="product-orders"><code>Product Orders</code></h4>
+<div class="sourceCode" id="cb28"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>{ FIXED [Stock Code]: COUNTD([Invoice <span class="kw">No</span>]) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>Explain the decision for applying <code>COUNTD</code></p>
+</blockquote>
+<hr>
+</section>
+<section id="product-quantity-sold" class="level4">
+<h4 class="anchored" data-anchor-id="product-quantity-sold"><code>Product Quantity Sold</code></h4>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>{ FIXED [Stock Code] : <span class="fu">SUM</span>([Quantity]) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="product-revenue" class="level4">
+<h4 class="anchored" data-anchor-id="product-revenue"><code>Product Revenue</code></h4>
+<div class="sourceCode" id="cb30"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>{ FIXED [Stock Code] : <span class="fu">SUM</span>([Sales]) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="visualzing" class="level3">
+<h3 class="anchored" data-anchor-id="visualzing">Visualzing</h3>
+<p>Drag Product Orders and Product Quantity Sold part into Columns and Rows</p>
+<pre class="text"><code>right click on the column → dimansion</code></pre>
+<p><img src="../../img/tableau/05/Cluster_Intermediate.png" class="img-fluid"></p>
+</section>
+<section id="video" class="level3">
+<h3 class="anchored" data-anchor-id="video">Video</h3>
+<p>Checkout the <a href="https://www.youtube.com/watch?v=nLFTAaHREt4">following video</a></p>
+</section>
+</section>
+<section id="step-8-return-value-by-order-month" class="level2">
+<h2 class="anchored" data-anchor-id="step-8-return-value-by-order-month">Step 8 | Return Value by Order Month</h2>
+<p><img src="../../img/tableau/05/return_value.png" class="img-fluid"></p>
+<section id="calculated-fields-3" class="level3">
+<h3 class="anchored" data-anchor-id="calculated-fields-3">Calculated Fields</h3>
+<ul>
+<li><code>Revenue</code></li>
+<li><code>Return Value</code></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We have the same as filed named Sales as well, I did so simply to train yourself :)</p>
+</div>
+</div>
+<section id="revenue" class="level4">
+<h4 class="anchored" data-anchor-id="revenue">Revenue</h4>
+<div class="sourceCode" id="cb32"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>[Quantity] <span class="op">*</span> [Unit Price]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="return-value" class="level4">
+<h4 class="anchored" data-anchor-id="return-value">Return Value</h4>
+<div class="sourceCode" id="cb33"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">IF</span> [Quantity] <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="fu">ABS</span>([Quantity] <span class="op">*</span> [Unit Price]) <span class="cf">END</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="final-results" class="level3">
+<h3 class="anchored" data-anchor-id="final-results">Final Results</h3>
+<p><img src="../../img/tableau/05/return_value_by_product_final.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="step-9-retrun-value-by-product" class="level2">
+<h2 class="anchored" data-anchor-id="step-9-retrun-value-by-product">Step 9 | Retrun Value By Product</h2>
+<p>Similar to the above case</p>
+<p><img src="../../img/tableau/05/return_value_by_product.png" class="img-fluid"></p>
+</section>
+<section id="step-10-dashboard-development" class="level2">
+<h2 class="anchored" data-anchor-id="step-10-dashboard-development">Step 10 | Dashboard Development</h2>
+<section id="container-structure" class="level3">
+<h3 class="anchored" data-anchor-id="container-structure">Container Structure</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+
+A[Main Vertical Container]
+
+A --&gt; B[KPI Horizontal Container]
+A --&gt; C[Middle Analytics Section]
+A --&gt; D[Bottom Supporting Charts]
+
+C --&gt; E[Sales Trend]
+C --&gt; F[Geographic Analysis]
+C --&gt; G[Product Analysis]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="dashboard-design-principles" class="level3">
+<h3 class="anchored" data-anchor-id="dashboard-design-principles">Dashboard Design Principles</h3>
+<p>A professional dashboard should:</p>
+<ul>
+<li>Guide user attention</li>
+<li>Prioritize important insights</li>
+<li>Reduce clutter</li>
+<li>Maintain spacing consistency</li>
+<li>Support storytelling</li>
+<li>Simplify decision-making</li>
+</ul>
+<p>The dashboard should feel analytical and structured rather than visually crowded.</p>
+<hr>
+</section>
+<section id="common-dashboard-mistakes" class="level3">
+<h3 class="anchored" data-anchor-id="common-dashboard-mistakes">Common Dashboard Mistakes</h3>
+<p>Avoid:</p>
+<ul>
+<li>Too many chart types</li>
+<li>Excessive colors</li>
+<li>Tiny labels</li>
+<li>Misaligned containers</li>
+<li>Heavy borders</li>
+<li>Decorative visualizations</li>
+<li>Overcrowded layouts</li>
+</ul>
+<p>Every dashboard element should have a clear analytical purpose.</p>
+<hr>
+</section>
+<section id="final-dashboard-checklist" class="level3">
+<h3 class="anchored" data-anchor-id="final-dashboard-checklist">Final Dashboard Checklist</h3>
+<p>Before publishing:</p>
+<ul>
+<li>KPI section visually dominant</li>
+<li>Charts aligned properly</li>
+<li>Colors consistent</li>
+<li>Font hierarchy clear</li>
+<li>Filters functional</li>
+<li>Tooltips readable</li>
+<li>Interactions working</li>
+<li>Dashboard spacing balanced</li>
+<li>Storytelling understandable</li>
+<li>Dashboard presentation-ready</li>
+</ul>
+</section>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<section id="github" class="level3">
+<h3 class="anchored" data-anchor-id="github">GitHub</h3>
+<p><a href="https://github.com/hovhannisyan91/tableau-analytics-portfolio/tree/main/session05">Tableau Course Code Repository</a> for this session is available in the GitHub repository linked above. It includes:</p>
+<ul>
+<li>Tableau workbook with all examples</li>
+<li>Sample datasets</li>
+</ul>
+</section>
+<section id="articles" class="level3">
+<h3 class="anchored" data-anchor-id="articles">Articles</h3>
+<ul>
+<li><a href="https://vizableinsights.com/wp-content/uploads/Dataviz-Design-Checklist-1.pdf">Dataviz Design Checklist</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
