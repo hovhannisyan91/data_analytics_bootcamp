@@ -3135,6 +3135,188 @@
     ]
   },
   {
+    "objectID": "materials/statistics/session06.html",
+    "href": "materials/statistics/session06.html",
+    "title": "Statistics Session 05: Sampling",
+    "section": "",
+    "text": "Sampling\nConfidence Intervals\nHypothesis Testing\nStorytelling With Data",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 05: Sampling"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session06.html#agenda",
+    "href": "materials/statistics/session06.html#agenda",
+    "title": "Statistics Session 05: Sampling",
+    "section": "",
+    "text": "Sampling\nConfidence Intervals\nHypothesis Testing\nStorytelling With Data",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 05: Sampling"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session06.html#sampling",
+    "href": "materials/statistics/session06.html#sampling",
+    "title": "Statistics Session 05: Sampling",
+    "section": "Sampling",
+    "text": "Sampling\n\nPopulation vs. Sample\nIn statistics:\n\na population is the full group we care about (all customers, all transactions, all students, all calls).\n\na sample is a smaller, representative portion of that population.\n\nFor example, when a market research company measures TV viewership, the population is every viewer, but the sample is only the households that have a Nielsen people-meter installed.\n\nThe goal is to learn something about everyone by studying just the selected few.\n\n\n\n\nWhy Not Measure Everyone?\nAt first glance, it may seem logical to “measure everything” But in reality, studying an entire population is often:\n\nToo expensive\n\nToo time-consuming\n\nPhysically impossible\n\nDamaging to the items being measured (quality control settings)\n\n\nImagine you want to understand student attitudes toward academic integrity at ACA.\nYou could send a survey to all students, but:\n\nNot everyone will respond.\n\nCollecting, cleaning, and processing thousands of responses would take weeks.\n\nIn many cases, a properly selected sample (e.g.,15–25% of students) is enough to accurately represent the entire student body.\n\nA similar real-world example from the textbook shows how a college committee surveyed only a subset of students yet confidently inferred the attitudes of the whole institution.\n\n\n\nWhy Businesses Prefer Sampling?\nSampling allows organizations to:\n\nSave money and time\n\nCheck quality without damaging products\n\nLaunch decisions faster\n\nWork with continuous data streams when populations grow too fast\n\nAvoid unnecessary measurements when additional data adds little value\n\nIn telecom, banking, or marketing environments—like you often cannot measure every interaction or manually label every event. Sampling helps you make reliable conclusions with controlled effort.\n\n\n\nThe Risks of Sampling\nSampling introduces uncertainty. Estimates may deviate from the true population values.\nHowever:\n\nStatistics gives us tools to quantify this risk\n\nMany sampling errors are small and predictable\n\nWell-designed sampling keeps accuracy high while effort stays low\n\n\nSampling is not a shortcut. It is a scientifically grounded method for making reliable decisions when full measurement is unnecessary, impractical, or impossible.\nIn both academic settings and real business operations, sampling enables accurate, fast, and cost-effective insights.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 05: Sampling"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session06.html#types-of-sampling",
+    "href": "materials/statistics/session06.html#types-of-sampling",
+    "title": "Statistics Session 05: Sampling",
+    "section": "Types of Sampling",
+    "text": "Types of Sampling\nThere are many options available for gathering samples from a population. The two basic types that we will discuss are:\n\nprobability sampling\nnonprobability sampling\n\n\nProbability Sampling\nA probability sample is a sample in which each member of the population has a known, nonzero, chance of being selected for the sample.\nThere are five main types of probability sampling techniques statisticians use:\n\nsimple random\nsystematic\nstratified\ncluster\nresampling\n\n\nSimple Random Sampling\nA simple random sample is a sample in which every member of the population has an equal chance of being chosen.\n\n\n\nSystematic Sampling\nIn systematic sampling, every k-th member of the population is chosen for the sample. The value of k is determined by dividing the size of the population (N) by the size of the sample (n).\nBut how do you know whcih value of k to choose? The value of k is the systematic sampling constant:\n\\[k = \\frac{N}{n}\\]\nwhere:\n\nN: Size of the population\nn: Size of the sample\n\nUsing my academic integrity survey, with a population of 1,800 students and a sample of 10:\n\\[k = \\frac{N}{n} = \\frac{1,800}{10}=180\\]\nFrom a listing of the entire population, I would choose every 180th student to be included in the sample.\n\nSystematic sampling is often easier to implement than a simple random sample.\n\nProblem\nA problem can arise if the population contains a repeating pattern that aligns with the interval (k). This periodicity can produce a biased sample.\nExample: selecting data every 4th week in an 8-week term may always fall on midterms or finals, leading to inflated study-hour data.\nSolution\nThe first selected unit does not have to be the first entry.We can randomly choose a starting position and then pick every (k)-th observation after that.\n\n\nStratified Sampling\nStratified sampling is used when specific subgroups within a population differ in ways that are important to the analysis. If these subgroups are not represented proportionally in the sample, the results may become biased—even when random sampling procedures are used.\nConsider a cybersecurity compliance study within a large technology company. Previous internal audits show that senior engineers tend to follow security protocols far more consistently than junior engineers. If we rely on simple random or systematic sampling, it is possible—simply by chance—that 45% of the selected employees will be senior engineers, even though they represent only 15% of the workforce. Such a sample would lead us to overestimate overall compliance levels.\nStratified sampling prevents this type of distortion. The population is divided into meaningful groups (such as junior, mid-level, senior, and management), and each group is sampled in proportion to its actual size. This ensures that the final sample mirrors the true composition of the population and that no subgroup with unusually high or low compliance influences the results disproportionately.\nIn contexts such as academic integrity studies, organizational culture assessments, customer-segmentation research, or ACA-style analytics projects, stratified sampling provides a more balanced, representative, and trustworthy basis for drawing conclusions.\n\n\n\n\n\n\n\n\n\n\nStratum (Role Level)\nPopulation Size\nPopulation %\nSample Size (n = 200)\nCalculation\n\n\n\n\nJunior Engineers\n1,200\n40%\n80\n\\(0.40 \\times 200\\)\n\n\nMid-Level Engineers\n900\n30%\n60\n\\(0.30 \\times 200\\)\n\n\nSenior Engineers\n450\n15%\n30\n\\(0.15 \\times 200\\)\n\n\nManagement\n450\n15%\n30\n\\(0.15 \\times 200\\)\n\n\nTotal\n3,000\n100%\n200\n—\n\n\n\n\n\n\nCluster Sampling\nCluster sampling divides the population into mutually exclusive groups—called clusters— where each cluster is intended to be a small-scale representation of the entire population. Instead of sampling individuals directly, we randomly select entire clusters and then either survey every member of those clusters or take a simple random sample within them.\nClusters are often based on geography or natural groupings to simplify data collection. For example, in an academic integrity study, classrooms at specific times of day could serve as clusters. Once a set of classrooms is randomly selected, all students in those rooms (or a sample of them) can be surveyed.\nA common source of confusion is the difference between strata and clusters:\n\nStrata are groups whose members share a common characteristic (e.g., all freshmen). Strata are typically homogeneous within each group and are used to ensure proper representation in the sample.\nClusters, by contrast, are “mini-populations”—often heterogeneous mixtures of different types of individuals (e.g., a classroom containing freshmen, sophomores, juniors, and seniors). The goal is convenience and efficiency, not homogeneity.\n\nCluster sampling is widely used in business settings, especially when test-marketing new products. Companies select cities or regions as clusters and gather feedback from customers within those areas. When designed carefully, cluster sampling provides a cost-effective way to collect a probability sample while maintaining representativeness.\n\n\n\nResampling (Bootstrap)\nResampling is a statistical approach in which multiple samples are repeatedly drawn from an observed dataset to better understand the variability of a statistic. One of the most widely used resampling techniques is the bootstrap method, introduced by Bradley Efron at Stanford University.\nBootstrapping offers a practical, assumption-light method for estimating the uncertainty around statistical measures.\nBootstrapping works by drawing many samples with replacement from the original dataset. For each resample, we compute a statistic of interest—such as a mean, median, proportion, or variance. By repeating this process thousands of times, we obtain a distribution of the statistic, which helps us understand how much it varies and where the true population value is likely to fall.\nBootstrapping is flexible and powerful. Unlike many traditional statistical methods, it does not require strong assumptions about the underlying population distribution. It can be applied to estimate population parameters, standard errors, and measures of uncertainty for a wide variety of statistics.\n\nWebsite Conversion Rates (Digital Marketing)\nA marketing team measures the conversion rate of a landing page based on 600 user sessions. They use bootstrapping to repeatedly resample these outcomes and estimate the distribution of the conversion rate. This helps them compare campaign performance confidently without relying on theoretical formulas.\n\n\nModel Performance Metrics (Machine Learning)\nA data science team evaluates a predictive model using a dataset of 10,000 labeled observations. They apply bootstrapping to estimate the variability of accuracy, recall, or AUC scores. This produces more reliable estimates of model performance under different resampling conditions.\n\n\n\n\n\nSimple Random vs Systematic vs Stratified vs Cluster\n\n\n\n\nNonprobability Sampling\nA nonprobability sample is a sample in which the probability of a population member being selected for the sample is not known.\nA common type of nonprobability sample is a convenience sample. This type of sampling is useful when you are simply trying to gather some general information about the population.\n\nConvenience sample: A convenience sample is used when members of the population are chosen to become part of the sample simply because they are easily accessible.\nInternet Poll: Most individuals who participate in Internet polls have very little statistical training. They are impressed when they see thousands of responses recorded in real time and tend to believe the results.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 05: Sampling"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session06.html#sampling-and-nonsampling-errors",
+    "href": "materials/statistics/session06.html#sampling-and-nonsampling-errors",
+    "title": "Statistics Session 05: Sampling",
+    "section": "Sampling and Nonsampling Errors",
+    "text": "Sampling and Nonsampling Errors\nWhen we rely on a sample instead of measuring an entire population, some level of error is unavoidable. Population values—known as parameters—are typically unknown, so we use statistics from our sample to estimate them. Because a sample represents only part of the population, the statistic will almost never match the parameter exactly. This difference is called sampling error, and it reflects the natural variability that occurs in any sampling process.\n\\[\\text{Sampling Error}=\\bar{x}-\\mu\\]\nwhere\n\n\\(\\bar{x}:\\) sample mean\n\\(\\mu:\\) population mean\n\nSampling error is expected and tends to decrease when the sample size increases. However, data collection can also be affected by nonsampling errors, which arise from factors unrelated to the sampling procedure. These include biased survey questions, measurement mistakes, data entry errors, or low response rates. Unlike sampling errors, nonsampling errors cannot be reduced simply by collecting more data.\n\nRecognizing the difference between sampling and nonsampling errors is essential for evaluating how accurate and reliable a study’s conclusions are.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 05: Sampling"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session06.html#sampling-distribution",
+    "href": "materials/statistics/session06.html#sampling-distribution",
+    "title": "Statistics Session 05: Sampling",
+    "section": "Sampling Distribution",
+    "text": "Sampling Distribution\n\nDistirbution of the Mean with Finite Population\nUp to this point, we have assumed that samples are drawn from a very large or effectively infinite population. In such cases, the sample represents only a tiny fraction of the population, so the usual standard error formula is appropriate.\nHowever, when the population is finite and the sample makes up a noticeable portion of that population, the standard error of the mean must be adjusted. This situation arises when the ratio of sample size to population size: \\(n/N \\gt 5\\).\nIn these cases, we use the finite population correction factor (FPC) to account for the fact that sampling without replacement reduces variability. The corrected standard error becomes smaller because the sample is capturing a larger portion of the population.\nFor example, if a population contains 100 individuals, and we sample more than 5 of them (i.e., \\(n &gt; 5\\)), the finite population correction factor should be applied to compute an accurate standard error.\nIgnoring the correction would overestimate the sampling error and lead to incorrect probability calculations.\n\\[\n\\sigma_{\\bar{x}} = \\frac{\\sigma}{\\sqrt{n}} \\sqrt{\\frac{N - n}{N - 1}}\n\\]\nwhere:\n\n\\(\\sigma:\\) Population standard deviation\n\\(N:\\) Population size\n\\(n:\\) Sample size\n\\(\\frac{N-n}{N-1}:\\) finite population correction factor.\n\nThis adjustment ensures that probability calculations and confidence intervals accurately reflect the reduced sampling variability when the sample is a sizable proportion of the population.\nExample\nConsider a consulting firm serving 120 clients. Historically, the average satisfaction rating is 7.3. A recent survey of 50 clients shows an average of 7.8.\nBecause the sample is more than 5% of the population, the finite population correction must be applied:\n\nThe sample represents a large share of all clients.\nSampling without replacement reduces variability.\nUsing the FPC provides a more accurate standard error.\nA low resulting probability suggests the true population mean has improved.\n\nThis type of adjustment is essential in practical business settings:\n\nsmall customer lists\ninternal employee populations\nspecialized cohorts\n\nEffect of the Correction Factor\nThe following table illustrates how the standard error changes when the population size is 100 and the sample size increases. As \\(n\\) grows, the correction factor becomes smaller, reducing the standard error significantly.\n\n\n\n\n\n\n\n\n\nSample Size (n)\nStandard Error\nFinite Correction Factor\nStandard Error with FPC\n\n\n\n\n40\n0.111\n0.778\n0.086\n\n\n60\n0.090\n0.636\n0.057\n\n\n80\n0.078\n0.449\n0.035\n\n\n100\n0.070\n0\n0\n\n\n\nAs shown, when the sample covers the entire population (\\(n = 100\\)), the corrected standard error becomes zero, as no sampling error exists in a census.\n\n\nDistribution of the Proportion\nIn many real-world applications, we analyze proportions rather than means.\nFor example the % of:\n\ncustomers who churn\nvoters who support a candidate\nhouseholds that watch a specific media event.\n\nIn these situations, the statistic of interest is the sample proportion, and its behavior across repeated samples is described by the sampling distribution of the proportion.\nSuppose a national streaming analytics firm claims that 52% of U.S. households watched a large live sports event in 2024. A media agency wants to verify the claim and surveys 300 randomly selected households. In the sample, 147 households watched the event.\nTo evaluate whether this sample supports the firm’s claim, we check whether the sample size is large enough to use the normal approximation to the binomial distribution.\nThe following conditions must hold:\n\\[\nnp \\ge 5\n\\]\n\\[\nn(1 - p) \\ge 5\n\\]\nUsing the claimed proportion \\(p = 0.52\\) and sample size \\(n = 300\\):\n\\[\nnp = 300(0.52) = 156 \\ge 5\n\\]\n\\[\nn(1 - p) = 300(0.48) = 144 \\ge 5\n\\]\nThus, the normal approximation is appropriate.\n\n\nSample Proportion\nThe sample proportion is:\n\\[\n\\hat{p} = \\frac{x}{n}\n\\]\nFor this survey:\n\\[\n\\hat{p} = \\frac{147}{300} = 0.49\n\\]\n\nStandard Error of the Proportion\nThe standard error reflects how much sample proportions vary across repeated samples:\n\\[\n\\sigma_{\\hat{p}} = \\sqrt{ \\frac{p(1 - p)}{n} }\n\\]\n\n\nz-Score for the Sample Proportion\nTo evaluate how far the sample proportion is from the claimed population proportion:\n\\[\nz_{\\hat{p}} = \\frac{\\hat{p} - p}{\\sigma_{\\hat{p}}}\n\\]\nA large positive or negative value indicates that the observed sample proportion would be unlikely if the claimed population proportion were correct.\nThe sampling distribution of the proportion allows us to determine how probable it is to observe a sample proportion like the one in our study. If the probability is small, the sample provides evidence against the population claim. If the probability is reasonable, the sample is consistent with the claim.\nIn this example, the observed sample proportion (0.49) is close to the claimed population proportion (0.52), and with a moderate sample size, the difference is well within the range of expected sampling variability.\n\n\n\n\n\n\n\n\nflowchart TD\nA[\"Population with true proportion p\"] --&gt; B[\"Select a random sample\"]\nB --&gt; C[\"Count successes in the sample\"]\nC --&gt; D[\"Compute the sample proportion\"]\nD --&gt; E[\"Repeat the sampling process\"]\nE --&gt; F[\"Distribution of sample proportions\"]\nF --&gt; G[\"Shape: approximately normal\"]\nF --&gt; H[\"Center equals p\"]\nF --&gt; I[\"Spread depends on p and n\"]",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 05: Sampling"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session06.html#confidence-intervals",
+    "href": "materials/statistics/session06.html#confidence-intervals",
+    "title": "Statistics Session 05: Sampling",
+    "section": "Confidence Intervals",
+    "text": "Confidence Intervals\nOne of the most important roles statistics plays in today’s world is to:\n\ngather information from a sample,\nuse that information to make a statement about the population from which the sample was chosen.\n\n\nUnderstanding confidence intervals helps quantify how certain we are about the population parameter based on sample data.\n\n\nPoint Estimates\nA point estimate is a single value that best describes the population parameter of interest.\nThe most common point estimates are:\n\nthe sample mean (\\(\\bar{x}\\))\nthe sample proportion (\\(\\hat{p}\\))\n\n\nPoint estimates are easy to calculate, but they provide no information about the accuracy or uncertainty of the estimate. They simply give one number a “best guess” of the true population value.\n\n\n\n\n\n\n\nConfidence Interval\n\n\n\nA confidence interval for the mean is an interval estimate around a sample mean that provides a range within which the true population mean is expected to lie.\n\n\n\n\n\n\n\n\nConfidence Level\n\n\n\nA confidence level is the probability that the interval constructed from sample data will contain the population parameter of interest.\n\n\nThe purpose of generating a confidence interval is to provide an estimate for the true population mean by combining:\n\nthe sample mean \\(\\bar{x}\\)\n\nthe critical \\(z\\)-value\n\nthe standard error \\(\\sigma_{\\bar{x}}\\)\n\nA 90% CL means that 90% of such intervals—constructed from repeated samples would contain the true population mean.\nTypically, confidence levels are set by the statistician at 90% or 95% and will occasionally go as high as 99%.\n\n\n\n\n\n\n\n\n\n\nConfidence Level\nα (Significance Level)\nα/2 (Each Tail)\nLower zα/2\nUpper zα/2\n\n\n\n\n90%\n0.10\n0.05\n-1.645\n1.645\n\n\n95%\n0.05\n0.025\n-1.960\n1.960\n\n\n99%\n0.01\n0.005\n-2.576\n2.576\n\n\n\n\n\nConfidence Intervals for the Mean | known SD\n\nLet’s say we want to construct a confidence interval for the average order size of the ABC customer based on my sample mean of $129.20 with a 90% confidence level. To determine this interval, we need two more pieces of information:\n\nthe sample size: \\(\\bar{x}\\)\n\nthe population standard deviation \\(\\sigma\\)\n\nSuppose the sample mean was based on the 32 orders (\\(n=32\\)). Also, we’ll assume the population standard deviation is equal to \\(\\sigma=40.602\\)\n\n\n\n\n\n\nAbout known Standard Deviation\n\n\n\nUsually domain experts are familiar with the value of SD\n\n\nStandard Error (SE):\n\\[\n\\sigma_{\\bar{x}} = \\frac{\\sigma}{\\sqrt{n}} = \\frac{\\$ 40.602}{\\sqrt{32}} = \\$7.173\n\\]\nMargin of Error (MoE):\nA margin of error represents the width of the confidence interval between a sample mean and its upper limit or between a sample mean and its lower limit. Notice that the confidence interval is symmetrical around the sample mean.\n\\[MoE_{\\bar{x}} = z_{\\frac{\\alpha}{2}}\\sigma_{\\bar{x}}\\]\nConfidence Levels:\n\n\n\\[UCL = \\bar{x} + MoE\\]\n\n\\[LCL = \\bar{x} - MoE\\]\n\n\n\\[ \\Downarrow \\]\n\\[MoE_{90} = 1.645 \\cdot 7.176 = 11.80\\]\n\n\n\\[UCL = 129.2 + 11.8 = 141\\]\n\n\\[LCL = 129.2 - 11.8 = 117\\]\n\n\n\n\n\n\n\n\n\n\n\n\n\nCL\n\\(z_{α/2}\\)\nSE\nMoE\nLCL\nUCL\n\n\n\n\n90%\n1.645\n7.173\n11.80\n117\n141\n\n\n95%\n1.960\n7.173\n14.06\n115\n143\n\n\n99%\n2.576\n7.174\n18.47\n110\n147\n\n\n\n\nA 99% confidence interval is even wider than the 95% and 90% intervals because a greater level of confidence requires covering a larger portion of the sampling distribution.\n\n\nSample Means and 90% Confidence Intervals\nA confidence interval does not guarantee that the true population mean will fall inside the interval calculated from a single sample. In the example, Sample 1 produced a 90% confidence interval that correctly captured the true population mean of 125. However, Sample 5 produced an interval that entirely missed the true mean.\nThis outcome is expected. A 90% confidence interval means that the method, when applied repeatedly across many random samples of the same size, will produce intervals that contain the population mean about 90% of the time. It does not mean that any individual interval has a 90% chance of containing the true value, nor does it guarantee that 9 out of 10 intervals from a small set of samples will succeed.\n\n\n\n\n\n\n\n\n\n\nSample\nSample Mean\nMargin of Error\nLower Limit\nUpper Limit\n\n\n\n\n1\n129.20\n11.80\n117.40\n141.00\n\n\n2\n132.00\n11.80\n120.20\n143.80\n\n\n3\n117.50\n11.80\n105.70\n129.30\n\n\n4\n128.20\n11.80\n116.40\n140.00\n\n\n5\n108.80\n11.80\n97.00\n120.60\n\n\n6\n130.10\n11.80\n118.30\n141.90\n\n\n7\n117.90\n11.80\n106.10\n129.70\n\n\n8\n120.10\n11.80\n108.30\n131.90\n\n\n9\n133.80\n11.80\n122.00\n145.60\n\n\n10\n119.00\n11.80\n107.20\n130.80\n\n\n\nThe key idea: confidence intervals describe the long-run performance of the estimation procedure, not certainty about the result of a single sample.\n\n\n\n\n\n\n\n\n\n\n\n\nConfidence Intervals for the Mean | Unknown SD\nSo far our Confidence Interval examples have assumed that the population standard deviation (\\(\\sigma\\)), is known. In practice, this is rarely the case. Most of the time, we only have access to the sample itself, and we must estimate the population standard deviation using the sample standard deviation, \\(s\\).\nThe sample standard deviation can always be computed directly from the data:\n\\[\ns = \\sqrt{\\frac{\\sum (x_i - \\bar{x})^2}{n - 1}}\n\\]\nSince \\(s\\) is based on the sample, it is only an estimate of the true population standard deviation. As a result, when \\(\\sigma\\) is unknown, we cannot rely on the normal distribution to calculate a confidence interval for the mean.\nInstead, we use the Student’s t-distribution, which adjusts for the uncertainty created by estimating \\(\\sigma\\) with \\(s\\).\nThe t-distribution behaves like the normal distribution when sample sizes are large, but it has heavier tails for smaller sample sizes. This accounts for the additional variability that comes from estimating the standard deviation. As the sample size increases, the t-distribution approaches the standard normal distribution.\nThe overall structure of the Confidence Interval formula remains the same:\n\n\\(\\sigma \\Rightarrow s\\)\n\nnormal distribution \\(\\Rightarrow\\) t-distribution\nz-table \\(\\Rightarrow\\) t-tabe\n\nThis adjustment allows us to construct valid confidence intervals in the realistic case where the population standard deviation is not available.\n\n\n\n\n\n\nInteresting fact about T-distribution\n\n\n\nPlease watch this video.\n\n\n\nStudent’s t-distribution\n\nA bell-shaped and symmetric, similar to the normal distribution.\nIts exact shape depends on the degrees of freedom, defined as \\(n - 1\\) for a sample of size \\(n\\).\nThe total area under the curve is 1.0, just like any valid probability distribution.\nBecause it is wider and flatter than the normal distribution, the critical values from the t-distribution are larger than z-critical values for the same confidence level. This leads to wider confidence intervals, reflecting the extra uncertainty created by estimating the population standard deviation with the sample standard deviation.\nThe t-distribution is actually a family of distributions one for each degree of freedom. As the degrees of freedom increase, the t-distribution becomes more similar to the normal distribution. With more than 100 degrees of freedom, the two are practically identical.\n\n\n\n\n\n\n\n\n\n\n\n\nCalculating the Confidence Intervals\nAs it is mentioned above, the calculation methodology is the same:\n\nCalculate Sample Mean\nCalcualate the Standard Error\nCalculate the Margin of Error\nCaluclate the Confidence Inervals\n\n\nNote the Confidence Level/Significance Level (\\(\\alpha\\)) must be given. Let’s assume that the \\(\\alpha = 0.05\\)\n\n\nWeekly Visitors\nThe shop owner expects to have more than 90 visiters per week for the sustainable develepment.\n\n\n\nWeek\nVisitors\n\n\n\n\n1\n116\n\n\n2\n83\n\n\n3\n89\n\n\n4\n87\n\n\n5\n81\n\n\n6\n109\n\n\n7\n114\n\n\n8\n123\n\n\n9\n102\n\n\n10\n131\n\n\n11\n96\n\n\n12\n74\n\n\n13\n109\n\n\n14\n106\n\n\n15\n118\n\n\n16\n78\n\n\n17\n91\n\n\n18\n98\n\n\n\nIn order to calculate the sample mean and the sample standard deviation we can use excel:\n\nDF: COUNT(B2:B19)-1 = 17\nMean: AVERAGE(B2:B19) = 100.3\nStandard Deviation | Sample: STDEV.S(B2:B19) = 16.6\nCritical t-score: T.INV.2T(alpha, df) = T.INV.2T(0.05,17) = 2.11\nMargin of Error: CONFIDENCE.T(alpha, sd,n) = CONFIDENCE.T(0.05, 16.6,18) = 8.25\n\nMargin of Error\n\\[\n\\hat{\\sigma}_{\\bar{x}} = \\frac{s}{\\sqrt{n}} = 3.92\n\\]\nConfidence Levels:\n\n\n\\[UCL = \\bar{x} + MoE\\]\n\n\\[LCL = \\bar{x} - MoE\\]\n\n\n\\[ \\Downarrow \\]\n\n\n\\[UCL = 100.3 + 8.25 = 108.55\\]\n\n\\[LCL = 100.3 - 8.25 = 92.05\\]\n\n\n\n\n\n\n\n\nConclusion\n\n\n\nBased on the result we are 95% confident that the true population mean for the number of visits per week is between 92 and 108. Because the entire interval exceeds 90 patients per week, it apears that the financial goals are being met.\n\n\n\n\n\n\n\n\nRemember\n\n\n\nThe properties of the confidence intervals using the t-distribution are the same for those constructed using the normal distribtuion:\n\nIncreasing the confidence level will result in a wider (less precise) confidence interval.\nIncreasing the sample size will result in a narrower (more precise) confidence interval.\nThe margin of error is given by: \\(\\text{Margin of Error} = t_{\\alpha/2} \\, \\hat{\\sigma}_{\\bar{x}}\\)\n\n\n\n\n\n\n\nConfidence Intervals for Proportions\nThe confidence interval for the proportion is an interval estimate around a sample proportion that provides us with a range of where the true population proportion lies.\nRecall that the proportion data follow the binomial distribution, which can be approximated by the normal distribution under the following condition:\n\\[np \\ge 5 \\text{ and } n(1-n) \\ge 5\\]\nwhere:\n\np: probability of a success in the population\nn: sample size\n\n\n\n\n\n\n\nMini Case Study\n\n\n\nSuppose the online channel would like to estimate the proportion of customers who are female in order to improve the channel’s advertising effectiveness.\nLet’s say from a random sample of 175 customers, 116 were female.\n\n\nSample Proportion\n\\[\\bar{p} = \\frac{x}{n} = \\frac{116}{175}=0.663\\]\nwhere:\n\nx: the number of observations of interest in the sample (successes)\nn: the sample size\n\nTo construct a confidence interval, we need the standard error of the proportion.\nThe true standard error (using the unknown population proportion \\(p\\)) is:\n\\[\n\\sigma_{\\bar{p}} = \\sqrt{\\frac{p(1 - p)}{n}}\n\\]\nWe do not know \\(p\\), yet the formula for standard error requires \\(p\\).\nWe can use the sample proportion \\(\\bar{p}\\) to approximate \\(p\\). This gives the approximate standard error:\n\\[\n\\hat{\\sigma}_{\\bar{p}} = \\sqrt{\\frac{\\bar{p}(1 - \\bar{p})}{n}}\n\\]\nAfter calculated the standard error, can calculate the 99% confidence interval for the proportion of female shopping customers using MoE and calculating UCL and LCL.\n\\[\n\\hat{\\sigma}_{\\bar{p}}\n= \\sqrt{\\frac{\\bar{p}(1 - \\bar{p})}{n}}\n= \\sqrt{\\frac{0.663(1 - 0.663)}{175}}\n= \\sqrt{\\frac{0.223}{175}}\n= \\sqrt{0.001274}\n= 0.0357\n\\]\n\\[ \\Downarrow \\]\n\\[\nUCL_{\\bar{p}} = \\bar{p} + z_{\\alpha/2}\\hat{\\sigma}_{\\bar{p}} = 0.663 + (2.575)(0.0357) =  0.755\n\\]\n\\[\nLCL_{\\bar{p}} = \\bar{p} - z_{\\alpha/2}\\hat{\\sigma}_{\\bar{p}} = 0.663 - (2.575)(0.0357) =0.571\n\\]\nBased on our sample proportion of 0.663, we are 99% confident that the proportion of female shoppers is between 0.572  and 0.755,\n\n\n\n\n\n\nWhy is it wider?\n\n\n\nThe confidence interval seems wider as we want to be 99% confident of capturing the population proportion we need a wide interval\n\n\n\n\nDetermining the Required Sample Size\nSo far, we have focused on calculating a confidence interval and margin of error for a population when we know:\n\nThe confidence level\n\nThe sample size\n\nThe standard deviation\n\nNow we will try to reverse the process. Instead of computing the margin of error from the sample size, we determine the sample size needed to achieve a desired margin of error, given:\n\nThe confidence level\n\nThe population standard deviation\n\nThis procedure is extremely useful because one of the first practical questions in statistical work is: How large should the sample be?\n\ntoo large: wastes resources.\n\ntoo small: produces estimates that are not precise enough.\n\nWe will begin by determining the required sample size for estimating a population mean and proportion.\n\nSample Size | Estimating Population Mean\n\n\n\n\n\n\nAt&T Case Study\n\n\n\nA major telecom operator in 2024 needed an accurate estimate of average monthly mobile data usage. With heavy-streaming customers generating most of the traffic, the operator aimed to set plans that balance cost and capacity.\nTo achieve this at a 95% confidence level with a \\(\\pm2\\) GB margin of error, the operator calculated the sample size required to estimate the population mean efficiently and reliably.\nBased on internal analytics, the population standard deviation is believed to be \\(\\sigma = 8\\) GB.\n\n\nIn order to identify the Sample Size we need to do minor algebra for MoE Equation:\n\\[MoE_\\bar{x} = z_{\\frac{\\alpha}{2}} \\sigma_{\\bar{x}} = z_{\\frac{\\alpha}{2}} \\frac{\\sigma}{\\sqrt{n}} \\Rightarrow  \\sqrt{n} = \\frac{z_{\\frac{\\alpha}{2}}\\sigma}{MoE}\\]\n\\[\nn = \\left( \\frac{z_{\\alpha/2}\\, 2\\sigma}{\\text{MoE}} \\right)^2\n\\]\nRemember for a 95% confidence level critical z-value would be \\(z_{\\alpha/2} = 1.96\\)\nCalculate and round up:\n\\[\nn = \\left( \\frac{1.96 \\cdot 8}{2} \\right)^2 = 61.46 = 62\n\\]\nThus, a sample of 62 customers is required to estimate the average monthly mobile data usage with a 95% confidence interval and a \\(\\pm2\\) GB margin of error.\n\n\nSample Size | Estimating Proportion\n\n\n\n\n\n\nFinTech Case Study: Biometric Login Adoption\n\n\n\nA leading FinTech app in 2025 wants to estimate the proportion of users who enable biometric login\n(FaceID/TouchID). This metric is crucial for security-feature adoption and for planning future upgrades.\nTo achieve a 95% confidence level with a \\(\\pm2\\)% margin of error, the company needs to determine the minimum sample size required to estimate this proportion accurately.\nA quick pilot test of 200 users revealed that 24% had biometric login enabled, giving\n\\[\\bar{p} = 0.24\\]\n\n\n\\[\nn = \\frac{z_{\\alpha/2}^2 \\, \\bar{p}(1 - \\bar{p})}{(MoE_{\\bar{p}})^2}\n\\]\nFor a 95% confidence level, we use:\n\n\\(z_{\\alpha/2} = 1.96\\)\n\\(\\bar{p} = 0.24\\)\n\\(MoE_{\\bar{p}} = 0.02\\)\n\nThus\n\\[\nn \\approx \\frac{(1.96)^2 (0.24)(0.76)}{(0.02)^2} \\approx 1402.6 \\Rightarrow 1403\n\\]\nA sample of 1,403 users is required to estimate the true proportion of biometric-enabled users within\na 95% confidence interval and \\(\\pm2\\) percentage points of precision.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 05: Sampling"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session04.html",
+    "href": "materials/statistics/session04.html",
+    "title": "Statistics Session 03: Probabilistic Distributions",
+    "section": "",
+    "text": "Probabilistic Distributions\n\nContinuous Distributions\n\nNormal Distribution\n\nUniform Distribution\n\nExponential Distribution",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 03: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session04.html#what-is-a-probabilistic-distributions",
+    "href": "materials/statistics/session04.html#what-is-a-probabilistic-distributions",
+    "title": "Statistics Session 03: Probabilistic Distributions",
+    "section": "What Is a Probabilistic Distributions",
+    "text": "What Is a Probabilistic Distributions\nIn Data Analytics, we rarely know outcomes with certainty.\nInstead of saying:\n“Tomorrow’s sales will be exactly 120 units”\nWe say:\n“Sales will most likely be around 120, but could reasonably vary”\nA probabilistic distribution is a formal way to describe this uncertainty by answering to the below three questions:\n\nWhat values can a variable take?\n\nHow likely is each value (or range of values)?\n\nHow is uncertainty spread across those values?\n\n\nFrom Raw Data to Distribution\nWhen we observe data repeatedly:\n\nCustomer purchases\n\nSession durations\n\nDelivery times\n\nPatterns emerge.\nA distribution is a model that summarizes those patterns instead of listing every observation.\n\n\nRandom Variables\nA random variable is a numerical description of an uncertain outcome.\nExamples:\n\nNumber of purchases today\n\nTime (in minutes) until a customer churns\n\nWhether a user clicks an ad (1 or 0)\n\nFrom the above example we could notice that the Random Variable could be\n\nDiscrete: take counts , yes/no outcomes\n\nNumber of compaints per day\nNumber of items sold\nEmail opened or not\netc..\n\nContinuous: measured not counted\n\nRevenue\nTime\nWeight\nDistance\netc..\n\n\n\n\nWell-Known Distributions",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 03: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session04.html#continues-distribution",
+    "href": "materials/statistics/session04.html#continues-distribution",
+    "title": "Statistics Session 03: Probabilistic Distributions",
+    "section": "Continues Distribution",
+    "text": "Continues Distribution\nMany real-world business variables are measured: Revenue, Time, Cost, Duration, Distances etc..\nA distribution is continuous if:\n\nThe variable can take any real value in a range\n\nThere are infinitely many possible values\n\nExact values are not meaningful on their own\n\n\n\n\n\n\n\nRemember\n\n\n\nFor a continuous random variable \\(X\\):\n\\[\nP(X = x) = 0\n\\]\nThis is not a mistake.\nProbability only makes sense over intervals:\n\\[\nP(a \\le X \\le b)\n\\]\n\n\nTo understand a Continuous probability distribution, we start with a simple experiment:\nWe go outside and measure people’s heights, one person at a time. Assume the true average height in the population is around 170 cm.\nWe begin with just a few measurements and gradually build the distribution.\nThe heights of the first 5 People:\n\n\n[174, 169, 175, 182, 168]\n\n\n\nHistogram with 5 People\n\n\n\n\n\n\n\n\n\n\n\nWider Bins\n\n\n\n\n\n\n\n\n\n\n\nNarrower Bins\n\n\n\n\n\n\n\n\n\n\n\nIncreasing Sample Size to 300\n\n\n\n\n\n\n\n\n\n\n\nProbability Density Function (PDF)\nContinuous distributions are described by a Probability Density Function (PDF).\nThe PDF:\n\nIs always non-negative\n\nIntegrates to 1 over its entire range\n\nDescribes how “dense” probability is around a value\n\nMathematically:\nImagine as calculating the area under the curves!\n\\[\n\\int_{-\\infty}^{\\infty} f(x)\\,dx = 1\n\\]\n\n\n\n\n\n\nImportant\n\n\n\n\nA higher PDF value means: Values around that point are more likely\n\nIt does not mean: The probability at that exact point is higher\n\n\n\n\n\n\nExpected Value (Mean)\nThe expected value represents the long-run average outcome.\nFor a continuous distribution:\n\\[\nE[X] = \\int_{-\\infty}^{\\infty} x f(x)\\,dx\n\\]\n\n\n\n\n\n\nBusiness Interpretation\n\n\n\nExpected value answers:\n“If we repeated this process many times, what average outcome should we expect?”\n\n\n\n\nVariance\nVariance measures spread or uncertainty around the mean.\nFor a continuous distribution:\n\\[\nVar(X) = \\int_{-\\infty}^{\\infty} (x - \\mu)^2 f(x)\\,dx\n\\]\nwhere \\(\\mu = E[X]\\).\n\n\n\n\n\n\nBusiness Interpretation\n\n\n\n\nLow variance → predictable outcomes\n\nHigh variance → risky or unstable outcomes\n\n\n\n\n\n\nWhy Continuous Distributions Are Powerful in Analytics\nThey allow us to:\n\nModel natural variability\n\nEstimate probabilities over ranges\n\nBuild confidence intervals\n\nPerform forecasting and optimization\n\n\n\nContinuous Distributions in Practice\nIn this course, we focus on:\n\nNormal Distribution\n\nUniform Distribution\n\nExponential Distribution",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 03: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session04.html#normal-distribution",
+    "href": "materials/statistics/session04.html#normal-distribution",
+    "title": "Statistics Session 03: Probabilistic Distributions",
+    "section": "Normal Distribution",
+    "text": "Normal Distribution\nAs the sample size increased and bins became finer, the histogram began to resemble a smooth, symmetric, bell-shaped curve. This shape corresponds to the Normal Distribution.\nA Normal Distribution is a continuous distribution that is:\n\nSymmetric around its mean\n\nBell-shaped\n\nFully described by two parameters\n\nMean \\(\\mu\\)\n\nVariance \\(\\sigma^2\\)\n\n\nIt is denoted as:\n\\[\nX \\sim \\mathcal{N}(\\mu, \\sigma^2)\n\\]\n\n\n\n\n\n\n\n\n\n\nProbability Density Function\n\\[\nf(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp\\!\\left( -\\,\\frac{(x - \\mu)^2}{2\\sigma^2} \\right)\n\\]\n\n\\(f(x)\\) gives the probability density at value \\(x\\). It describes how concentrated the distribution is around that point.\n\\(\\mu\\) is the mean.\n\n\\(\\sigma\\) is the standard deviation.\n\nsmall \\(\\sigma\\) makes the curve narrow and tall,\n\nlarge \\(\\sigma\\) makes it wide and flat.\n\n\nThe term \\(\\frac{1}{\\sigma \\sqrt{2\\pi}}\\) ensures that the total area under the curve equals 1, as required for any probability distribution.\n\n\nExpecteed Value\nFor a normal random variable \\(X \\sim \\mathcal{N}(\\mu, \\sigma^2)\\):\n\\[\nE[X] = \\mu\n\\]\n\n\n\n\n\n\nBusiness Interpretation\n\n\n\nThe expected value represents the typical or average outcome.\nExamples:\n\nAverage customer height\n\nAverage daily revenue\n\nAverage delivery time\n\n\n\n\n\nVariance of the Normal Distribution\nFor a normal random variable:\n\\[\nVar(X) = \\sigma^2\n\\]\n\n\n\n\n\n\nBusiness Interpretation\n\n\n\nVariance controls spread:\n\nSmall \\(\\sigma^2\\) → values tightly clustered around the mean\n\nLarge \\(\\sigma^2\\) → values widely spread and more uncertain\n\n\n\n\n\nTwo Normal Distributions\n\n\n\n\n\n\n\n\n\n\n\n\nSpreadsheet Demostration\n\nGeneration: =NORM.INV(RAND(),170,8)\nMean: =AVERAGE(range)\nStandard Deviation: =STDEV.P(range)\nVariance: =VAR.P(range)\nPDF: =NORM.DIST(x, mean, std, FALSE)\nCumulative Probability CDF: =NORM.DIST(x, mean, std, TRUE)\n\n\n\n\n\n\n\nTip\n\n\n\nCheckout the Normal Distribtion on practice here\n\n\n\n\nStandard Normal Distribution\nThe Standard Normal Distribution is a special case of the normal distribution where:\n\\[\n\\mu = 0 \\quad \\text{and} \\quad \\sigma = 1\n\\]\nIt is denoted as:\n\\[\nZ \\sim \\mathcal{N}(0,1)\n\\]\nAny normal random variable \\(X \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) can be transformed into a standard normal variable using standardization:\n\\[\nZ = \\frac{X - \\mu}{\\sigma}\n\\]\n\n\n\n\n\n\nRecall\n\n\n\nStandardization allows us to:\n\nCompare values measured on different scales\n\nCompute probabilities using a single reference distribution\n\nInterpret how many standard deviations a value is from the mean\n\n\n\n\n\n\nNormal vs Gaussian Distribution\nThe Normal Distribution and the Gaussian Distribution are the same thing.\nThey are two names for the same mathematical distribution.\n\nGaussian is the name used in mathematics and physics, after Carl Friedrich Gauss\n\nNormal is the name commonly used in statistics and data analytics\n\nBoth refer to the distribution defined by the PDF:\n\\[\nf(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}} \\exp\\left( -\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)\n\\]\nThey are completely interchangeable terms.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 03: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session04.html#uniform-distribution",
+    "href": "materials/statistics/session04.html#uniform-distribution",
+    "title": "Statistics Session 03: Probabilistic Distributions",
+    "section": "Uniform Distribution",
+    "text": "Uniform Distribution\nThe Uniform Distribution models situations where all values within a range are equally likely.\nThere is:\n\nNo center\n\nNo peak\n\nNo value more likely than another\n\nImagine the following situations:\n\nA random number generator picks a number between 0 and 1\n\nA customer arrives at a store at a random time between 09:00 and 10:00\n\nA system assigns users randomly to time slots between 0 and 30 minutes\n\nIn all these cases:\n\nEvery value in the interval is equally likely\n\nAnother example:\nImagine a telecom system that assigns a customer to one of several identical support bots randomly.\nThe system waits somewhere between 0 and 10 seconds before routing the customer, and every value in that interval is equally likely.\nThis kind of process has no preference:\n\nnot more likely to assign earlier,\nnot more likely to assign later.\n\n\nDefinition\nA Uniform Distribution on the interval \\([a, b]\\) is denoted as:\n\\[\nX \\sim \\text{Uniform}(a, b)\n\\]\nwhere:\n\n\\(a\\) is the minimum possible value\n\n\\(b\\) is the maximum possible value\n\n\n\nProbability Density Function (PDF)\nIf \\(X \\sim U(a,b)\\), then:\n\\[\nf(x) = \\frac{1}{b - a}, \\quad a \\le x \\le b\n\\]\n\n\\(f(x)=0\\) outside the interval\n\\([a,b]\\) is equally likely.\n\nSuppose we observe a sample \\(x_1, x_2, \\dots, x_n\\) from a uniform distribution \\(U(a,b)\\).\nThe likelihood of the parameters \\((a,b)\\) given the data is:\n\\[\nL(a,b \\mid x_1,\\dots,x_n)=\\prod_{i=1}^n f(x_i)\n\\]\nBecause the PDF is constant inside the interval:\n\nIf all observations lie in \\([a,b]\\):\n\n\\[\nL(a,b \\mid x_1,\\dots,x_n)=\\left(\\frac{1}{b-a}\\right)^n\n\\]\n\nIf any observation lies outside \\([a,b]\\):\n\n\\[\nL(a,b \\mid x_1,\\dots,x_n)=0\n\\]\nSo uniform likelihood is simple: constant if all points are inside, zero otherwise.\n\n\nVisualizing Uniform Distribution\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportant Interpretation\n\n\n\nBecause the PDF is flat:\n\nNo value inside \\([a,b]\\) is more likely than another\n\nProbability depends only on interval length, not position\n\n\n\n\n\nExpected Value (Mean)\nFor a uniform random variable \\(X \\sim \\text{Uniform}(a,b)\\):\n\\[\nE[X] = \\frac{a + b}{2}\n\\]\n\n\nExpected Value (Mean)\n\n\n\n\n\n\nBusiness Interpretation\n\n\n\nThe expected value is simply the midpoint of the interval.\nExample:\nIf arrival time is uniformly distributed between 0 and 60 minutes,\nthe average arrival time is 30 minutes.\n\n\n\n\nVariance\nFor a uniform distribution:\n\\[\nVar(X) = \\frac{(b - a)^2}{12}\n\\]\n\n\n\n\n\n\nBusiness Interpretation\n\n\n\n\nWider interval → higher uncertainty\nNarrow interval → more predictable outcomes\n\n\n\nIf \\(X \\sim \\text{Uniform}(0, 10)\\):\n\\[\nP(2 \\le X \\le 5) = \\frac{5 - 2}{10 - 0} = 0.3\n\\]\n\n\nBusiness Applications of the Uniform Distribution\nUniform distributions are used when:\n\nRandom assignment is required\nNo prior preference exists\n\nExamples:\n\nA/B testing randomization\nLoad balancing\nSimulation baselines\nRandom sampling assumptions\n\n\n\nProbability as Area\nBecause the density is constant:\n\\[\nP(c \\le X \\le d) = \\frac{d - c}{b - a}\n\\]\nThis is simply the fraction of the interval covered.\n\n\nSpreadsheet Demonstration (Uniform Distribution)\n\nGenerate Uniform Data: =RAND()*(b-a)+a\n\nExample for \\([0,10]\\): =RAND()*10\n\nExpected Value: =(a+b)/2\nVariance: =(b-a)^2/12\nProbability Between Two Values \\(c\\) and \\(d\\): =(d-c)/(b-a)\n\n\n\n\n\n\n\nImportant\n\n\n\nThe uniform distribution assumes:\n\nNo structure\n\nNo memory\n\nNo preferred values",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 03: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session04.html#exponential-distribution",
+    "href": "materials/statistics/session04.html#exponential-distribution",
+    "title": "Statistics Session 03: Probabilistic Distributions",
+    "section": "Exponential Distribution",
+    "text": "Exponential Distribution\nWe now move to a continuous distribution that models waiting time until an event occurs.\nThis distribution is fundamentally different from Normal and Uniform distributions because:\n\nIt is not symmetric\n\nIt is right-skewed\n\nIt explicitly models time-to-event behavior\n\nConsider a supermarket or retail chain.\nCustomers arrive at the checkout lanes randomly, and the store wants to model:\nHow long until the next customer arrives at the counter?\nIf arrivals are independent and have no memory, then the waiting time** between customer arrivals follows an Exponential distribution.**\n\nif you’ve been waiting 4 minutes already, the next customer is not due\nevery moment is a fresh start\n\nthe past does NOT influence the future (Markov Chain)\n\nThis is very common in retail analytics:\n\ntime until next customer walks into the store,\ntime until next person reaches a self-checkout station,\ntime until next event in an online store: purchase, add-to-cart, click, etc.\n\nAll of these waiting times are modeled by the Exponential distribution.\n\nDefinition\nA random variable \\(X\\) follows an Exponential Distribution if:\n\\[\nX \\sim \\text{Exp}(\\lambda)\n\\]\nwhere:\n\n\\(\\lambda &gt; 0\\) is the arrival rate (events per unit time)\n\\(\\frac{1}{\\lambda}\\) is the average waiting time\n\n\n\nProbability Density Function (PDF)\nIf \\(X \\sim \\text{Exp}(\\lambda)\\):\n\\[\nf(x) = \\lambda e^{-\\lambda x}, \\quad x \\ge 0\n\\]\nWhere:\n\n\\(\\lambda\\) = customer arrival rate (customers per minute)\n\n\\(1/\\lambda\\) = average waiting time\n\n\n\nExpected Value (Mean)\n\\[\nE[X] = \\frac{1}{\\lambda}\n\\]\n\n\n\n\n\n\nBusiness Interpretation\n\n\n\nIf customers arrive at a rate of: \\(\\lambda = 2\\) customers per minute then the expected waiting time is: \\(1/2 = 0.5\\) minutes\n\n\n\n\n\nVariance\n\\[\nVar(X) = \\frac{1}{\\lambda^2}\n\\]\n\n\n\n\n\n\nBusiness Interpretation\n\n\n\n\nHigh arrival rate → lower variability\n\nLow arrival rate → higher uncertainty in waiting times\n\n\n\n\n\nLikelihood for Observed Retail Data\nSuppose we measure actual waiting times between customer arrivals:\n\\[\nx_1, x_2, \\dots, x_n\n\\]\nThe likelihood of \\(\\lambda\\) given the data is:\n\\[\nL(\\lambda) = \\prod_{i=1}^n \\lambda e^{-\\lambda x_i}\n\\]\nThis simplifies to:\n\\[\nL(\\lambda)\n= \\lambda^n \\exp\\!\\left(-\\lambda \\sum_{i=1}^n x_i\\right)\n\\]\nLog-likelihood:\n\\[\n\\ell(\\lambda)\n= n \\ln(\\lambda) - \\lambda \\sum x_i\n\\]\nMaximum Likelihood Estimate (MLE):\n\\[\n\\hat{\\lambda} = \\frac{n}{\\sum x_i}\n\\]\nInterpretation:\n\nfast arrivals → large \\(\\lambda\\)\n\nslow arrivals → small \\(\\lambda\\)\n\nJust like checkout traffic in a retail store.\n\n\n\nVisualization\nWe use example waiting times in minutes: obs = [1.2, 0.5, 2.0, 0.8]\nThese could be times between customers reaching a checkout lane.\n\nLeft plot → PDF comparison for \\(\\lambda = 1\\) and \\(\\lambda = 0.3\\)\n\nRight plot → Likelihood curve for the observed retail dat\n\n\n\n\n\n\n\n\n\n\n\n\nInterpretation\n\nWhen customers arrive quickly and consistently, the waiting times shrink → the likelihood favors a large \\(\\lambda\\).\nWhen customers arrive sporadically or slowly, the waiting times grow → the likelihood favors a small \\(\\lambda\\).\n\nIn our observed data:\n\nAverage waiting time = \\(4.5 / 4 = 1.125\\) minutes\n\nMLE: \\(\\hat{\\lambda} = 4/4.5 = 0.889\\) customers/minute\n\nMeaning:\n\nthe best-fitting model suggests approximately 0.89 customers per minute,\n\nwhich corresponds to one customer roughly every 1.1 minutes.\n\nThis type of analysis is central in retail analytics for understanding staffing requirements, managing checkout lanes, predicting peak hours, and optimizing store operations.\n\n\nSpreadsheet Demonstration (Exponential Distribution)\n\nGenerate exponential data: =-LN(1-RAND())/lambda\nExpected value: =1/lambda\nVariance: =1/(lambda^2)\nCDF (event occurs within x): =1-EXP(-lambda*x)",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 03: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session04.html#watching-materials",
+    "href": "materials/statistics/session04.html#watching-materials",
+    "title": "Statistics Session 03: Probabilistic Distributions",
+    "section": "Watching Materials",
+    "text": "Watching Materials\n\nNormal Distribution\nExponential Distribution",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 03: Probabilistic Distributions"
+    ]
+  },
+  {
     "objectID": "materials/statistics/session02.html",
     "href": "materials/statistics/session02.html",
     "title": "Session 02: Types of Bias",
@@ -3178,7 +3360,7 @@
     "href": "materials/statistics/index.html",
     "title": "Statistics",
     "section": "",
-    "text": "Session 01: Data Layers and Bias in Data\n\n\nWhat is Data Analytics, Data Layers, Types of Biases\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSession 02: Types of Bias\n\n\nBias and Data Litracy\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 02: Data Types\n\n\nData Types, Central Tendancy\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 03: Probabilistic Distributions\n\n\nContinues Distributions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 04: Probabilistic Distributions\n\n\nDiscrete Probability Distributions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 05: Sampling\n\n\nSampling\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 06: Inferential Statistics\n\n\nHypothesis Testing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 06: Inferential Statistics\n\n\nHypothesis Testing\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "text": "Session 01: Data Layers and Bias in Data\n\n\nWhat is Data Analytics, Data Layers, Types of Biases\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSession 02: Types of Bias\n\n\nBias and Data Litracy\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSession 03: Data Types\n\n\nData Types, Central Tendancy\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 02: Data Types\n\n\nData Types, Central Tendancy\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 03: Probabilistic Distributions\n\n\nContinues Distributions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 03: Probabilistic Distributions\n\n\nContinues Distributions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 04: Probabilistic Distributions\n\n\nDiscrete Probability Distributions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 04: Probabilistic Distributions\n\n\nDiscrete Probability Distributions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 05: Sampling\n\n\nSampling\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 05: Sampling\n\n\nSampling\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 06: Inferential Statistics\n\n\nHypothesis Testing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStatistics Session 06: Inferential Statistics\n\n\nHypothesis Testing\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Syllabus",
       "Statistical Thinking"
@@ -8658,7 +8840,7 @@
     "href": "materials/python/session07.html#datetime-module",
     "title": "Session 07: Working with Dates",
     "section": "datetime Module",
-    "text": "datetime Module\nThe built-in datetime module is useful when working with individual date values.\n\nfrom datetime import datetime, date, timedelta\n\n\nCreating a Date Object\nA date object stores only year, month, and day.\n\nsimple_date = date(2024, 7, 1)\nsimple_date\n\ndatetime.date(2024, 7, 1)\n\n\n\n\n\nPosition\nValue\nMeaning\n\n\n\n\n1st\n2024\nyear\n\n\n2nd\n7\nmonth\n\n\n3rd\n1\nday\n\n\n\n\n\nCreating a Datetime Object\nA datetime object stores both date and time.\n\nfull_datetime = datetime(2024, 7, 1, 14, 30, 0)\nfull_datetime\n\ndatetime.datetime(2024, 7, 1, 14, 30)\n\n\n\n\n\nPosition\nValue\nMeaning\n\n\n\n\n1st\n2024\nyear\n\n\n2nd\n7\nmonth\n\n\n3rd\n1\nday\n\n\n4th\n14\nhour\n\n\n5th\n30\nminute\n\n\n6th\n0\nsecond\n\n\n\n\n\nGetting the Current Date and Time\n\ntoday = date.today()\nnow = datetime.now()\n\nprint(f'today is {today}')\nprint(f'right now is {now}')\n\ntoday is 2026-08-20\nright now is 2026-08-20 15:15:33.915442\n\n\n\n\nAccessing Parts of a Datetime\nA datetime object has useful attributes.\n\nprint(f\"Year: {full_datetime.year}\")\nprint(f\"Month: {full_datetime.month}\")\nprint(f\"Day: {full_datetime.day}\")\nprint(f\"Hour: {full_datetime.hour}\")\nprint(f\"Minute: {full_datetime.minute}\")\nprint(f\"Second: {full_datetime.second}\")\n\nYear: 2024\nMonth: 7\nDay: 1\nHour: 14\nMinute: 30\nSecond: 0\n\n\n\n\nFormatting Dates as Strings\nMost of the times we want to display a date in a readable format.\n\nfull_datetime.strftime(\"%Y-%m-%d\")\n\n'2024-07-01'\n\n\n\nfull_datetime.strftime(\"%d/%m/%Y\")\n\n'01/07/2024'\n\n\n\nfull_datetime.strftime(\"%B %d, %Y\")\n\n'July 01, 2024'\n\n\n\n\nCommon Formatting Codes\n\n\n\nCode\nMeaning\nExample\n\n\n\n\n%Y\n4-digit year\n2024\n\n\n%m\n2-digit month\n07\n\n\n%d\n2-digit day\n01\n\n\n%H\nhour (24-hour clock)\n14\n\n\n%M\nminute\n30\n\n\n%S\nsecond\n00\n\n\n%b\nshort month name\nJul\n\n\n%B\nfull month name\nJuly\n\n\n\n\n\nParsing Strings into Datetime\nThis is the reverse of formatting.\n\ndt = datetime.strptime(\"2024-07-01\", \"%Y-%m-%d\")\ndt\n\ndatetime.datetime(2024, 7, 1, 0, 0)\n\n\nThis is useful when reading text dates and converting them into structured date objects.\n\n\nArithmetic with Dates\nOne of the most important date operations is measuring time differences.\n\nstart = date(2024, 7, 1)\nend = date(2024, 7, 15)\n\ndelta = end - start\ndelta\n\ndatetime.timedelta(days=14)\n\n\n\ndelta.days\n\n14\n\n\nWe can also add or subtract days using timedelta.\n\nstart + timedelta(days=10)\n\ndatetime.date(2024, 7, 11)\n\n\n\nstart - timedelta(days=7)\n\ndatetime.date(2024, 6, 24)\n\n\nWe can also add or subtract time using timedelta.\nWhen we work with a date object, the most natural granularity is usually days or weeks.\n\nprint(start + timedelta(days=10))\nprint(start - timedelta(days=7))\nprint(start + timedelta(weeks=2))\nprint(start - timedelta(weeks=1))\n\n2024-07-11\n2024-06-24\n2024-07-15\n2024-06-24\n\n\nOther granularity are available as well: such as hours, minutes, or seconds, we usually work with a datetime object instead of a plain date.\n\nstart_dt = datetime(2024, 7, 1, 14, 30, 0)\n\nprint(start_dt + timedelta(days=1))\nprint(start_dt + timedelta(hours=5))\nprint(start_dt + timedelta(minutes=45))\nprint(start_dt + timedelta(seconds=30))\nprint(start_dt + timedelta(days=2, hours=3, minutes=15, seconds=10))\n\n2024-07-02 14:30:00\n2024-07-01 19:30:00\n2024-07-01 15:15:00\n2024-07-01 14:30:30\n2024-07-03 17:45:10\n\n\nHere are the most common timedelta units:\n\n\n\nArgument\nMeaning\n\n\n\n\ndays\nadd or subtract days\n\n\nweeks\nadd or subtract weeks\n\n\nhours\nadd or subtract hours\n\n\nminutes\nadd or subtract minutes\n\n\nseconds\nadd or subtract seconds\n\n\n\nSo timedelta helps us move forward or backward in time with different levels of granularity.\n\n\nWhy datetime is Useful?\nThe built-in module is especially useful when:\n\ncreating single date values manually\nmeasuring time differences\nformatting dates for display\nparsing custom date strings\n\nHowever, once we start working with full columns of data, Pandas becomes much more practical.",
+    "text": "datetime Module\nThe built-in datetime module is useful when working with individual date values.\n\nfrom datetime import datetime, date, timedelta\n\n\nCreating a Date Object\nA date object stores only year, month, and day.\n\nsimple_date = date(2024, 7, 1)\nsimple_date\n\ndatetime.date(2024, 7, 1)\n\n\n\n\n\nPosition\nValue\nMeaning\n\n\n\n\n1st\n2024\nyear\n\n\n2nd\n7\nmonth\n\n\n3rd\n1\nday\n\n\n\n\n\nCreating a Datetime Object\nA datetime object stores both date and time.\n\nfull_datetime = datetime(2024, 7, 1, 14, 30, 0)\nfull_datetime\n\ndatetime.datetime(2024, 7, 1, 14, 30)\n\n\n\n\n\nPosition\nValue\nMeaning\n\n\n\n\n1st\n2024\nyear\n\n\n2nd\n7\nmonth\n\n\n3rd\n1\nday\n\n\n4th\n14\nhour\n\n\n5th\n30\nminute\n\n\n6th\n0\nsecond\n\n\n\n\n\nGetting the Current Date and Time\n\ntoday = date.today()\nnow = datetime.now()\n\nprint(f'today is {today}')\nprint(f'right now is {now}')\n\ntoday is 2026-08-24\nright now is 2026-08-24 18:07:06.956279\n\n\n\n\nAccessing Parts of a Datetime\nA datetime object has useful attributes.\n\nprint(f\"Year: {full_datetime.year}\")\nprint(f\"Month: {full_datetime.month}\")\nprint(f\"Day: {full_datetime.day}\")\nprint(f\"Hour: {full_datetime.hour}\")\nprint(f\"Minute: {full_datetime.minute}\")\nprint(f\"Second: {full_datetime.second}\")\n\nYear: 2024\nMonth: 7\nDay: 1\nHour: 14\nMinute: 30\nSecond: 0\n\n\n\n\nFormatting Dates as Strings\nMost of the times we want to display a date in a readable format.\n\nfull_datetime.strftime(\"%Y-%m-%d\")\n\n'2024-07-01'\n\n\n\nfull_datetime.strftime(\"%d/%m/%Y\")\n\n'01/07/2024'\n\n\n\nfull_datetime.strftime(\"%B %d, %Y\")\n\n'July 01, 2024'\n\n\n\n\nCommon Formatting Codes\n\n\n\nCode\nMeaning\nExample\n\n\n\n\n%Y\n4-digit year\n2024\n\n\n%m\n2-digit month\n07\n\n\n%d\n2-digit day\n01\n\n\n%H\nhour (24-hour clock)\n14\n\n\n%M\nminute\n30\n\n\n%S\nsecond\n00\n\n\n%b\nshort month name\nJul\n\n\n%B\nfull month name\nJuly\n\n\n\n\n\nParsing Strings into Datetime\nThis is the reverse of formatting.\n\ndt = datetime.strptime(\"2024-07-01\", \"%Y-%m-%d\")\ndt\n\ndatetime.datetime(2024, 7, 1, 0, 0)\n\n\nThis is useful when reading text dates and converting them into structured date objects.\n\n\nArithmetic with Dates\nOne of the most important date operations is measuring time differences.\n\nstart = date(2024, 7, 1)\nend = date(2024, 7, 15)\n\ndelta = end - start\ndelta\n\ndatetime.timedelta(days=14)\n\n\n\ndelta.days\n\n14\n\n\nWe can also add or subtract days using timedelta.\n\nstart + timedelta(days=10)\n\ndatetime.date(2024, 7, 11)\n\n\n\nstart - timedelta(days=7)\n\ndatetime.date(2024, 6, 24)\n\n\nWe can also add or subtract time using timedelta.\nWhen we work with a date object, the most natural granularity is usually days or weeks.\n\nprint(start + timedelta(days=10))\nprint(start - timedelta(days=7))\nprint(start + timedelta(weeks=2))\nprint(start - timedelta(weeks=1))\n\n2024-07-11\n2024-06-24\n2024-07-15\n2024-06-24\n\n\nOther granularity are available as well: such as hours, minutes, or seconds, we usually work with a datetime object instead of a plain date.\n\nstart_dt = datetime(2024, 7, 1, 14, 30, 0)\n\nprint(start_dt + timedelta(days=1))\nprint(start_dt + timedelta(hours=5))\nprint(start_dt + timedelta(minutes=45))\nprint(start_dt + timedelta(seconds=30))\nprint(start_dt + timedelta(days=2, hours=3, minutes=15, seconds=10))\n\n2024-07-02 14:30:00\n2024-07-01 19:30:00\n2024-07-01 15:15:00\n2024-07-01 14:30:30\n2024-07-03 17:45:10\n\n\nHere are the most common timedelta units:\n\n\n\nArgument\nMeaning\n\n\n\n\ndays\nadd or subtract days\n\n\nweeks\nadd or subtract weeks\n\n\nhours\nadd or subtract hours\n\n\nminutes\nadd or subtract minutes\n\n\nseconds\nadd or subtract seconds\n\n\n\nSo timedelta helps us move forward or backward in time with different levels of granularity.\n\n\nWhy datetime is Useful?\nThe built-in module is especially useful when:\n\ncreating single date values manually\nmeasuring time differences\nformatting dates for display\nparsing custom date strings\n\nHowever, once we start working with full columns of data, Pandas becomes much more practical.",
     "crumbs": [
       "Syllabus",
       "Python",
@@ -8944,7 +9126,7 @@
     "href": "materials/python/session01.html#why-programming-is-necessary",
     "title": "Session 01: Programming for Data Analysts",
     "section": "Why Programming is Necessary",
-    "text": "Why Programming is Necessary\nThe fundamental reason is leverage.\n\nExcel allows you to operate on data manually.\nSQL allows you to …\n\nPython allows you to:\n\nAutomate repetitive tasks\n\nScale to larger datasets\n\nEnsure reproducibility\n\nReduce dependency on licensed tools\n\nIncrease speed and efficiency\n\n\n\n\n\n\n\nImportant\n\n\n\nProgramming transforms you from an operator into a system designer.\n\n\n\n\nAutomation: Eliminating Repetition\nConsider a simple scenario:\n\nEvery month you receive a CSV/Excel file.\n\nEvery month you clean it manually.\nEvery month you need to INSERT INTO the Database\n\n\\[\\Downarrow\\]\nEvery month you repeat the same steps.\nInstead, you write the logic once.\nimport pandas as pd\n\ndf = pd.read_csv(\"monthly_sales.csv\")\n\ndf = df[df[\"price\"] &gt; 0]\ndf[\"revenue\"] = df[\"price\"] * df[\"quantity\"]\n\ndf.to_csv(\"cleaned_sales.csv\", index=False)\n\ndf.to_sql('sql_reference_folder')\n\n\n\n\n\n\nTip\n\n\n\nNow the computer performs the task consistently and automatically.\n\n\n\n\nScale: Beyond Excel Limits\nExcel maximum row capacity: 1,048,576 rows.\nModern systems generate millions of records daily.\nPython, especially when integrated with databases, handles large-scale datasets efficiently.\n\n\n\n\n\nflowchart LR\n    A[Small Dataset] --&gt; B[Excel Works]\n    C[Large Dataset] --&gt; D[Excel Slows]\n    D --&gt; E[Python + Database]\n\n\n\n\n\n\n\n\n\n\n\n\nCaution\n\n\n\nLarge-scale analytics requires programmatic control.\n\n\n\n\nReproducibility: Making Analysis Transparent\nExcel operations can disappear when formulas are overwritten.\nIn Python, every transformation is documented as code.\nimport pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\n\ndf = df[df[\"price\"] &gt; 0]\ndf[\"revenue\"] = df[\"price\"] * df[\"quantity\"]\n\ndf.head()\nIf someone reads your script, they can reproduce every step.\n\n\n\n\n\n\nImportant\n\n\n\nThis is critical in professional analytics environments.\n\n\n\n\n\nCost Efficiency\nTraditional statistical/analytical tools require expensive licenses.\n\nSPSS\n\nSAS\n\nStata\n\nExcel\nTableau\nPower BI\n\nPython:\n\nOpen-source\n\nFree\n\nCommunity-supported\n\nFlexible (no restrictions)\n\n\nThis reduces organizational cost and increases accessibility.\n\n\n\n\n\n\n\n\nTip\n\n\n\nNewly established and/or small companies they prefer to use Python, for data analytics and/or in analtyics workflows because of above mentioned reeasons\n\n\n\n\nSpeed and Performance\nWhen datasets grow, Excel becomes slower.\nPython processes filtering and transformations faster, especially when vectorized operations are used.\nExample:\n\nimport pandas as pd\nimport numpy as np\n\ndata = np.random.randint(1, 100, size=1_000_000)\ndf = pd.DataFrame({\"value\": data})\n\nfiltered = df[df[\"value\"] &gt; 50]\n\nprint(f'the shape of the main data: {df.shape}')\nprint(f'the shape of the filtered data: {filtered.shape}')\nfiltered.head()\n\nthe shape of the main data: (1000000, 1)\nthe shape of the filtered data: (494452, 1)\n\n\n\n\n\n\n\n\n\nvalue\n\n\n\n\n0\n73\n\n\n2\n84\n\n\n3\n74\n\n\n4\n79\n\n\n5\n94\n\n\n\n\n\n\n\nThis demonstrates processing of one million observations programmatically.",
+    "text": "Why Programming is Necessary\nThe fundamental reason is leverage.\n\nExcel allows you to operate on data manually.\nSQL allows you to …\n\nPython allows you to:\n\nAutomate repetitive tasks\n\nScale to larger datasets\n\nEnsure reproducibility\n\nReduce dependency on licensed tools\n\nIncrease speed and efficiency\n\n\n\n\n\n\n\nImportant\n\n\n\nProgramming transforms you from an operator into a system designer.\n\n\n\n\nAutomation: Eliminating Repetition\nConsider a simple scenario:\n\nEvery month you receive a CSV/Excel file.\n\nEvery month you clean it manually.\nEvery month you need to INSERT INTO the Database\n\n\\[\\Downarrow\\]\nEvery month you repeat the same steps.\nInstead, you write the logic once.\nimport pandas as pd\n\ndf = pd.read_csv(\"monthly_sales.csv\")\n\ndf = df[df[\"price\"] &gt; 0]\ndf[\"revenue\"] = df[\"price\"] * df[\"quantity\"]\n\ndf.to_csv(\"cleaned_sales.csv\", index=False)\n\ndf.to_sql('sql_reference_folder')\n\n\n\n\n\n\nTip\n\n\n\nNow the computer performs the task consistently and automatically.\n\n\n\n\nScale: Beyond Excel Limits\nExcel maximum row capacity: 1,048,576 rows.\nModern systems generate millions of records daily.\nPython, especially when integrated with databases, handles large-scale datasets efficiently.\n\n\n\n\n\nflowchart LR\n    A[Small Dataset] --&gt; B[Excel Works]\n    C[Large Dataset] --&gt; D[Excel Slows]\n    D --&gt; E[Python + Database]\n\n\n\n\n\n\n\n\n\n\n\n\nCaution\n\n\n\nLarge-scale analytics requires programmatic control.\n\n\n\n\nReproducibility: Making Analysis Transparent\nExcel operations can disappear when formulas are overwritten.\nIn Python, every transformation is documented as code.\nimport pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\n\ndf = df[df[\"price\"] &gt; 0]\ndf[\"revenue\"] = df[\"price\"] * df[\"quantity\"]\n\ndf.head()\nIf someone reads your script, they can reproduce every step.\n\n\n\n\n\n\nImportant\n\n\n\nThis is critical in professional analytics environments.\n\n\n\n\n\nCost Efficiency\nTraditional statistical/analytical tools require expensive licenses.\n\nSPSS\n\nSAS\n\nStata\n\nExcel\nTableau\nPower BI\n\nPython:\n\nOpen-source\n\nFree\n\nCommunity-supported\n\nFlexible (no restrictions)\n\n\nThis reduces organizational cost and increases accessibility.\n\n\n\n\n\n\n\n\nTip\n\n\n\nNewly established and/or small companies they prefer to use Python, for data analytics and/or in analtyics workflows because of above mentioned reeasons\n\n\n\n\nSpeed and Performance\nWhen datasets grow, Excel becomes slower.\nPython processes filtering and transformations faster, especially when vectorized operations are used.\nExample:\n\nimport pandas as pd\nimport numpy as np\n\ndata = np.random.randint(1, 100, size=1_000_000)\ndf = pd.DataFrame({\"value\": data})\n\nfiltered = df[df[\"value\"] &gt; 50]\n\nprint(f'the shape of the main data: {df.shape}')\nprint(f'the shape of the filtered data: {filtered.shape}')\nfiltered.head()\n\nthe shape of the main data: (1000000, 1)\nthe shape of the filtered data: (494643, 1)\n\n\n\n\n\n\n\n\n\nvalue\n\n\n\n\n0\n76\n\n\n2\n83\n\n\n3\n92\n\n\n4\n78\n\n\n7\n85\n\n\n\n\n\n\n\nThis demonstrates processing of one million observations programmatically.",
     "crumbs": [
       "Syllabus",
       "Python",
@@ -15693,6 +15875,565 @@
       "Statistical Thinking",
       "Statistics",
       "Session 01: Data Layers and Bias in Data"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html",
+    "href": "materials/statistics/session03.html",
+    "title": "Session 03: Data Types",
+    "section": "",
+    "text": "Types of Data\nCentral Tendancy measurs\nIntro to visualization",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#agenda",
+    "href": "materials/statistics/session03.html#agenda",
+    "title": "Session 03: Data Types",
+    "section": "",
+    "text": "Types of Data\nCentral Tendancy measurs\nIntro to visualization",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#what-is-statistics",
+    "href": "materials/statistics/session03.html#what-is-statistics",
+    "title": "Session 03: Data Types",
+    "section": "What is Statistics?",
+    "text": "What is Statistics?\nStatistics is the branch of mathematics that transforms numbers (data) into useful information fohr decision makers.\nWhy learn Statistics?\n\nstatistics helps you make better sense of the world.\nstatistics helps you make better business decisions.\n\nThe statistical methods you use for these tasks come from one of the two branches of statistics: descriptive statistics and inferential statistics.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#basic-vocabulary-of-statistics",
+    "href": "materials/statistics/session03.html#basic-vocabulary-of-statistics",
+    "title": "Session 03: Data Types",
+    "section": "Basic Vocabulary of Statistics",
+    "text": "Basic Vocabulary of Statistics\n\nVariable: A variable is a characteristic of an item or individual.\nData: Data are the different values associated with a variable.\nPopulation: A population consists of all the items or individuals about which you want to reach conclusions.\nSample: A sample is the portion of a population selected for analysis.\nParameter: A parameter is a measure that describes a characteristic of a population.\nStatistic: A statistic is a measure that describes a characteristic of a sample.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#why-data-types-matter",
+    "href": "materials/statistics/session03.html#why-data-types-matter",
+    "title": "Session 03: Data Types",
+    "section": "Why Data Types Matter?",
+    "text": "Why Data Types Matter?\nBefore calculating averages or plotting charts, it’s essential to recognize what kind of data you’re working with.\nThe classification of a variable determines:\n\nWhich summary statistics are meaningful\n\nWhich visualizations can be used\n\nHow relationships between variables should be interpreted",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#qualitative-categorical-data",
+    "href": "materials/statistics/session03.html#qualitative-categorical-data",
+    "title": "Session 03: Data Types",
+    "section": "Qualitative (Categorical) Data",
+    "text": "Qualitative (Categorical) Data\nQualitative data describe qualities, categories, or labels rather than numbers.\n\n\n\n\n\n\n\n\nSubtype\nDefinition\nExamples\n\n\n\n\nNominal\nCategories with no natural order\nGender (Male/Female), City (Paris, Yerevan, Tokyo)\n\n\nOrdinal\nCategories with a meaningful order, but unequal spacing\nEducation Level (High &lt; Bachelor &lt; Master &lt; PhD), Satisfaction (Low–Medium–High)\n\n\n\n\n\n\n\n\n\nRemember\n\n\n\n\nNominal → just names, no order\n\nOrdinal → names with rank",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#quantitative-numerical-data",
+    "href": "materials/statistics/session03.html#quantitative-numerical-data",
+    "title": "Session 03: Data Types",
+    "section": "Quantitative (Numerical) Data",
+    "text": "Quantitative (Numerical) Data\nQuantitative data represent measurable quantities that can be used in arithmetic operations.\n\n\n\n\n\n\n\n\nSubtype\nDefinition\nExamples\n\n\n\n\nDiscrete\nCountable numbers, often integers\nNumber of customers, Complaints per day\n\n\nContinuous\nMeasured values within a range\nTemperature, Age, Revenue, Weight\n\n\n\n\nInterval Data\nInterval values represent ordered units that have the same difference.\nA variable is considered interval data when it contains numeric values that are ordered and where the exact differences between values are known.\nExample (Temperature in Celsius):\n[-15, -10, -5, 0, 5, 10, 15, 20, 25, 30]\nA key limitation of interval data is that it does not have a true zero.\nIn the Celsius example, there is no such thing as “no temperature.”\n\n\nRatio Data\nRatio values are also ordered units that have the same difference, similar to interval values.\nThe key distinction is that ratio data has an absolute zero.\nExamples: Income, Weight, Length, etc.\n\n\n\n\n\n\nTip\n\n\n\n\nDiscrete → counting\n\nContinuous → measuring",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#additional-data-types-common-in-analytics",
+    "href": "materials/statistics/session03.html#additional-data-types-common-in-analytics",
+    "title": "Session 03: Data Types",
+    "section": "Additional Data Types (Common in Analytics)",
+    "text": "Additional Data Types (Common in Analytics)\n\n\n\n\n\n\n\n\nType\nDefinition\nExample Applications\n\n\n\n\nBinary\nTwo possible outcomes (Yes/No, 0/1)\nSubscription status, churn indicator\n\n\nTime-Series\nObservations recorded sequentially over time\nDaily sales, hourly temperature\n\n\nTextual / Unstructured\nWords, sentences, or documents\nCustomer reviews, tweets\n\n\nSpatial / Geographical\nLocation-based information\nStore coordinates, delivery zones\n\n\n\n\n\n\n\n\n%%{init: {\"theme\": \"default\", \"logLevel\": \"fatal\"}}%%\ngraph TD\n    A[\"Data Types\"] --&gt; B[\"Qualitative (Categorical)\"]\n    A --&gt; C[\"Quantitative (Numerical)\"]\n    A --&gt; H[\"Other Types\"]\n\n    B --&gt; D[\"Nominal\"]\n    B --&gt; E[\"Ordinal\"]\n\n    C --&gt; F[\"Discrete\"]\n    C --&gt; G[\"Continuous\"]\n\n    \n    H --&gt; I[\"Binary\"]\n    H --&gt; J[\"Time-Series\"]\n    H --&gt; K[\"Textual\"]\n    H --&gt; L[\"Spatial\"]",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#mean",
+    "href": "materials/statistics/session03.html#mean",
+    "title": "Session 03: Data Types",
+    "section": "Mean",
+    "text": "Mean\nThe mean is the sum of all values divided by the number of observations.\n\\[\n\\text{Mean} = \\frac{\\sum_{i=1}^{n} x_i}{n}\n\\]\n\n\n\nExample\nCalculation\n\n\n\n\nData: 5, 7, 8, 10\nMean = (5 + 7 + 8 + 10) / 4 = 7.5\n\n\n\n\nMean for Sample\n\\[\n\\bar{x} = \\frac{\\sum_{i=1}^{n} x_i}{n}\n\\]\n\n\nPopulation Mean\n(same, only notation is different)\n\\[\n\\mu = \\frac{\\sum_{i=1}^{N} x_i}{N}\n\\]\n\n\nWeighted Mean\n\n\n\nType\nScore\nWeight (%)\n\n\n\n\nExam\n94\n50\n\n\nProject\n92\n35\n\n\nHomework\n100\n15\n\n\n\n(Weights do not need to add up to one!)\n\\[\n\\bar{x} =\n\\frac{\\displaystyle \\sum_{i=1}^{n} (w_i x_i)}\n     {\\displaystyle \\sum_{i=1}^{n} w_i}\n\\]\n\n\nSample Mean Example\n\n\n\n\n\n\nWhen to Use?\n\n\n\n\nConveinent measurement clear to everybody\nWorks well with continuous or discrete numerical data.\n\nSensitive to outliers (extreme values can distort the result).\n\n\n\nGiven the 5 observations:\n\\[\n\\bar{x}\n= \\frac{\\sum_{i=1}^{5} x_i}{5}\n= \\frac{14.2 + 19.6 + 22.7 + 13.1 + 20.9}{5}\n= \\frac{90.5}{5}\n= 18.1 \\\n\\]\n\n\\[\n\\mu\n= \\frac{\\sum_{i=1}^{5} x_i}{5}\n= \\frac{300 + 320 + 270 + 210 + 8{,}000}{5}\n= \\frac{9{,}100}{5}\n= 1{,}820\n\\]",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#median",
+    "href": "materials/statistics/session03.html#median",
+    "title": "Session 03: Data Types",
+    "section": "Median",
+    "text": "Median\nThe median is the value that separates the dataset into two equal halves.\nSteps to calculate:\n\nOrder the data from smallest to largest.\n\nIf the number of observations is odd → middle value.\n\nIf even → average of the two middle values.\n\n\n\n\nExample\nCalculation\n\n\n\n\nData: 2, 5, 7, 9, 12\nMedian = 7\n\n\nData: 3, 5, 8, 10\nMedian = (5 + 8)/2 = 6.5\n\n\n\n\n\n\n\n\n\nWhen to Use?\n\n\n\n\nBetter than the mean for skewed data or when outliers are present.\n\nCommon for income, property prices, etc.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#mode",
+    "href": "materials/statistics/session03.html#mode",
+    "title": "Session 03: Data Types",
+    "section": "Mode",
+    "text": "Mode\nThe mode is the value that appears most often.\n\n\n\nExample\nCalculation\n\n\n\n\nData: 2, 3, 3, 4, 5, 5, 5, 7\nMode = 5\n\n\n\n\n\n\n\n\n\nWhen to Use?\n\n\n\n\nIdeal for categorical or discrete data.\n\nA dataset can have:\n\nOne mode → unimodal\n\nTwo modes → bimodal\n\nMore than two → multimodal",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#comparison-of-mean-median-and-mode",
+    "href": "materials/statistics/session03.html#comparison-of-mean-median-and-mode",
+    "title": "Session 03: Data Types",
+    "section": "Comparison of Mean, Median, and Mode",
+    "text": "Comparison of Mean, Median, and Mode\n\n\n\n\n\n\n\n\n\n\nMeasure\nBest For\nSensitive to Outliers?\nData Type\nExample Context\n\n\n\n\nMean\nSymmetrical distributions\nYes\nContinuous, Discrete\nAverage income\n\n\nMedian\nSkewed distributions\nNo\nContinuous\nTypical housing price\n\n\nMode\nCategorical / Repeated values\nNo\nNominal, Ordinal\nMost common product category\n\n\n\n\n\n\n\n\n\nVisual Insight\n\n\n\n\nIn a perfectly symmetrical distribution → Mean = Median = Mode\n\nIn a right-skewed distribution → Mean &gt; Median &gt; Mode\n\nIn a left-skewed distribution → Mean &lt; Median &lt; Mode",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#frequency-distributions",
+    "href": "materials/statistics/session03.html#frequency-distributions",
+    "title": "Session 03: Data Types",
+    "section": "Frequency Distributions",
+    "text": "Frequency Distributions\n\nSymmetric Distribution\nMean ~ Median\n\n\n\n\n\n\n\n\n\n\n\nLeft Skewed Distributions\n\n\n\n\n\n\n\n\n\n\n\nRight Skewed Distributions",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#symmetric-left-skewed-and-right-skewed-distributions",
+    "href": "materials/statistics/session03.html#symmetric-left-skewed-and-right-skewed-distributions",
+    "title": "Session 03: Data Types",
+    "section": "Symmetric, Left-Skewed, and Right-Skewed Distributions",
+    "text": "Symmetric, Left-Skewed, and Right-Skewed Distributions",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#enriched-plot",
+    "href": "materials/statistics/session03.html#enriched-plot",
+    "title": "Session 03: Data Types",
+    "section": "Enriched Plot",
+    "text": "Enriched Plot\n\nnp.random.seed(1)\n\n# ---- Generate data ----\ndata_sym  = np.random.normal(loc=50, scale=10, size=500)\ndata_left = 100 - np.random.gamma(shape=5, scale=4, size=500)\ndata_right = np.random.gamma(shape=4, scale=4, size=500)\n\ndatasets = [\n    (\"Symmetric\\nMean ≈ Median\", data_sym),\n    (\"Left-Skewed\\nMean &lt; Median\", data_left),\n    (\"Right-Skewed\\nMean &gt; Median\", data_right)\n]\n\n# ---- Create subplots ----\nfig, axes = plt.subplots(1, 3, figsize=(16, 4.5))  # slightly wider for annotations\nbins = 20\n\nfor ax, (title, data) in zip(axes, datasets):\n\n    mean_val = np.mean(data)\n    median_val = np.median(data)\n\n    # Histogram\n    counts, bins_hist, patches = ax.hist(\n        data, bins=bins, alpha=0.6, edgecolor=\"black\"\n    )\n\n    # KDE smooth density\n    kde = gaussian_kde(data)\n    xline = np.linspace(min(data), max(data), 400)\n    ax.plot(xline, kde(xline) * len(data) * (bins_hist[1] - bins_hist[0]),\n            color=\"black\", linewidth=1.5, label=\"KDE\")\n\n    # Mean line (blue dashed)\n    ax.axvline(mean_val, color=\"blue\", linestyle=\"--\", linewidth=2)\n    ax.annotate(\"Mean\", xy=(mean_val, max(counts)*0.9),\n                xytext=(mean_val, max(counts)*1.1),\n                ha=\"center\", color=\"blue\", fontsize=8,\n                arrowprops=dict(arrowstyle=\"-&gt;\", color=\"blue\"))\n\n    # Median line (red solid)\n    ax.axvline(median_val, color=\"red\", linestyle=\"-\", linewidth=2)\n    ax.annotate(\"Median\", xy=(median_val, max(counts)*0.9),\n                xytext=(median_val, max(counts)*1.1),\n                ha=\"center\", color=\"red\", fontsize=8,\n                arrowprops=dict(arrowstyle=\"-&gt;\", color=\"red\"))\n\n    # Shaded tails depending on skew\n    if \"Left\" in title:\n        ax.axvspan(min(data), mean_val, alpha=0.12, color=\"blue\")\n    elif \"Right\" in title:\n        ax.axvspan(mean_val, max(data), alpha=0.12, color=\"blue\")\n\n    # Titles & labels\n    ax.set_title(title, fontsize=12)\n    ax.set_xlabel(\"Value\", fontsize=9)\n    ax.set_ylabel(\"Frequency\", fontsize=9)\n    ax.tick_params(axis=\"both\", labelsize=8)\n\n    # Summary table under plot\n    table_data = [\n        [\"Mean\", f\"{mean_val:.2f}\"],\n        [\"Median\", f\"{median_val:.2f}\"],\n        [\"Std Dev\", f\"{np.std(data):.2f}\"]\n    ]\n    table = ax.table(\n        cellText=table_data,\n        colLabels=[\"Statistic\", \"Value\"],\n        cellLoc=\"center\",\n        loc=\"bottom\",\n        fontsize=8\n    )\n    table.scale(1, 1.1)\n\nplt.tight_layout(pad=2)\nplt.show()",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#measures-of-variability",
+    "href": "materials/statistics/session03.html#measures-of-variability",
+    "title": "Session 03: Data Types",
+    "section": "Measures of Variability",
+    "text": "Measures of Variability\n\nRange\nVariance\nStandard Deviation (SD)",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#range",
+    "href": "materials/statistics/session03.html#range",
+    "title": "Session 03: Data Types",
+    "section": "Range",
+    "text": "Range\n\\[\n\\text{Range = Highest Value - Lowest Value}\n\\]\n\n\n\n\n\n\nThink about…\n\n\n\n\nThink about where is it applicable?\nAre there any limitations",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#variance",
+    "href": "materials/statistics/session03.html#variance",
+    "title": "Session 03: Data Types",
+    "section": "Variance",
+    "text": "Variance\nSample Variance:\n\\[\ns^{2} = \\frac{\\sum_{i=1}^{n} (x_i - \\bar{x})^{2}}{n - 1}\n\\]\nPopulation Variance\n\\[\n\\sigma^{2}\n=\n\\frac{\n\\displaystyle \\sum_{i=1}^{N} (x_i - \\mu)^{2}\n}{\nN\n}\n\\]",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#standard-deviation",
+    "href": "materials/statistics/session03.html#standard-deviation",
+    "title": "Session 03: Data Types",
+    "section": "Standard Deviation",
+    "text": "Standard Deviation\nSample Standard Deviation (Standard Error)\n\\[\ns \\;=\\; \\sqrt{s^{2}}\n\\;=\\;\n\\sqrt{\n\\frac{\n\\displaystyle \\sum_{i=1}^{n} (x_i - \\bar{x})^{2}\n}{\nn - 1\n}\n}\n\\]\nPopulation standard deviation\n\\[\n\\sigma\n=\n\\sqrt{\n\\frac{\n\\displaystyle \\sum_{i=1}^{N} (x_i - \\mu)^{2}\n}{\nN\n}\n}\n\\]",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#how-to-compare-variability",
+    "href": "materials/statistics/session03.html#how-to-compare-variability",
+    "title": "Session 03: Data Types",
+    "section": "How to compare variability?",
+    "text": "How to compare variability?\nIn which cases you can compare standard deviations?\n\n\n\nBox\nSample 1\nSample 2\n\n\n\n\nBox 1\n14.2\n18.2\n\n\nBox 2\n19.6\n17.9\n\n\nBox 3\n22.7\n18.1\n\n\nBox 4\n13.1\n18.1\n\n\nBox 5\n20.9\n18.2\n\n\nMean\n18.1\n18.1\n\n\nStandard deviation\n4.23\n0.12\n\n\n\n\nVisual Comparison of Variability\n\n\n\n\n\n\n\n\n\n\n\nWhen variability is bad?\n\nWhen consistency and quality control are important\n\nProduct weights, drug dosages, machine precision\n\nDelivery times, service response times\n\nFinancial risk (greater uncertainty)\n\n\n\nWhen variability is good?\n\nBiological diversity and adaptability\n\nMarketing segmentation & A/B testing\n\nCreativity and innovation\n\nInvestments seeking higher upside\n\nIdentifying top performers (sports, hiring)\n\n\n\nWhen variability is neutral?\n\nNatural randomness (weather, height, sampling variation)\n\n\n\n\n\n\n\nCaution\n\n\n\nVariability is not inherently good or bad—its value depends on what you are trying to achieve.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#why-n-1",
+    "href": "materials/statistics/session03.html#why-n-1",
+    "title": "Session 03: Data Types",
+    "section": "Why \\(N-1\\)?",
+    "text": "Why \\(N-1\\)?\nA degree of freedom (df) is an independent piece of information that can vary freely.\nWhenever we estimate a parameter from the sample, we introduce a constraint.\nEach constraint removes one degree of freedom.\nThe universal rule is:\n\\[\ndf = n - \\text{(number of estimated parameters)}.\n\\]\nDuring the mean estimation, since we have one constraint we remove only 1 hence\n\\[\ndf = n - 1\n\\]",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#coefficient-of-variation-normalization",
+    "href": "materials/statistics/session03.html#coefficient-of-variation-normalization",
+    "title": "Session 03: Data Types",
+    "section": "Coefficient of Variation (Normalization)",
+    "text": "Coefficient of Variation (Normalization)\nThe coefficient of variation (CV) is a measure of relative variability.\nIt allows us to compare the variability of two datasets even when their units or scales differ.\n\nData\n\n\n\nDate\nNike\nGoogle\n\n\n\n\nSeptember 14, 2012\n48.32\n709.68\n\n\nOctober 15, 2012\n47.81\n740.98\n\n\nNovember 15, 2012\n45.42\n647.26\n\n\nDecember 14, 2012\n48.46\n701.96\n\n\nJanuary 15, 2013\n53.64\n724.93\n\n\nFebruary 15, 2013\n54.95\n792.89\n\n\nMean\n49.77\n719.62\n\n\nStandard deviation\n3.70\n47.96\n\n\n\n\n\nFormula for the Coefficient of Variation\n\\[\n\\text{CV} = \\frac{s}{\\bar{x}} \\times 100\n\\]\nWhere:\n\n\\(s\\) = standard deviation\n\n\\(\\bar{x}\\) = mean\n\nCV is expressed as a percentage\n\n\nNike\n\\[\n\\text{CV}_{\\text{Nike}}\n= \\frac{3.70}{49.77} \\times 100\n\\approx 7.4\\%\n\\]\nGoogle\n\\[\n\\text{CV}_{\\text{Google}}\n= \\frac{47.96}{719.62} \\times 100\n\\approx 6.7\\%\n\\]\nAlthough Google’s stock prices vary by a much larger dollar amount, its relative variability is smaller.\n\nNike CV = 7.4%\n\nGoogle CV = 6.7%\n\nThis means that, compared to its average price, Google’s stock price is more stable than Nike’s.\nThe CV helps us compare variability across different scales and units—something raw standard deviations alone cannot do.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#z-score",
+    "href": "materials/statistics/session03.html#z-score",
+    "title": "Session 03: Data Types",
+    "section": "Z-score",
+    "text": "Z-score\nNumber of standard deviations that particular value is farther from the mean of its population or sample:\nPopulation:\n\\[\nz = \\frac{x - \\mu}{\\sigma}\n\\]\nSample:\n\\[\nz = \\frac{x - \\bar{x}}{s}\n\\]\n=STANDARDIZE(x, mean, standard_deviation)\nSuppose we have:\n\nx = 540\nmean = 776.3\nstandard deviation = 385.1\n\nIf a data point has a z-score of 0, that means it lies exactly at the mean. If a data point has a positive score (z-score &gt; 0), that means it lies above the mean. If a data point has negative score (z-score&lt;0), that means it lies below the mean.\n\nRule of Thumb for identifying outliers: Data values that have z-scores above +3 and below -3 can be categorized as outliers.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#empirical-rule",
+    "href": "materials/statistics/session03.html#empirical-rule",
+    "title": "Session 03: Data Types",
+    "section": "Empirical Rule",
+    "text": "Empirical Rule\nFor a normally distributed variable with mean \\(\\mu\\) and standard deviation \\(\\sigma\\), the empirical rule states:\n\nWithin 1 standard deviation \\((\\mu \\pm 1\\sigma)\\): about \\(68\\%\\) of the data\nWithin 2 standard deviations \\((\\mu \\pm 2\\sigma)\\): about \\(95\\%\\) of the data\nWithin 3 standard deviations \\(\\mu \\pm 3\\sigma\\): about \\(99.7\\%\\) of the data\n\n\n\n\n\n\n\n\n\n\n\nExamples\n\nDaily Steps on Fitness Trackers\nDaily step counts for a person over several months often form a normal-like distribution.\nAssuming:\n\nAverage steps per day: \\(\\mu = 8{,}000\\)\n\nStandard deviation: \\(\\sigma = 1{,}500\\)\n\nThen:\n\n68% of days fall within: \\([6500,\\ 9500]\\)\n95% of days fall within: \\([5000,\\ 11000]\\)\n99.7% of days fall within: \\([3500,\\ 12500]\\)\n\nFitness coaches use this rule to identify unusually inactive or exceptionally active days.\n\n\nSAT / GRE / University Exam Scores\nLarge standardized tests tend to be approximately normal.\nSuppose:\n\nMean SAT Math score: \\(\\mu = 520\\)\n\nStandard deviation: \\(\\sigma = 100\\)\n\nThen:\n\n68% score between: \\(520 \\pm 100 = [420,\\ 620]\\)\n95% score between: \\(520 \\pm 200 = [320,\\ 720]\\)\n99.7% score between: \\(520 \\pm 300 = [220,\\ 820]\\)\n\nAdmissions departments use this distribution to benchmark typical, strong, or exceptional performance.\n\n\n\nSummarized Examples\n\n\n\n\n\n\n\n\n\n\n\nScenario\nMean (\\(\\mu\\))\nStd (\\(\\sigma\\))\n68% Range\n95% Range\n99.7% Range\n\n\n\n\nBody Temperature (°C)\n37°C\n0.3°C\n36.7–37.3°C\n36.4–37.6°C\n36.1–37.9°C\n\n\nSAT Math Score\n520\n100\n420–620\n320–720\n220–820\n\n\nSteps per Day\n8000\n1500\n6500–9500\n5000–11000\n3500–12500\n\n\nRod Length (mm)\n100\n2\n98–102\n96–104\n94–106\n\n\nReaction Time (sec)\n0.25\n0.04\n0.21–0.29\n0.17–0.33\n0.13–0.37",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#chebyshevs-theorem",
+    "href": "materials/statistics/session03.html#chebyshevs-theorem",
+    "title": "Session 03: Data Types",
+    "section": "Chebyshev’s Theorem",
+    "text": "Chebyshev’s Theorem\nChebyshev’s Theorem applies to any distribution, not only symmetric or bell-shaped ones.\nIt states that for any value of \\((z &gt; 1)\\), at least the following percentage of observations lie within\n( z ) standard deviations of the mean:\n\\[\n\\left( 1 - \\frac{1}{z^2} \\right) \\times 100\n\\]\n\n\n\n\n\n\n\n\nZ-Score Band\nChebyshev Minimum\nInterpretation\n\n\n\n\n\\(|Z| &lt; 1.5\\)\n\\(1 - \\frac{1}{2.25} = 0.556 \\rightarrow 55.6\\%\\)\nAt least \\(55.6\\%\\) of data have z-scores between –1.5 and +1.5\n\n\n\\(|Z| &lt; 2\\)\n\\(1 - \\frac{1}{4} = 0.75 \\rightarrow 75\\%\\)\nAt least \\(75\\%\\) fall within –2 ≤ Z ≤ +2\n\n\n\\(|Z| &lt; 3\\)\n\\(1 - \\frac{1}{9} = 0.889 \\rightarrow 88.9\\%\\)\nAt least \\(88.9\\%\\) fall within –3 ≤ Z ≤ +3\n\n\n\\(|Z| &lt; 4\\)\n\\(1 - \\frac{1}{16} = 0.9375\\rightarrow 93.75\\%\\)\nAt least \\(93.75\\%\\) fall within –4 ≤ Z ≤ +4\n\n\n\nSuppose monthly customer spending is highly skewed, with a few customers making extremely large purchases.\nBecause the distribution is not normal, we cannot rely on the empirical rule — but Chebyshev’s theorem still applies when using z-scores.\nWe measure:\n\nMean spending: \\(\\mu = 120\\) USD\n\nStandard deviation: \\(\\sigma = 90\\) USD\n\nWe want to know what proportion of customers have z-scores between –2 and +2, i.e., fall within two standard deviations of the mean.\nUsing Chebyshev:\n\\[\nP(|Z| &lt; 2) \\ge 1 - \\frac{1}{4} = 0.75\n\\]\nSo at least 75% of customers must have z-scores:\n\\[\n-2 \\le Z \\le 2\n\\]\nThis corresponds to spending between:\n\\[\nx = \\mu \\pm 2\\sigma = 120 \\pm 180\n\\]\nThus:\n\nLower bound: 120 - 180 = -60 (interpreted as 0 in real life)\n\nUpper bound: 120 + 180 = 300\n\nMeaning:\n\n\n\n\n\n\nTip\n\n\n\nAt least 75% of all customers must spend between 0 and 300 USD, even though the distribution is highly skewed and unpredictable.\n\n\nThis is the power of expressing Chebyshev in z-score terms:",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#chebyshev-vs-empirical-rule",
+    "href": "materials/statistics/session03.html#chebyshev-vs-empirical-rule",
+    "title": "Session 03: Data Types",
+    "section": "Chebyshev vs Empirical Rule",
+    "text": "Chebyshev vs Empirical Rule\n\n\n\n\n\n\n\n\nGoal\nNormal Data\nAny Data\n\n\n\n\nWant precise percentages (68–95–99.7)?\nUse z-scores + Empirical Rule\nNot valid\n\n\nWant a minimum guarantee?\nOptional\nUse z-scores + Chebyshev\n\n\nData is skewed or irregular?\nNot valid\nChebyshev works\n\n\nDistribution unknown?\nNot valid\nChebyshev works",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#grouped-data",
+    "href": "materials/statistics/session03.html#grouped-data",
+    "title": "Session 03: Data Types",
+    "section": "Grouped Data",
+    "text": "Grouped Data\nBelow table represents a grouped frequency distribution of respondents by age category. Each row corresponds to an age interval, and the second column shows the frequency (fᵢ), meaning the number of people who fall within that interval. The total frequency is 100, indicating the entire sample size.\n\n\n\nAge Group\nNumber of Respondents (fᵢ)\n\n\n\n\n20 to under 30\n20\n\n\n30 to under 40\n41\n\n\n40 to under 50\n19\n\n\n50 to under 60\n9\n\n\n60 to under 70\n11\n\n\nTotal\n100\n\n\n\n\nMean of the Grouped Data\n\\[\n\\bar{x} \\approx\n\\frac{\n\\sum_{i=1}^{k} (f_i m_i)\n}{\nn\n}\n\\]\n\n\\(f_i\\) = the frequency for class \\(i\\)\n\n\\(m_i\\) = the midpoint for class \\(i\\)\n\n\\(n = \\sum_{i=1}^{k} f_i\\) (the total number of observations)\n\n\\(k\\) = number of classes\n\n\nStep 1: Midpoints\n\n\\(\\frac{20+30}{2}=25\\)\n\n\n\n\nAge Group\nClass Midpoint (mᵢ)\nFrequency (fᵢ)\n\n\n\n\n20 to under 30\n25\n20\n\n\n30 to under 40\n35\n41\n\n\n40 to under 50\n45\n19\n\n\n50 to under 60\n55\n9\n\n\n60 to under 70\n65\n11\n\n\nTotal\n\n100\n\n\n\n\n\n\nStep 2: Cumulative\n\n\n\nAge Group\nFrequency (fᵢ)\nCumulative Frequency (Fᵢ)\n\n\n\n\n20 to under 30\n20\n20\n\n\n30 to under 40\n41\n61\n\n\n40 to under 50\n19\n80\n\n\n50 to under 60\n9\n89\n\n\n60 to under 70\n11\n100\n\n\nTotal\n100\n100\n\n\n\n\n\nStep 3: Relative Frequency Table\n\n\n\nAge Group\nFrequency (fᵢ)\nRelative Frequency (fᵢ / 100)\n\n\n\n\n20 to under 30\n20\n0.20\n\n\n30 to under 40\n41\n0.41\n\n\n40 to under 50\n19\n0.19\n\n\n50 to under 60\n9\n0.09\n\n\n60 to under 70\n11\n0.11\n\n\nTotal\n100\n1.00\n\n\n\n\n\nStep 4: Percentage Frequencies Table\n\n\n\nAge Group\nFrequency (fᵢ)\nPercentage (%)\n\n\n\n\n20 to under 30\n20\n20\n\n\n30 to under 40\n41\n41\n\n\n40 to under 50\n19\n19\n\n\n50 to under 60\n9\n9\n\n\n60 to under 70\n11\n11\n\n\nTotal\n100\n100\n\n\n\n\n\nStep 5: Visualization\n\n\n\n\n\n\n\n\n\n\n\nGrouped SD\n\\[\ns^2 \\approx \\frac{\\sum_{i=1}^k f_i (m_i - \\bar{x})^2}{n - 1}\n\\]\n\n\n\n\n\n\n\n\n\n\n\n\n\nAge Group\nClass Midpoint \\(m_i\\)\nFrequency \\(f_i\\)\n\\(\\bar{x}\\)\n\\(m_i - \\bar{x}\\)\n\\((m_i - \\bar{x})^2\\)\n\\((m_i - \\bar{x})^2 f_i\\)\n\n\n\n\n20–30\n25\n20\n40\n-15\n225\n4,500\n\n\n30–40\n35\n41\n40\n-5\n25\n1,025\n\n\n40–50\n45\n19\n40\n5\n25\n475\n\n\n50–60\n55\n9\n40\n15\n225\n2,025\n\n\n60–70\n65\n11\n40\n25\n625\n6,875\n\n\nTotal\n\n100\n\n\n\n14,900",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#relative-positions-percentile",
+    "href": "materials/statistics/session03.html#relative-positions-percentile",
+    "title": "Session 03: Data Types",
+    "section": "Relative Positions | Percentile",
+    "text": "Relative Positions | Percentile\nPercentiles help us describe where a particular value lies within the distribution of a dataset.\n\nPercentile: an approximate measure of the percentage of values in the dataset that fall below a given value.\nThe \\(p\\)-th percentile is the value such that at least \\(p\\) percent of the observations lie below it.\nDo not confuse percentages and percentiles — they describe different concepts.\nThe median is the 50th percentile, because half of the values lie below it.\n\n\\[\ni = \\frac{p}{100}(n)\n\\]\nWhere:\n\n\\(p\\) = the desired percentile\n\n\\(n\\) = the total number of observations\n\n\\(i\\) = the index (position) of the percentile in the ordered dataset\n\nInterpreting the Index \\(i\\)\n\nIf \\(i\\) is not a whole number, round \\(i\\) up to the next whole number: The value at that position is the percentile.\nIf \\(i\\) is a whole number, the percentile is the midpoint between the value at position \\(i\\) and the value at position \\(i + 1\\).\n\nIn this example, we will calculate several percentiles using the index formula:\n\\[\ni = \\frac{p}{100}(n)\n\\]\n\nPercentile Rank\n\n\n\nName\nScore\nName\nScore\n\n\n\n\nLori\n726\nMarc\n690\n\n\nChris\n643\nKendra\n747\n\n\nJohn\n777\nPeter\n618\n\n\nSam\n695\nJordan\n701\n\n\nKatie\n796\nTeresa\n660\n\n\nCarole\n743\nDavid\n716\n\n\nIrina\n642\nGia\n742\n\n\nLisa\n819\nRyan\n682\n\n\n\n\n\\[ \\text{Percentile Rank} = \\frac{\\text{Number of values below x}+0.5}{\\text{Total nuber of values}}100 \\]\nThere are 14 scores below John.\n\\[\\frac{14 + 0.5}{16} \\times 100 = 90.625\\]\nThus, John is in approximately the 91st percentile. This means he scored better than about 91% of all individuals in the dataset.\n–\nSuppose we have the following ordered dataset of \\(n = 12\\) values:\n2, 4, 5, 7, 8, 9, 10, 12, 14, 15, 18, 21\nWe will try find:\n\nthe 25th percentile (\\(P_{25}\\))\nthe 50th percentile (\\(P_{50}\\), the median)\nthe 75th percentile (\\(P_{75}\\))\n\n\n\n\nFinding the 25th Percentile (\\(P_{25}\\))\nStep 1: Compute the index\n\\[\ni = \\frac{25}{100}(12) = 3\n\\]\nStep 2: Since \\(i = 3\\) is a whole number, we take the midpoint between the 3rd and 4th values.\n\n3rd value = 5\n\n4th value = 7\n\nThus, \\[\nP_{25} = \\frac{5 + 7}{2} = 6\n\\]\n\n\n\nFinding the 50th Percentile (\\(P_{50}\\)), the Median\nStep 1: Compute the index\n\\[\ni = \\frac{50}{100}(12) = 6\n\\]\nStep 2: Index is a whole number → midpoint between 6th and 7th values.\n\n6th value = 9\n\n7th value = 11\n\nThus, \\[\nP_{50} = \\frac{9 + 11}{2} = 10\n\\]\n\n\n\nFinding the 75th Percentile (\\(P_{75}\\))\nStep 1: Compute the index\n\\[\ni = \\frac{75}{100}(12) = 9\n\\]\nStep 2: Whole number → midpoint between 9th and 10th values.\n\n9th value = 14\n\n10th value = 18\n\nThus:\n\\[\nP_{75} = \\frac{14 + 18}{2} = 16\n\\]\n\n\n\nSummary\n\n\\(P_{25} = 6\\)\n\n\\(P_{50} = 10\\)\n\n\\(P_{75} = 16\\)\n\nPercentiles locate values relative to the distribution and help us describe how data spreads.\n\n\nQuartiles\nQuartiles divide the data into four equal parts. They are special percentiles:\n\n1st quartile (\\(Q_1\\)) = 25th percentile\n\n2nd quartile (\\(Q_2\\)) = 50th percentile (median)\n\n3rd quartile (\\(Q_3\\)) = 75th percentile\n\n\nThe Interquartile Range (IQR) measures the spread of the middle 50% of the data:\n\\[\n\\text{IQR} = Q_3 - Q_1\n\\]\n\n\nBoxplot Example\n\n\n\n\n\n\n\n\n\n\n\nExample Dataset\nConsider the following ordered dataset with 12 data points:\n2, 4, 5, 7, 8, 9, 10, 12, 14, 15, 18, 21\n\n\n\nStep 1: Find the Median (\\(Q_2\\))\nBecause \\(n = 12\\) is even:\n\n6th value = 9\n\n7th value = 10\n\n\\[\nQ_2 = \\frac{9 + 10}{2} = 9.5\n\\]\n\n\n\nStep 2: Find \\(Q_1\\) (25th percentile)\n\\(Q_1\\) is the median of the lower half:\nLower half: 2, 4, 5, 7, 8, 9\nMedian of lower half:\n\n3rd value = 5\n\n4th value = 7\n\n\\[\nQ_1 = \\frac{5 + 7}{2} = 6\n\\]\n\n\n\nStep 3: Find \\(Q_3\\) (75th percentile)\n\\(Q_3\\) is the median of the upper half:\nUpper half: 10, 12, 14, 15, 18, 21\nMedian of upper half:\n\n3rd value = 14\n\n4th value = 15\n\n\\[\nQ_3 = \\frac{14 + 15}{2} = 14.5\n\\]\n\n\n\n\nStep 4: Compute the IQR\n\\[\n\\text{IQR} = Q_3 - Q_1 = 14.5 - 6 = 8.5\n\\]\n\n\nSummary of Quartiles\n\n\n\nQuartile\nValue\n\n\n\n\n\\(Q_1\\)\n6\n\n\n\\(Q_2\\)\n9.5\n\n\n\\(Q_3\\)\n14.5\n\n\nIQR\n8.5\n\n\n\n\n\n\nAssingment in Percentiles\nWe are given the populations (in millions) of 12 U.S. cities.\nWe will:\n\nCalculate the 60th percentile of the population data\n\nFind the percentile rank of the population of Dallas (1.20 million)\n\n\n\nData Table\n\n\n\nCity\nPopulation (millions)\n\n\n\n\nNew York, NY\n8.18\n\n\nLos Angeles, CA\n3.79\n\n\nChicago, IL\n2.70\n\n\nHouston, TX\n2.10\n\n\nPhiladelphia, PA\n1.53\n\n\nPhoenix, AZ\n1.45\n\n\nSan Antonio, TX\n1.33\n\n\nSan Diego, CA\n1.31\n\n\nDallas, TX\n1.20\n\n\nSan Jose, CA\n0.95\n\n\nJacksonville, FL\n0.82\n\n\nIndianapolis, IN\n0.82",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#measures-of-association",
+    "href": "materials/statistics/session03.html#measures-of-association",
+    "title": "Session 03: Data Types",
+    "section": "Measures of Association",
+    "text": "Measures of Association\nSo far we were working on one dimasional.\nIn statistics, measures of association are numerical indices that quantify the strength and sometimes direction of a relationship between two or more variables. They help you understand how strongly variables are related (not necessarily causally), and the appropriate measure depends on the type of data (continuous, ordinal, categorical, binary, etc.)\nIn the scope of bootcamp we are going to concetrate on two measures:\n\nCovariance\nCorrelation\n\n\n\n\n\n\n\nNote\n\n\n\nDuring the Python module we are going to cover Chi-Squered test as well\n\n\n\nCovariance\n\nCovariance describes the direction of the linear relationship between two variables.\n\nA positive covariance means the variables tend to increase together.\n\nA negative covariance means one variable increases as the other decreases.\n\nThe magnitude of covariance does not indicate the strength of association.\n\nTherefore, covariance is useful for describing direction, but not strength.\n\n\\[\ns_{xy} =\n\\frac{\n\\sum_{i=1}^{n} (x_i - \\bar{x})(y_i - \\bar{y})\n}{\nn -1\n}\n\\]\nWhere:\n\n\\(x_i\\), \\(y_i\\) are paired observations\n\n\\(\\bar{x}\\) = mean of the \\(x\\) values\n\n\\(\\bar{y}\\) = mean of the \\(y\\) values\n\n\\(n\\) = sample size\n\nCovariance uses the product of deviations to identify whether\n\\(x\\) and \\(y\\) move in the same direction (positive) or opposite directions (negative).\n\n\nCorrelation\nCorrelation standardizes covariance so that it always falls between –1.0 and +1.0. It tells us both the direction and strength of a linear relationship between two variables.\n\\[\nr_{xy} = \\frac{s_{xy}}{s_x s_y}\n\\]\nExample:\n\\[\nr_{xy}\n= \\frac{12.8}{(1.79)(7.77)}\n= 0.920\n\\]\n\nThe values of \\(r_{xy}\\) range from –1.0 to +1.0.\n\nWhen \\(r_{xy}\\) is positive, the linear relationship between \\(x\\) and \\(y\\) is positive:\nas \\(x\\) increases, \\(y\\) tends to increase.\n\nWhen \\(r_{xy}\\) is negative, the linear relationship between \\(x\\) and \\(y\\) is negative:\nas \\(x\\) increases, \\(y\\) tends to decrease.\n\nWhen \\(r_{xy} = 0\\), there is no linear relationship between the variables.\n\nA value of \\(r_{xy} = 0.920\\) indicates a strong positive linear relationship.\n\n\nHours of Study vs Exam Grade\nLet’s calculate both correlation and covariance between Hours of Study and Exam Grade step by step.\nThe table below shows the number of hours each student studied and their corresponding exam grade.\n\n\n\nStudent\nHours of Study\nExam Grade\n\n\n\n\n1\n3\n86\n\n\n2\n7\n98\n\n\n3\n5\n92\n\n\n4\n4\n83\n\n\n5\n3\n78\n\n\n6\n2\n79\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCovariance and Correlation: Full Manual Calculations\nWe use the dataset:\n\n\n\nStudent\nHours (\\(x_i\\))\nGrade (\\(y_i\\))\n\n\n\n\n1\n3\n86\n\n\n2\n7\n98\n\n\n3\n5\n92\n\n\n4\n4\n83\n\n\n5\n3\n78\n\n\n6\n2\n79\n\n\n\nNumber of observations:\n\\[ n = 6 \\]\n\n\n\nStep 1: Compute the Means\nHours:\n\\[ \\bar{x} = \\frac{3 + 7 + 5 + 4 + 3 + 2}{6} = \\frac{24}{6} = 4 \\]\nGrades:\n\\[ \\bar{y} = \\frac{86 + 98 + 92 + 83 + 78 + 79}{6} = \\frac{516}{6} = 86 \\]\n\n\n\nStep 2: Covariance Table\n\n\n\n\n\n\n\n\n\n\n\\(x_i\\)\n\\(y_i\\)\n\\(x_i - \\bar{x}\\)\n\\(y_i - \\bar{y}\\)\n\\((x_i - \\bar{x})(y_i - \\bar{y})\\)\n\n\n\n\n3\n86\n-1\n0\n0\n\n\n7\n98\n3\n12\n36\n\n\n5\n92\n1\n6\n6\n\n\n4\n83\n0\n-3\n0\n\n\n3\n78\n-1\n-8\n8\n\n\n2\n79\n-2\n-7\n14\n\n\nSum\n\n\n\n64\n\n\n\n\n\n\nStep 3: Sample Covariance\nFormula:\n\\[\ns_{xy} = \\frac{\\sum (x_i - \\bar{x})(y_i - \\bar{y})}{n - 1}\n\\]\nPlug in values:\n\\[\ns_{xy} = \\frac{64}{6 - 1} = \\frac{64}{5} = 12.8\n\\]\n\n\n\nStep 4: Compute Standard Deviations\nHours (\\(x\\)):\n\n\n\n\\(x_i\\)\n\\(x_i - \\bar{x}\\)\n\\((x_i - \\bar{x})^2\\)\n\n\n\n\n3\n-1\n1\n\n\n7\n3\n9\n\n\n5\n1\n1\n\n\n4\n0\n0\n\n\n3\n-1\n1\n\n\n2\n-2\n4\n\n\nSum\n\n16\n\n\n\nVariance:\n\\[\ns_x^2 = \\frac{16}{5} = 3.2\n\\]\nStd dev:\n\\[\ns_x = \\sqrt{3.2} \\approx 1.79\n\\]\n\nGrades (\\(y\\)):\n\n\n\n\\(y_i\\)\n\\(y_i - \\bar{y}\\)\n\\((y_i - \\bar{y})^2\\)\n\n\n\n\n86\n0\n0\n\n\n98\n12\n144\n\n\n92\n6\n36\n\n\n83\n-3\n9\n\n\n78\n-8\n64\n\n\n79\n-7\n49\n\n\nSum\n\n302\n\n\n\nVariance:\n\\[\ns_y^2 = \\frac{302}{5} = 60.4\n\\]\nStd dev:\n\\[\ns_y = \\sqrt{60.4} \\approx 7.77\n\\]\n\n\n\nStep 5: Correlation\n\\[\nr_{xy} = \\frac{s_{xy}}{s_x s_y}\n\\]\nSubstitute:\n\\[\nr_{xy} = \\frac{12.8}{(1.79)(7.77)} = 0.9207\n\\]\nThis matches the Python result.\n\n\n\nFinal Values\n\nCovariance: \\(s_{xy} = 12.8\\)\nCorrelation: \\(r_{xy} = 0.9207\\)\n\n\n\n\nScatter Plot With Values\n\n\n\n\n\n\n\n\n\n\n\n\nCorrelation Graphically\nBelow image shoes the correlation visually given different values\nr = 1, -1, 0.6, -0.4, 0\n\n\n\n\n\n\n\n\n\n\n\nCorrelation VS Causation\nHigh correlation does not imply causation:\n\nReverse Causality\nSample Selection\n\n\nThe Ice Cream and Drowning Season\n\nEvery summer, ice cream sales rise sharply.\nEvery summer, drowning incidents also rise sharply.\n\nThe two curves look almost identical for many countries.\n\n\n\n\n\n\nReality\n\n\n\nBoth are driven by a third factor \\(\\rightarrow\\) a hot weather.\nPeople buy more ice cream, and people also go swimming more. Swimming increases exposure to drowning risk.\n\\[\\downarrow\\]\nThe common cause was hot weather\n\n\n\n\n\n\n\n\n\n\n\nReference: Tyler Vigen. Spurious Correlations. Hachette Books, 2015.\n\n\nThe Firefighters and Fire Damage Pattern\n\nLarge fires attract more firefighters.\n\nLarge fires also cause more property damage.\n\nThe two lines rise together almost perfectly.\n\n\n\n\n\n\nReality\n\n\n\n\nFire size is the true driver. Bigger fires require more firefighters and naturally cause more damage.\n\nDeploying more firefighters does not increase damage — the causality is reversed.\n\n\\[\\downarrow\\]\nThe common cause was fire severity\n\n\n\n\n\n\n\n\n\n\n\nReference: Gelman, Andrew & Jennifer Hill. Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press, 2006.\n\n\n\nThe Salary and Coffee Consumption Illusion\n\nEmployees with higher salaries tend to drink more coffee.\n\nThe relationship appears almost linear.\n\nThis may tempt someone to conclude that drinking more coffee leads to higher pay.\n\n\n\n\n\n\nReality\n\n\n\n\nSenior employees have both higher salaries and stronger coffee habits due to culture, workload, and meeting routines.\n\nCoffee does not cause higher salaries — job level does.\n\n\\[\\downarrow\\] The common cause was job seniority\n\n\n\n\n\n\n\n\n\n\n\nReferences: Davenport, Thomas H., and Jeanne Harris. Competing on Analytics. Harvard Business Press, 2007.\n\n\nThe Shoe Size and Reading Score Example\n\nChildren with larger shoe sizes show higher reading scores.\n\nThe scatterplot forms a convincing positive trend.\n\nAt first glance, it seems like bigger feet lead to better reading ability.\n\n\n\n\n\n\nReality\n\n\n\n\nOlder children have both bigger shoes and higher reading ability.\n\nAge is the confounding factor that explains the pattern.\n\n\\[\\downarrow\\]\nThe common cause was age\n\n\n\n\n\n\n\n\n\n\n\nReference Gravetter, Frederick & Larry Wallnau. Statistics for the Behavioral Sciences. Cengage Learning.\n\n\nSmoking and Lung Cancer Incidence\n\nSmoking rates show a steep rise across mid-20th century.\nLung cancer incidence follows with a lag of several years.\n\nThis trend appears across countries, genders, and time periods.\n\n\n\n\n\n\nReality\n\n\n\n\nSmoking introduces carcinogenic compounds that mutate lung tissue.\n\nThe causal mechanism is biological and supported by decades of medical research.\n\n\\[\\downarrow\\] The mechanism was carcinogenic exposure",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session03.html#usefull-materials",
+    "href": "materials/statistics/session03.html#usefull-materials",
+    "title": "Session 03: Data Types",
+    "section": "Usefull materials",
+    "text": "Usefull materials\n\nBusiness Statistics 2 Chapter 3 and Chapter 4\nHere",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Session 03: Data Types"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html",
+    "href": "materials/statistics/session05.html",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "",
+    "text": "Discrete Distributions\nPoisson Distribution\nBernuli Distribution\nCentral Limit Theorem | CLT",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#topics",
+    "href": "materials/statistics/session05.html#topics",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "",
+    "text": "Discrete Distributions\nPoisson Distribution\nBernuli Distribution\nCentral Limit Theorem | CLT",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#discrete-distributions",
+    "href": "materials/statistics/session05.html#discrete-distributions",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Discrete Distributions",
+    "text": "Discrete Distributions\nUp to this point, we focused on continuous distributions, where variables can take infinitely many values within a range.\nNow we move to discrete distributions, which model situations where outcomes are countable.\nThis shift is important because many business problems are naturally discrete.\nA distribution is discrete if:\n\nThe random variable takes countable values\nProbabilities are assigned to exact outcomes\nThe total probability is obtained by summing, not integrating\n\nExamples of discrete outcomes:\n\nNumber of purchases made today\n\nNumber of customers who churned this month\n\nNumber of defects in a production batch\n\nWhether a user clicked an ad (yes / no)\n\n\nDiscrete Random Variables\nA discrete random variable is a numerical description of a countable outcome.\nTypical forms:\n\nBinary outcomes: \\(X \\in \\{0,1\\}\\)\nCounts: \\(X = 0,1,2,3,\\dots\\)\n\nExamples:\n\n\\(X = 1\\) if a customer churns, \\(0\\) otherwise\n\n\\(X\\) = number of purchases per user\n\n\\(X\\) = number of support tickets per day\n\n\n\nProbability Mass Function\nDiscrete distributions are described by a Probability Mass Function (PMF).\nThe PMF answers the question:\n\nWhat is the probability that the random variable equals a specific value?\n\nMathematically:\n\\[\nP(X = x)\n\\]\nCore Properties of a PMF\n\n\\(0 \\le P(X = x) \\le 1\\)\nProbabilities are assigned to exact values\nThe total probability sums to 1:\n\n\\[\n\\sum_x P(X = x) = 1\n\\]\nDiscrete vs Continuous\n\n\n\nAspect\nDiscrete\nContinuous\n\n\n\n\nPossible values\nCountable\nInfinite\n\n\nProbability at a point\nMeaningful\nAlways 0\n\n\nMathematical tool\nSum\nIntegral\n\n\nFunction\nPMF\nPDF\n\n\n\n\n\n\n\n\n\nDo Not Confuse Them\n\n\n\nIt is critical to clearly distinguish between PMF and PDF.\n\nPMF (Probability Mass Function):\nUsed for discrete random variables. It assigns probability to exact values: \\[\nP(X = x)\n\\]\nPDF (Probability Density Function)\nUsed for continuous random variables. It does not give probabilities at exact points: \\[\nP(X = x) = 0\n\\]\n\nKey differences:\n\nPMF values are actual probabilities\nPDF values are densities, not probabilities\nPMFs sum to 1\nPDFs integrate to 1\n\nUsing a PDF when the data is discrete (or vice versa) leads to incorrect interpretations and wrong conclusions.\n\n\n\n\nWhy Descrete Destributions are Essential?\nDiscrete distributions are essential when modeling:\n\nDecisions (yes / no)\nEvent counts\nConversion funnels\nOperational metrics\nRisk events\n\nThey allow analysts to:\n\nQuantify uncertainty in decisions\nEstimate probabilities of rare events\nOptimize policies and thresholds",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#poisson-distribution",
+    "href": "materials/statistics/session05.html#poisson-distribution",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Poisson Distribution",
+    "text": "Poisson Distribution\nThe Poisson Distribution models a very common business question:\n\nHow many times does an event occur within a fixed time (or space) interval?\n\nExamples of such intervals:\n\nper hour\n\nper day\n\nper kilometer\n\nper page view session\n\nA random variable \\(X\\) follows a Poisson distribution if:\n\\[\nX \\sim \\text{Poisson}(\\lambda)\n\\]\nwhere:\n\\(\\lambda &gt; 0\\) is the average number of events per interval\nThe parameter \\(\\lambda\\) captures the typical intensity of events.\nIt answers:\n\n“On average, how many events should I expect in this interval?”\n\nImportantly:\n\nEvents are independent\nThe average rate is stable\nEvents occur randomly, not in bursts or schedules\n\n\nReal-World Narrative\nImagine a retail store observing customer foot traffic.\nEvery 10 minutes, a random number of customers enter the store.\nOver many days, management notices:\n\nSome intervals have 1–2 customers\n\nSome have 5–6 customers\n\nOccasionally, none\n\nYet the average stays roughly the same.\nTypical Poisson use cases in retail and digital analytics:\n\nnumber of customers entering per hour\n\nnumber of purchases per minute in an online shop\n\nnumber of returns processed in each 30-minute window\n\nnumber of carts abandoned per hour\n\nIf these events:\n\nhappen independently\noccur at a stable average rate\n\n…then the count of events per interval follows a Poisson distribution.\n\n\nProbability Mass Function\nThe PMF of a Poisson random variable is:\n\\[\nP(X = x) = \\frac{\\lambda^x e^{-\\lambda}}{x!}, \\quad x = 0,1,2,\\dots\n\\]\n\n\\(x\\) is an exact count\n\nThis formula gives the probability of seeing exactly \\(x\\) events\n\n\n\nExpected Value and Variance\nFor a Poisson distribution both Variance and Expected Value\n\\[\nE[X] = \\lambda\n\\]\n\\[\nVar(X) = \\lambda\n\\]\n\nThe average number of events equals \\(\\lambda\\)\n\nThe uncertainty (variance) grows at the same rate\n\nThis makes Poisson models easy to interpret and diagnose.\n\n\nBusiness Interpretation of \\(\\lambda\\)\n\nLarge \\(\\lambda\\) → frequent events\n\nSmall \\(\\lambda\\) → rare events\n\nConcrete examples:\n\n\\(\\lambda = 2\\) → about 2 calls per hour\n\n\\(\\lambda = 15\\) → about 15 website visits per minute\n\n\\(\\lambda = 0.2\\) → a rare failure, once every 5 intervals\n\n\n\nBusiness Applications of Poisson Distribution\nPoisson models are widely used in practice for:\n\ncustomer arrivals and foot traffic\n\ncall center volume estimation\n\nwebsite click and impression counts\n\nmanufacturing defects\n\nincident and outage reporting\n\nThese models help translate random counts into actionable forecasts.\n\n\nSpreadsheet Demonstration\nAssume \\(\\lambda\\) is stored in cell B1.\n\nPMF for \\(x\\): =POISSON.DIST(x, B1, FALSE)\nCDF (at most \\(x\\) events): =POISSON.DIST(x, B1, TRUE)\n\nTypical spreadsheet questions:\n\n“What is the probability of more than 10 calls this hour?”\n\n“What is the chance we see zero purchases in 5 minutes?”\n\nThese are answered directly using the Poisson CDF.\n\n\n\n\n\n\nTip\n\n\n\nReference for POISSON.DIST in Distributions Spreadsheets:\n\n\n\n\nRelationship to Continuous Models\n\nExponential distribution models time between events\nPoisson distribution models number of events\n\nThey describe the same process from different perspectives.\n\n\nVisualization\n\nLeft plot → PMF for \\(\\lambda = 3\\) and \\(\\lambda = 10\\)\n\nRight plot → likelihood as a function of \\(\\lambda\\)\n\n\n\n\n\n\n\n\n\n\n\n\nInterpretation\n\nHigher \\(\\lambda\\) means more customers entering per time interval.\n\nLower \\(\\lambda\\) means slower foot traffic.\n\nIn our observed retail data:\n\nTotal customers: \\(S = 23\\)\n\nNumber of intervals: \\(n = 6\\)\nMLE: \\(\\hat{\\lambda} = 23/6 = 3.83\\) customers per interval\n\nMeaning\n\non average, about 3.8 customers arrive every 10 minutes,\n\nwhich translates to roughly 23 customers per hour.\n\nThis insight directly supports:\n\nstaff scheduling\n\ncheckout lane allocation\n\npeak-hour planning\n\ndemand forecasting\n\ncapacity optimization\n\nPoisson models turn randomness into operational clarity.\n\n\nCase Study\nIn practice, “fitting a Poisson model” means:\n\nconfirming the data matches the Poisson story\n\nestimating \\(\\lambda\\)\n\nchecking whether the fitted model matches the observed counts\n\n\nBusiness Context\nA retail store records the number of customers entering the store every 10 minutes during a weekday afternoon (14:00–16:00).\n\nTime window length is fixed\n\nEvents are counts\n\nGoal: model arrivals and estimate \\(\\lambda\\)\n\n\n\nObserved Data (Raw Counts)\n\n\n\nInterval\nTime Window\nCustomers\n\n\n\n\n1\n14:00–14:10\n4\n\n\n2\n14:10–14:20\n3\n\n\n3\n14:20–14:30\n5\n\n\n4\n14:30–14:40\n2\n\n\n5\n14:40–14:50\n6\n\n\n6\n14:50–15:00\n4\n\n\n7\n15:00–15:10\n3\n\n\n8\n15:10–15:20\n5\n\n\n9\n15:20–15:30\n4\n\n\n10\n15:30–15:40\n6\n\n\n11\n15:40–15:50\n2\n\n\n12\n15:50–16:00\n4\n\n\n\n\n\nSummary Statistics\nLet \\(X\\) = number of customers per 10-minute interval.\n\nNumber of intervals: \\(n = 12\\)\n\nTotal customers: \\(S = 48\\)\n\nSample mean:\n\\[\n\\bar{x} = \\frac{48}{12} = 4\n\\]\n\nThis strongly suggests a candidate model:\n\\[\nX \\sim \\text{Poisson}(\\lambda = 4)\n\\]\n\n\nDefine the Random Variable\nLet:\n\\[\nX = \\text{number of customers entering the store in a 10-minute interval}\n\\]\nKey properties:\n\n\\(X\\) is a count\n\\(X \\in \\{0,1,2,\\dots\\}\\)\nInterval length is fixed\n\nThis definition already aligns with the Poisson framework.\nBefore computing anything, we check the story, not formulas.\n\nFixed interval length → yes (10 minutes)\nCounting events → yes (customers)\nIndependence → reasonable in short windows\nStable average rate → plausible for this time range\n\nThis tells us:\n\nA Poisson model is a reasonable first approximation.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#bernoulli-distribution",
+    "href": "materials/statistics/session05.html#bernoulli-distribution",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Bernoulli Distribution",
+    "text": "Bernoulli Distribution\nThe Bernoulli Distribution models the most fundamental probabilistic question in data analytics and business decision-making:\n\nDid an event happen or not?\n\nThis is the simplest form of uncertainty we encounter in practice.\nThere are only two possible outcomes for a Bernoulli random variable:\n\nsuccess\n\nfailure\n\nThese outcomes can be represented in many equivalent ways depending on the business context:\n\nyes / no\n\n1 / 0\n\nclick / no click\n\npurchase / no purchase\n\ntail / head (ղուշ / գիր)\n\nA random variable \\(X\\) follows a Bernoulli distribution if:\n\\[\nX \\sim \\text{Bernoulli}(p)\n\\]\nwhere:\n\n\\(p \\in [0,1]\\) is the probability of success\n\nUnlike the Poisson distribution, which models how many times an event occurs over an interval, the Bernoulli distribution focuses on a single decision, attempt, or event.\nIt answers the question:\n\n“Did the event occur this time?”",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#what-is-a-bernoulli-trial",
+    "href": "materials/statistics/session05.html#what-is-a-bernoulli-trial",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "What Is a Bernoulli Trial",
+    "text": "What Is a Bernoulli Trial\nA Bernoulli trial is a single experiment characterized by:\n\nexactly one attempt\nexactly two possible outcomes\na fixed probability of success\n\nEach trial is assumed to be independent of the others.\nThis structure appears constantly in real-world data.\nExamples of Bernoulli trials include:\n\nDid a user click an advertisement?\n\nDid a customer complete a purchase?\n\nDid a transaction fail?\n\nDid a device respond to a health check?\n\nEach experiment produces a single binary outcome.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#real-world-narrative-1",
+    "href": "materials/statistics/session05.html#real-world-narrative-1",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Real-World Narrative",
+    "text": "Real-World Narrative\nConsider an online store tracking customer conversions.\nFor each user session, the outcome is recorded as:\n\nPurchase → 1\n\nNo purchase → 0\n\nAcross thousands of sessions:\n\nSome users convert\n\nMost users do not\n\nHowever, each session is evaluated independently, with the same underlying probability of conversion.\nThis is precisely the setting modeled by a Bernoulli distribution.\nTypical Bernoulli use cases in business analytics include:\n\nad click behavior (clicked / not clicked)\n\nconversion events (purchase / no purchase)\n\nemail engagement (opened / ignored)\n\nfraud detection flags (fraud / legitimate)\n\nchurn indicators (churned / stayed)",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#probability-mass-function-pmf",
+    "href": "materials/statistics/session05.html#probability-mass-function-pmf",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Probability Mass Function (PMF)",
+    "text": "Probability Mass Function (PMF)\nBecause the Bernoulli distribution is discrete, it is described using a Probability Mass Function (PMF).\nThe PMF of a Bernoulli random variable is:\n\\[\nP(X = x) = p^x (1-p)^{1-x}, \\quad x \\in \\{0,1\\}\n\\]\nThis formula yields two probabilities:\n\n\\(P(X = 1) = p\\)\n\n\\(P(X = 0) = 1 - p\\)\n\nThese are the only possible outcomes, and their probabilities always sum to 1.\n\n\n\n\n\n\nPMF vs PDF\n\n\n\n\nBernoulli is a discrete distribution, so we use a PMF\nContinuous distributions (Normal, Exponential) use a PDF\nPMFs assign probability to exact outcomes\nPDFs describe density, not probability at a single point\n\nNever mix these concepts.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#expected-value-and-variance-1",
+    "href": "materials/statistics/session05.html#expected-value-and-variance-1",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Expected Value and Variance",
+    "text": "Expected Value and Variance\nFor a Bernoulli random variable:\n\\[\nE[X] = p\n\\]\n\\[\nVar(X) = p(1-p)\n\\]\nInterpretation:\n\nThe expected value equals the probability of success\nVariance is largest when \\(p = 0.5\\), reflecting maximum uncertainty\nVariance decreases as outcomes become more predictable",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#business-interpretation-of-p",
+    "href": "materials/statistics/session05.html#business-interpretation-of-p",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Business Interpretation of \\(p\\)",
+    "text": "Business Interpretation of \\(p\\)\nThe parameter \\(p\\) is often one of the most important quantities in analytics.\nIt represents a rate, probability, or KPI.\n\nLarge \\(p\\) → success is likely\n\nSmall \\(p\\) → success is rare\n\nConcrete examples:\n\n\\(p = 0.02\\) → 2% conversion rate\n\n\\(p = 0.35\\) → 35% email open rate\n\n\\(p = 0.90\\) → highly reliable system\n\nBernoulli models appear everywhere in practice:\n\nconversion modeling\n\nchurn indicators\n\nA/B testing outcomes\n\nfraud detection flags\n\nquality control pass/fail checks\n\nThey form the building block for more advanced statistical models.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#spreadsheet-demonstration-1",
+    "href": "materials/statistics/session05.html#spreadsheet-demonstration-1",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Spreadsheet Demonstration",
+    "text": "Spreadsheet Demonstration\nAssume the probability \\(p\\) is stored in cell B1.\n\nProbability of success: =B1\nProbability of failure: =1-B1\nSimulate a Bernoulli outcome: =IF(RAND()&lt;B1,1,0)\nEstimate \\(p\\) from observed data: =AVERAGE(range)\nVariance: =B1*(1-B1)\n\nTypical spreadsheet questions include:\n\n“What fraction of users converted?”\n\n“How volatile is this conversion rate?”\n\n\nCase Study\n\nBusiness Context\nAn e-commerce company records whether each visitor completes a purchase during a session.\nEach session is encoded as:\n\n1 → purchase\n\n0 → no purchase\n\n\n\nObserved Data\n{.smaller}\n\n\n\nSession\nPurchase\n\n\n\n\n1\n0\n\n\n2\n1\n\n\n3\n0\n\n\n4\n0\n\n\n5\n1\n\n\n6\n0\n\n\n7\n1\n\n\n8\n0\n\n\n9\n0\n\n\n10\n1\n\n\n\n\n\nSummary Statistics\nLet \\(X\\) denote the purchase indicator per session.\n\nNumber of sessions: \\(n = 10\\)\n\nTotal purchases: \\(S = 4\\)\n\nThe sample mean is:\n\\[\n\\bar{x} = \\frac{4}{10} = 0.4\n\\]\nThis provides a natural estimate of the probability of purchase:\n\\[\n\\hat{p} = 0.4\n\\]\n\n\n\nDefining the Random Variable\nThe Bernoulli random variable can be written explicitly as:\n\\[\nX =\n\\begin{cases}\n1 & \\text{if a purchase occurs} \\\\\n0 & \\text{otherwise}\n\\end{cases}\n\\]\nKey properties:\n\nbinary outcome\n\nindependent trials\n\nfixed probability per session\n\nBefore applying any formulas, we validate the modeling story:\n\nsingle decision → yes\n\ntwo outcomes → yes\n\nstable probability → reasonable\n\nConclusion:\n\nA Bernoulli model is an appropriate first representation of this process.\n\nBernoulli distributions transform binary behavior into measurable probabilities, forming the foundation of modern data analytics and statistical modeling.\n\n\n\n\n\n\nTip\n\n\n\nReference to the Distributions Spreadsheets:",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#final-intuition-summary",
+    "href": "materials/statistics/session05.html#final-intuition-summary",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Final Intuition Summary",
+    "text": "Final Intuition Summary\n\nUse Uniform for “random within limits.”\nUse Exponential for “time until next event.”\nUse Poisson for “number of events per interval.”\nUse Bernoulli for “one yes/no outcome”.\n\nTogether, these four distributions cover the majority of basic retail/business modeling scenarios:\n\nfoot traffic analysis,\ncheckout optimization,\nconversion measurement,\nforecasting purchase behavior\nand customer journey analytics.",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
+    ]
+  },
+  {
+    "objectID": "materials/statistics/session05.html#central-limit-theorem-clt",
+    "href": "materials/statistics/session05.html#central-limit-theorem-clt",
+    "title": "Statistics Session 04: Probabilistic Distributions",
+    "section": "Central Limit Theorem (CLT)",
+    "text": "Central Limit Theorem (CLT)\nThe normal distribution is kind of magical in that we see it a lot in nature. But there’s a reason for that, and that reason makes it super useful for statistics as well. The Central Limit Theorem is the basis for a lot of statistics and the good news is that it is a pretty simple concept. That magic is called The Central Limit Theorem (CLT).\n\n\n“Even if you’re not normal, the average is normal”\n\n\nBig Idea\nThe Central Limit Theorem states that when we take many independent samples from a population and compute the average of each sample, the distribution of those averages:\n\napproaches a Normal distribution\nas the sample size increases\nregardless of the shape of the original distribution\n(provided the variance is finite)\n\nIn symbols, if:\n\\[\nX_1, X_2, ..., X_n\n\\] are independent with mean \\(\\mu\\) and variance \\(\\sigma^2\\), then the sample mean: \\[\n\\bar{X} = \\frac{1}{n}\\sum_{i=1}^n X_i\n\\] has an approximate Normal distribution for large \\(n\\): \\[\n\\bar{X} \\approx \\mathcal{N}\\!\\left(\\mu,\\,\\frac{\\sigma^2}{n}\\right)\n\\]\n\n\n\nWhy This Matters\nIn analytics, we rarely care about one single observation;\nInstead we often care about:\n\nsample means\n\ntotals\n\nproportions\n\ndifferences of means\n\nEven if the raw data come from a non-Normal distribution, the CLT tells us the distribution of these statistics will be approximately Normal when the sample size is sufficiently large.\nThis underpins many common tools, including:\n\nconfidence intervals\n\nhypothesis tests\n\nregressions\n\nA/B testing\n\ncontrol charts\n\n\n\nIntuition with an Example\nImagine you repeatedly sample from a skewed distribution — say, an exponential distribution (like waiting times).\nEven though individual values are skewed, the distribution of average values will look more symmetric and bell-shaped when you increase the sample size.\nThis “averaging effect” is why Normal distributions are so prevalent in real data.\n\n\n\nSimulation of CLT\n\n\n\n\n\n\n\n\n\n\n\n\nWhat the Simulation Shows\n\nFor small sample sizes, the distribution of sample means is skewed.\nAs sample size increases:\n\nthe distribution becomes more symmetric\nit takes on the bell-shaped form\nit becomes closer to Normal\n\n\nThis happens even though the original population was not Normal.\n\n\n\nConditions for the CLT to Work\nThe CLT applies when:\n\nsamples are independent\nthe sample size is large enough\nthe population has finite variance\n\nIn practice, a sample size of 30 or more is often enough for many distributions.\n\n\n\nPractical Importance\nThe CLT justifies:\n\nusing Normal distribution tools for inference\napproximating distributions of sums/means\nconstructing confidence intervals\nperforming hypothesis tests\n\nEven for non-Normal raw data, aggregating information leads to Normal behavior.\n\n\n\nSummary\n\nThe Central Limit Theorem explains the widespread appearance of Normal distributions.\nIt applies to sample means (and sums) of independent observations.\nIt works even when individual data are not Normal.\nIt is a cornerstone of statistical inference.\n\n\n“Even if you’re not normal, the average is normal.”",
+    "crumbs": [
+      "Syllabus",
+      "Statistical Thinking",
+      "Statistics",
+      "Statistics Session 04: Probabilistic Distributions"
     ]
   },
   {
