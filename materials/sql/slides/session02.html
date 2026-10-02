@@ -7,8 +7,8 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.39">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Karen Hovhannisyan">
   <meta name="dcterms.date" content="2026-10-02">
@@ -19,10 +19,16 @@
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -31,8 +37,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -43,7 +50,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -96,7 +103,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-bbe7401fe57d4b791b917637bb662036.css">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -211,7 +218,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Karen Hovhannisyan 
+Karen Hovhannisyan
 </div>
 </div>
 </div>
@@ -226,7 +233,6 @@ Karen Hovhannisyan
 <section id="learning-goals" class="slide level2 smaller">
 <h2>Learning Goals</h2>
 <p><strong>By the end of this session, you will be able to:</strong></p>
-<div>
 <ul>
 <li class="fragment">understand how data is structured in PostgreSQL</li>
 <li class="fragment">identify tables, rows, and columns</li>
@@ -235,7 +241,6 @@ Karen Hovhannisyan
 <li class="fragment">recognize common PostgreSQL data types</li>
 <li class="fragment">get familiarized with basic SQL syntax</li>
 </ul>
-</div>
 </section>
 <section id="erd-simple" class="slide level2">
 <h2>ERD Simple</h2>
@@ -244,7 +249,6 @@ Karen Hovhannisyan
 <section id="sales-analytics-database" class="slide level2 smaller">
 <h2>Sales Analytics Database</h2>
 <p><strong>The database captures information about:</strong></p>
-<div>
 <ul>
 <li class="fragment"><strong>customers</strong> who place orders</li>
 <li class="fragment"><strong>products</strong> that are sold</li>
@@ -252,12 +256,10 @@ Karen Hovhannisyan
 <li class="fragment"><strong>orders</strong> placed over time</li>
 <li class="fragment"><strong>individual</strong> sales transactions</li>
 </ul>
-</div>
 </section>
 <section id="questions-to-data-analyst" class="slide level2 smaller">
 <h2>Questions to Data Analyst</h2>
 <p>Your role as an analyst is to <strong>query this data</strong> to answer business questions related to:</p>
-<div>
 <ul>
 <li class="fragment">revenue and sales performance</li>
 <li class="fragment">product popularity</li>
@@ -265,7 +267,6 @@ Karen Hovhannisyan
 <li class="fragment">employee contribution</li>
 <li class="fragment">time-based trends</li>
 </ul>
-</div>
 </section>
 <section id="erd-complete" class="slide level2">
 <h2>ERD Complete</h2>
@@ -728,14 +729,12 @@ Karen Hovhannisyan
 <section id="data-types-in-postgresql" class="slide level2">
 <h2>Data Types in PostgreSQL</h2>
 <p><strong>Data types define:</strong></p>
-<div>
 <ul>
 <li class="fragment">what kind of data a column can store?</li>
 <li class="fragment">how data is validated?</li>
 <li class="fragment">how much storage is used?</li>
 <li class="fragment">how fast queries can run?</li>
 </ul>
-</div>
 </section>
 <section id="why-data-types-matter" class="slide level2">
 <h2>Why Data Types Matter?</h2>
@@ -1157,8 +1156,8 @@ Karen Hovhannisyan
 <section id="create-example-index" class="slide level2">
 <h2>CREATE Example | Index</h2>
 <p><strong>Example:</strong> create an index to improve analytical queries.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_sales_product_id</span>
-<span id="cb1-2"><a></a><span class="kw">ON</span> sales (product_id);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a aria-label="1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_sales_product_id</span>
+<span id="cb1-2"><a aria-label="2"></a><span class="kw">ON</span> sales (product_id);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>This command:</strong></p>
 <ul>
 <li>does not change data</li>
@@ -1173,9 +1172,9 @@ Karen Hovhannisyan
 <section id="alter-example-constraint" class="slide level2">
 <h2>ALTER Example | Constraint</h2>
 <p><strong>Example:</strong> enforce a business rule on existing data.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> products</span>
-<span id="cb2-2"><a></a><span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_products_price</span>
-<span id="cb2-3"><a></a><span class="kw">CHECK</span> (price <span class="op">&gt;=</span> <span class="dv">0</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a aria-label="1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> products</span>
+<span id="cb2-2"><a aria-label="2"></a><span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> chk_products_price</span>
+<span id="cb2-3"><a aria-label="3"></a><span class="kw">CHECK</span> (price <span class="op">&gt;=</span> <span class="dv">0</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="drop" class="slide level2">
 <h2>DROP</h2>
@@ -1189,7 +1188,7 @@ Karen Hovhannisyan
 <section id="drop-example" class="slide level2">
 <h2>DROP Example</h2>
 <p>Example: remove an unused index.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="kw">DROP</span> <span class="kw">INDEX</span> idx_sales_product_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a aria-label="1"></a><span class="kw">DROP</span> <span class="kw">INDEX</span> idx_sales_product_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="truncate" class="slide level2">
 <h2>TRUNCATE</h2>
@@ -1203,7 +1202,7 @@ Karen Hovhannisyan
 </section>
 <section id="truncate-example" class="slide level2">
 <h2>TRUNCATE Example</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="kw">TRUNCATE</span> <span class="kw">TABLE</span> sales_staging;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a aria-label="1"></a><span class="kw">TRUNCATE</span> <span class="kw">TABLE</span> sales_staging;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section></section>
 <section>
 <section id="crud-data-manipulation" class="title-slide slide level1 center">
@@ -1214,14 +1213,12 @@ Karen Hovhannisyan
 <h2>What Is CRUD?</h2>
 <p>CRUD represents operations used to <strong>work with data inside tables</strong>.</p>
 <p><strong>CRUD stands for:</strong></p>
-<div>
 <ul>
 <li class="fragment">CREATE</li>
 <li class="fragment">READ</li>
 <li class="fragment">UPDATE</li>
 <li class="fragment">DELETE</li>
 </ul>
-</div>
 </section>
 <section id="critical-terminology-clarification" class="slide level2">
 <h2>Critical Terminology Clarification</h2>
@@ -1245,39 +1242,39 @@ Karen Hovhannisyan
 <h2>CREATE (CRUD <span class="math inline">\(\rightarrow\)</span> INSERT)</h2>
 <p>In CRUD, CREATE means <strong>adding new rows</strong>.</p>
 <p>This is done using <code>INSERT</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="kw">INSERT</span> <span class="kw">INTO</span> products (product_id, product_name, price, <span class="kw">category</span>)</span>
-<span id="cb5-2"><a></a><span class="kw">VALUES</span> (<span class="dv">101</span>, <span class="st">'Wireless Mouse'</span>, <span class="fl">24.99</span>, <span class="st">'Accessories'</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a aria-label="1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> products (product_id, product_name, price, <span class="kw">category</span>)</span>
+<span id="cb5-2"><a aria-label="2"></a><span class="kw">VALUES</span> (<span class="dv">101</span>, <span class="st">'Wireless Mouse'</span>, <span class="fl">24.99</span>, <span class="st">'Accessories'</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="read-select" class="slide level2">
 <h2>READ (SELECT)</h2>
 <p>READ retrieves data and is implemented using <code>SELECT</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb6-2"><a></a>  product_id,</span>
-<span id="cb6-3"><a></a>  product_name</span>
-<span id="cb6-4"><a></a><span class="kw">FROM</span> products;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb6-2"><a aria-label="2"></a>  product_id,</span>
+<span id="cb6-3"><a aria-label="3"></a>  product_name</span>
+<span id="cb6-4"><a aria-label="4"></a><span class="kw">FROM</span> products;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="read-with-filtering" class="slide level2">
 <h2>READ with Filtering</h2>
 <p>Filtering rows is done using <code>WHERE</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb7-2"><a></a>  <span class="op">*</span></span>
-<span id="cb7-3"><a></a><span class="kw">FROM</span> sales</span>
-<span id="cb7-4"><a></a><span class="kw">WHERE</span> total_sales <span class="op">&lt;</span> <span class="dv">50</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb7-2"><a aria-label="2"></a>  <span class="op">*</span></span>
+<span id="cb7-3"><a aria-label="3"></a><span class="kw">FROM</span> sales</span>
+<span id="cb7-4"><a aria-label="4"></a><span class="kw">WHERE</span> total_sales <span class="op">&lt;</span> <span class="dv">50</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="update" class="slide level2">
 <h2>UPDATE</h2>
 <p><code>UPDATE</code> modifies existing records.</p>
 <p>Always use <code>WHERE</code> to target specific rows.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="kw">UPDATE</span> products</span>
-<span id="cb8-2"><a></a><span class="kw">SET</span> price <span class="op">=</span> <span class="fl">49.99</span></span>
-<span id="cb8-3"><a></a><span class="kw">WHERE</span> product_id <span class="op">=</span> <span class="dv">12</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a aria-label="1"></a><span class="kw">UPDATE</span> products</span>
+<span id="cb8-2"><a aria-label="2"></a><span class="kw">SET</span> price <span class="op">=</span> <span class="fl">49.99</span></span>
+<span id="cb8-3"><a aria-label="3"></a><span class="kw">WHERE</span> product_id <span class="op">=</span> <span class="dv">12</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="delete" class="slide level2">
 <h2>DELETE</h2>
 <p><code>DELETE</code> removes records from a table.</p>
 <p>Deletions are irreversible and must be used with caution.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a></a><span class="kw">DELETE</span> <span class="kw">FROM</span> sales</span>
-<span id="cb9-2"><a></a><span class="kw">WHERE</span> transaction_id <span class="op">=</span> <span class="dv">1004</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a aria-label="1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> sales</span>
+<span id="cb9-2"><a aria-label="2"></a><span class="kw">WHERE</span> transaction_id <span class="op">=</span> <span class="dv">1004</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section></section>
 <section>
 <section id="constraints" class="title-slide slide level1 center">
@@ -1315,11 +1312,11 @@ national identification numbers</div>
 <section id="unique-constraint-example" class="slide level2">
 <h2>UNIQUE Constraint | Example</h2>
 <p>Ensure each customer email is unique.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customers (</span>
-<span id="cb10-2"><a></a>  customer_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb10-3"><a></a>  email TEXT <span class="kw">UNIQUE</span>,</span>
-<span id="cb10-4"><a></a>  phone_number TEXT</span>
-<span id="cb10-5"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a aria-label="1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customers (</span>
+<span id="cb10-2"><a aria-label="2"></a>  customer_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb10-3"><a aria-label="3"></a>  email TEXT <span class="kw">UNIQUE</span>,</span>
+<span id="cb10-4"><a aria-label="4"></a>  phone_number TEXT</span>
+<span id="cb10-5"><a aria-label="5"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>With this constraint in place, PostgreSQL will reject any attempt to insert a duplicate email address.</p>
 </section>
 <section id="not-null-constraint" class="slide level2">
@@ -1334,11 +1331,11 @@ transaction timestamps</div>
 <section id="not-null-constraint-example" class="slide level2">
 <h2>NOT NULL Constraint | Example</h2>
 <p>Ensure every customer has a phone number.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customers (</span>
-<span id="cb11-2"><a></a>  customer_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb11-3"><a></a>  phone_number TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb11-4"><a></a>  email TEXT</span>
-<span id="cb11-5"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a aria-label="1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customers (</span>
+<span id="cb11-2"><a aria-label="2"></a>  customer_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb11-3"><a aria-label="3"></a>  phone_number TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb11-4"><a aria-label="4"></a>  email TEXT</span>
+<span id="cb11-5"><a aria-label="5"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If an insert is attempted without a phone number, PostgreSQL will return an error.</p>
 </section>
 <section id="primary-key-constraint" class="slide level2">
@@ -1352,11 +1349,11 @@ exists only once per table</div>
 <section id="primary-key-constraint-example" class="slide level2">
 <h2>PRIMARY KEY Constraint | Example</h2>
 <p>Define a primary key for a products table.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> products (</span>
-<span id="cb12-2"><a></a>  product_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb12-3"><a></a>  product_name TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb12-4"><a></a>  price <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>)</span>
-<span id="cb12-5"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a aria-label="1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> products (</span>
+<span id="cb12-2"><a aria-label="2"></a>  product_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb12-3"><a aria-label="3"></a>  product_name TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb12-4"><a aria-label="4"></a>  price <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb12-5"><a aria-label="5"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>PRIMARY KEY</code> constraint automatically enforces both <code>UNIQUE</code> and <code>NOT NULL</code>.</p>
 </section>
 <section id="foreign-key-constraint" class="slide level2">
@@ -1367,13 +1364,13 @@ exists only once per table</div>
 <section id="foreign-key-constraint-example" class="slide level2">
 <h2>FOREIGN KEY Constraint | Example</h2>
 <p>Link sales records to customers.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> sales (</span>
-<span id="cb13-2"><a></a>  transaction_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb13-3"><a></a>  customer_id <span class="dt">INTEGER</span>,</span>
-<span id="cb13-4"><a></a>  total_sales <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>),</span>
-<span id="cb13-5"><a></a>  <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (customer_id)</span>
-<span id="cb13-6"><a></a>    <span class="kw">REFERENCES</span> customers (customer_id)</span>
-<span id="cb13-7"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a aria-label="1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> sales (</span>
+<span id="cb13-2"><a aria-label="2"></a>  transaction_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb13-3"><a aria-label="3"></a>  customer_id <span class="dt">INTEGER</span>,</span>
+<span id="cb13-4"><a aria-label="4"></a>  total_sales <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>),</span>
+<span id="cb13-5"><a aria-label="5"></a>  <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (customer_id)</span>
+<span id="cb13-6"><a aria-label="6"></a>    <span class="kw">REFERENCES</span> customers (customer_id)</span>
+<span id="cb13-7"><a aria-label="7"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>With this constraint, you cannot insert a sale for a customer that does not exist.</p>
 </section>
 <section id="check-constraint" class="slide level2">
@@ -1388,10 +1385,10 @@ domain rules</div>
 <section id="check-constraint-example" class="slide level2">
 <h2>CHECK Constraint | Example</h2>
 <p>Ensure total sales values are non-negative.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> sales (</span>
-<span id="cb14-2"><a></a>  transaction_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb14-3"><a></a>  total_sales <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>) <span class="kw">CHECK</span> (total_sales <span class="op">&gt;=</span> <span class="dv">0</span>)</span>
-<span id="cb14-4"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a aria-label="1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> sales (</span>
+<span id="cb14-2"><a aria-label="2"></a>  transaction_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb14-3"><a aria-label="3"></a>  total_sales <span class="dt">NUMERIC</span>(<span class="dv">10</span>, <span class="dv">2</span>) <span class="kw">CHECK</span> (total_sales <span class="op">&gt;=</span> <span class="dv">0</span>)</span>
+<span id="cb14-4"><a aria-label="4"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If a value violates the condition, the insert or update will fail.</p>
 </section>
 <section class="slide level2">
@@ -1423,11 +1420,11 @@ underscores should be used to separate words</div>
 <section id="naming-examples" class="slide level2">
 <h2>Naming | Examples</h2>
 <p><strong>Recommended:</strong></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer_lifecycle;</span>
-<span id="cb15-2"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a aria-label="1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer_lifecycle;</span>
+<span id="cb15-2"><a aria-label="2"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Not recommended:</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer lifecycle;</span>
-<span id="cb16-2"><a></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="dv">3</span>customer;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a aria-label="1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer lifecycle;</span>
+<span id="cb16-2"><a aria-label="2"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="dv">3</span>customer;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="capitalization" class="slide level2">
 <h2>Capitalization</h2>
@@ -1440,13 +1437,13 @@ column names <span class="math inline">\(\rightarrow\)</span> lowercase</div>
 <section id="capitalization-examples" class="slide level2">
 <h2>Capitalization | Examples</h2>
 <p><strong>Recommended:</strong></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a></a><span class="kw">SELECT</span> product_id, product_name</span>
-<span id="cb17-2"><a></a><span class="kw">FROM</span> products;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a></a><span class="kw">SELECT</span> transaction_id, total_sales</span>
-<span id="cb18-2"><a></a><span class="kw">FROM</span> sales;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a aria-label="1"></a><span class="kw">SELECT</span> product_id, product_name</span>
+<span id="cb17-2"><a aria-label="2"></a><span class="kw">FROM</span> products;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a aria-label="1"></a><span class="kw">SELECT</span> transaction_id, total_sales</span>
+<span id="cb18-2"><a aria-label="2"></a><span class="kw">FROM</span> sales;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Not recommended:</strong></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a></a><span class="kw">Select</span> PRODUCT_ID, PRODUCT_NAME <span class="kw">From</span> PRODUCTS;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a></a><span class="kw">SELECT</span> TRANSACTION_ID, TOTAL_SALES <span class="kw">FROM</span> SALES;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a aria-label="1"></a><span class="kw">Select</span> PRODUCT_ID, PRODUCT_NAME <span class="kw">From</span> PRODUCTS;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a aria-label="1"></a><span class="kw">SELECT</span> TRANSACTION_ID, TOTAL_SALES <span class="kw">FROM</span> SALES;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="commenting-sql-code" class="slide level2">
 <h2>Commenting SQL Code</h2>
@@ -1459,21 +1456,21 @@ help during debugging</div>
 <section id="commenting-examples" class="slide level2">
 <h2>Commenting | Examples</h2>
 <p>Single-line comments:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a></a><span class="co">-- select and display the first 10 rows from the sales table</span></span>
-<span id="cb21-2"><a></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb21-3"><a></a><span class="kw">FROM</span> sales</span>
-<span id="cb21-4"><a></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a aria-label="1"></a><span class="co">-- select and display the first 10 rows from the sales table</span></span>
+<span id="cb21-2"><a aria-label="2"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb21-3"><a aria-label="3"></a><span class="kw">FROM</span> sales</span>
+<span id="cb21-4"><a aria-label="4"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Multi-line comments:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a></a><span class="co">/*</span></span>
-<span id="cb22-2"><a></a><span class="co">SELECT</span></span>
-<span id="cb22-3"><a></a><span class="co">  s.transaction_id,</span></span>
-<span id="cb22-4"><a></a><span class="co">  p.product_name,</span></span>
-<span id="cb22-5"><a></a><span class="co">  s.total_sales</span></span>
-<span id="cb22-6"><a></a><span class="co">FROM sales s</span></span>
-<span id="cb22-7"><a></a><span class="co">JOIN products p</span></span>
-<span id="cb22-8"><a></a><span class="co">  ON s.product_id = p.product_id</span></span>
-<span id="cb22-9"><a></a><span class="co">WHERE s.total_sales &gt; 100;</span></span>
-<span id="cb22-10"><a></a><span class="co">*/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a aria-label="1"></a><span class="co">/*</span></span>
+<span id="cb22-2"><a aria-label="2"></a><span class="co">SELECT</span></span>
+<span id="cb22-3"><a aria-label="3"></a><span class="co">  s.transaction_id,</span></span>
+<span id="cb22-4"><a aria-label="4"></a><span class="co">  p.product_name,</span></span>
+<span id="cb22-5"><a aria-label="5"></a><span class="co">  s.total_sales</span></span>
+<span id="cb22-6"><a aria-label="6"></a><span class="co">FROM sales s</span></span>
+<span id="cb22-7"><a aria-label="7"></a><span class="co">JOIN products p</span></span>
+<span id="cb22-8"><a aria-label="8"></a><span class="co">  ON s.product_id = p.product_id</span></span>
+<span id="cb22-9"><a aria-label="9"></a><span class="co">WHERE s.total_sales &gt; 100;</span></span>
+<span id="cb22-10"><a aria-label="10"></a><span class="co">*/</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="aliasing" class="slide level2">
 <h2>Aliasing</h2>
@@ -1486,18 +1483,18 @@ resolving ambiguity in joins</div>
 <section id="aliasing-examples" class="slide level2">
 <h2>Aliasing | Examples</h2>
 <p>Column aliases:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb23-2"><a></a>  product_name <span class="kw">AS</span> item_name,</span>
-<span id="cb23-3"><a></a>  price <span class="kw">AS</span> unit_price</span>
-<span id="cb23-4"><a></a><span class="kw">FROM</span> products;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb23-2"><a aria-label="2"></a>  product_name <span class="kw">AS</span> item_name,</span>
+<span id="cb23-3"><a aria-label="3"></a>  price <span class="kw">AS</span> unit_price</span>
+<span id="cb23-4"><a aria-label="4"></a><span class="kw">FROM</span> products;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Table aliases in joins:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb24-2"><a></a>  s.transaction_id,</span>
-<span id="cb24-3"><a></a>  p.product_name,</span>
-<span id="cb24-4"><a></a>  s.total_sales</span>
-<span id="cb24-5"><a></a><span class="kw">FROM</span> sales <span class="kw">AS</span> s</span>
-<span id="cb24-6"><a></a><span class="kw">JOIN</span> products <span class="kw">AS</span> p</span>
-<span id="cb24-7"><a></a>  <span class="kw">ON</span> s.product_id <span class="op">=</span> p.product_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb24-2"><a aria-label="2"></a>  s.transaction_id,</span>
+<span id="cb24-3"><a aria-label="3"></a>  p.product_name,</span>
+<span id="cb24-4"><a aria-label="4"></a>  s.total_sales</span>
+<span id="cb24-5"><a aria-label="5"></a><span class="kw">FROM</span> sales <span class="kw">AS</span> s</span>
+<span id="cb24-6"><a aria-label="6"></a><span class="kw">JOIN</span> products <span class="kw">AS</span> p</span>
+<span id="cb24-7"><a aria-label="7"></a>  <span class="kw">ON</span> s.product_id <span class="op">=</span> p.product_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
@@ -1700,7 +1697,7 @@ clean SQL enables better optimization</div>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1727,190 +1724,173 @@ clean SQL enables better optimization</div>
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>

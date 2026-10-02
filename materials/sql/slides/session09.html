@@ -7,8 +7,8 @@
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.39">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Karen Hovhannisyan">
   <meta name="dcterms.date" content="2026-10-02">
@@ -19,10 +19,16 @@
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -31,8 +37,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -43,7 +50,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -96,7 +103,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-bbe7401fe57d4b791b917637bb662036.css">
+  <link rel="stylesheet" href="../../../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="../../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -214,7 +221,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Karen Hovhannisyan 
+Karen Hovhannisyan
 </div>
 </div>
 </div>
@@ -223,7 +230,6 @@ Karen Hovhannisyan
 </section>
 <section id="session-objectives" class="slide level2">
 <h2>Session Objectives</h2>
-<div>
 <ol type="1">
 <li class="fragment">Temporary Tables<br>
 </li>
@@ -231,7 +237,6 @@ Karen Hovhannisyan
 </li>
 <li class="fragment">Window Functions</li>
 </ol>
-</div>
 </section>
 <section>
 <section id="temporary-tables" class="title-slide slide level1 center">
@@ -299,16 +304,16 @@ Karen Hovhannisyan
 </section>
 <section id="example-order-level-revenue" class="slide level2 smaller">
 <h2>Example: Order-Level Revenue</h2>
-<div class="sourceCode" id="cb1" data-code-line-numbers="1|1-10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a></a><span class="kw">CREATE</span> TEMP <span class="kw">TABLE</span> tmp_order_revenue <span class="kw">AS</span></span>
-<span id="cb1-2"><a></a><span class="kw">SELECT</span></span>
-<span id="cb1-3"><a></a>    o.order_id,</span>
-<span id="cb1-4"><a></a>    o.customer_id,</span>
-<span id="cb1-5"><a></a>    o.order_date,</span>
-<span id="cb1-6"><a></a>    <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> order_revenue</span>
-<span id="cb1-7"><a></a><span class="kw">FROM</span> analytics.orders o</span>
-<span id="cb1-8"><a></a><span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
-<span id="cb1-9"><a></a><span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
-<span id="cb1-10"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> o.order_id, o.customer_id, o.order_date;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="1|1-10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a aria-label="1"></a><span class="kw">CREATE</span> TEMP <span class="kw">TABLE</span> tmp_order_revenue <span class="kw">AS</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="kw">SELECT</span></span>
+<span id="cb1-3"><a aria-label="3"></a>    o.order_id,</span>
+<span id="cb1-4"><a aria-label="4"></a>    o.customer_id,</span>
+<span id="cb1-5"><a aria-label="5"></a>    o.order_date,</span>
+<span id="cb1-6"><a aria-label="6"></a>    <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> order_revenue</span>
+<span id="cb1-7"><a aria-label="7"></a><span class="kw">FROM</span> analytics.orders o</span>
+<span id="cb1-8"><a aria-label="8"></a><span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb1-9"><a aria-label="9"></a><span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb1-10"><a aria-label="10"></a><span class="kw">GROUP</span> <span class="kw">BY</span> o.order_id, o.customer_id, o.order_date;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <blockquote>
 <p><code>tmp_order_revenue</code> behaves like a normal table.</p>
@@ -325,12 +330,12 @@ Karen Hovhannisyan
 </li>
 <li>Business logic checks</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb2-2"><a></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_orders,</span>
-<span id="cb2-3"><a></a>    <span class="fu">MIN</span>(order_revenue) <span class="kw">AS</span> min_revenue,</span>
-<span id="cb2-4"><a></a>    <span class="fu">MAX</span>(order_revenue) <span class="kw">AS</span> max_revenue,</span>
-<span id="cb2-5"><a></a>    <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_revenue</span>
-<span id="cb2-6"><a></a><span class="kw">FROM</span> tmp_order_revenue;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb2-2"><a aria-label="2"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_orders,</span>
+<span id="cb2-3"><a aria-label="3"></a>    <span class="fu">MIN</span>(order_revenue) <span class="kw">AS</span> min_revenue,</span>
+<span id="cb2-4"><a aria-label="4"></a>    <span class="fu">MAX</span>(order_revenue) <span class="kw">AS</span> max_revenue,</span>
+<span id="cb2-5"><a aria-label="5"></a>    <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_revenue</span>
+<span id="cb2-6"><a aria-label="6"></a><span class="kw">FROM</span> tmp_order_revenue;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <table class="caption-top">
 <thead>
@@ -355,11 +360,11 @@ Karen Hovhannisyan
 <section id="reusing-temporary-tables" class="slide level2 smaller">
 <h2>Reusing Temporary Tables</h2>
 <p>Once created, the temporary table can be reused without recomputing joins.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb3-2"><a></a>    customer_id,</span>
-<span id="cb3-3"><a></a>    <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_order_revenue</span>
-<span id="cb3-4"><a></a><span class="kw">FROM</span> tmp_order_revenue</span>
-<span id="cb3-5"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> customer_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb3-2"><a aria-label="2"></a>    customer_id,</span>
+<span id="cb3-3"><a aria-label="3"></a>    <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_order_revenue</span>
+<span id="cb3-4"><a aria-label="4"></a><span class="kw">FROM</span> tmp_order_revenue</span>
+<span id="cb3-5"><a aria-label="5"></a><span class="kw">GROUP</span> <span class="kw">BY</span> customer_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <table class="caption-top">
 <thead>
@@ -406,23 +411,23 @@ Karen Hovhannisyan
 <section id="example-city-level-revenue" class="slide level2 smaller">
 <h2>Example: City-Level Revenue</h2>
 <p>Temporary tables scale naturally across business hierarchies.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a></a><span class="kw">CREATE</span> TEMP <span class="kw">TABLE</span> tmp_customer_spend <span class="kw">AS</span></span>
-<span id="cb4-2"><a></a><span class="kw">SELECT</span></span>
-<span id="cb4-3"><a></a>    c.customer_id,</span>
-<span id="cb4-4"><a></a>    c.city_id,</span>
-<span id="cb4-5"><a></a>    <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> total_spend</span>
-<span id="cb4-6"><a></a><span class="kw">FROM</span> analytics.customers c</span>
-<span id="cb4-7"><a></a><span class="kw">JOIN</span> analytics.orders o <span class="kw">ON</span> c.customer_id <span class="op">=</span> o.customer_id</span>
-<span id="cb4-8"><a></a><span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
-<span id="cb4-9"><a></a><span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
-<span id="cb4-10"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> c.customer_id, c.city_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a aria-label="1"></a><span class="kw">CREATE</span> TEMP <span class="kw">TABLE</span> tmp_customer_spend <span class="kw">AS</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="kw">SELECT</span></span>
+<span id="cb4-3"><a aria-label="3"></a>    c.customer_id,</span>
+<span id="cb4-4"><a aria-label="4"></a>    c.city_id,</span>
+<span id="cb4-5"><a aria-label="5"></a>    <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> total_spend</span>
+<span id="cb4-6"><a aria-label="6"></a><span class="kw">FROM</span> analytics.customers c</span>
+<span id="cb4-7"><a aria-label="7"></a><span class="kw">JOIN</span> analytics.orders o <span class="kw">ON</span> c.customer_id <span class="op">=</span> o.customer_id</span>
+<span id="cb4-8"><a aria-label="8"></a><span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb4-9"><a aria-label="9"></a><span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb4-10"><a aria-label="10"></a><span class="kw">GROUP</span> <span class="kw">BY</span> c.customer_id, c.city_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb5-2"><a></a>    city_id,</span>
-<span id="cb5-3"><a></a>    <span class="fu">AVG</span>(total_spend) <span class="kw">AS</span> avg_customer_spend,</span>
-<span id="cb5-4"><a></a>    <span class="fu">MAX</span>(total_spend) <span class="kw">AS</span> max_customer_spend</span>
-<span id="cb5-5"><a></a><span class="kw">FROM</span> tmp_customer_spend</span>
-<span id="cb5-6"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> city_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb5-2"><a aria-label="2"></a>    city_id,</span>
+<span id="cb5-3"><a aria-label="3"></a>    <span class="fu">AVG</span>(total_spend) <span class="kw">AS</span> avg_customer_spend,</span>
+<span id="cb5-4"><a aria-label="4"></a>    <span class="fu">MAX</span>(total_spend) <span class="kw">AS</span> max_customer_spend</span>
+<span id="cb5-5"><a aria-label="5"></a><span class="kw">FROM</span> tmp_customer_spend</span>
+<span id="cb5-6"><a aria-label="6"></a><span class="kw">GROUP</span> <span class="kw">BY</span> city_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <table class="caption-top">
@@ -499,7 +504,6 @@ Karen Hovhannisyan
 </section>
 <section id="performance-and-practical-considerations" class="slide level2 smaller">
 <h2>Performance and Practical Considerations</h2>
-<div>
 <ul>
 <li class="fragment">Reduce repeated scans of large tables<br>
 </li>
@@ -509,7 +513,6 @@ Karen Hovhannisyan
 </li>
 <li class="fragment">Less suitable for single-use logic</li>
 </ul>
-</div>
 </section>
 <section id="when-to-use-temporary-tables" class="slide level2">
 <h2>When to Use Temporary Tables</h2>
@@ -556,14 +559,12 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <section id="types-of-subqueries" class="slide level2 smaller">
 <h2>Types of Subqueries</h2>
 <p><strong>We will study subqueries in the following order:</strong></p>
-<div>
 <ul>
 <li class="fragment">Filter subqueries (<code>WHERE</code>)</li>
 <li class="fragment">Column (scalar) subqueries (<code>SELECT</code>)</li>
 <li class="fragment">Derived tables (<code>FROM</code>)</li>
 <li class="fragment">Correlated subqueries</li>
 </ul>
-</div>
 </section></section>
 <section>
 <section id="filter-subqueries" class="title-slide slide level1 center">
@@ -628,13 +629,13 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </tbody>
 </table>
 <div class="fragment">
-<div class="sourceCode" id="cb6" data-code-line-numbers="1-2|3|4-6|1-22"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb6-2"><a></a><span class="kw">FROM</span> employees</span>
-<span id="cb6-3"><a></a><span class="kw">WHERE</span> salary <span class="op">&gt;</span> (</span>
-<span id="cb6-4"><a></a>    <span class="kw">SELECT</span> </span>
-<span id="cb6-5"><a></a>      <span class="fu">AVG</span>(salary)</span>
-<span id="cb6-6"><a></a>    <span class="kw">FROM</span> employees</span>
-<span id="cb6-7"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="1-2|3|4-6|1-22"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a aria-label="1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb6-2"><a aria-label="2"></a><span class="kw">FROM</span> employees</span>
+<span id="cb6-3"><a aria-label="3"></a><span class="kw">WHERE</span> salary <span class="op">&gt;</span> (</span>
+<span id="cb6-4"><a aria-label="4"></a>    <span class="kw">SELECT</span> </span>
+<span id="cb6-5"><a aria-label="5"></a>      <span class="fu">AVG</span>(salary)</span>
+<span id="cb6-6"><a aria-label="6"></a>    <span class="kw">FROM</span> employees</span>
+<span id="cb6-7"><a aria-label="7"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <table class="caption-top">
@@ -668,19 +669,19 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <section id="example-from-analytics-schema" class="slide level2 smaller">
 <h2>Example from <code>Analytics Schema</code></h2>
 <p><strong>Q:</strong> Which customers have an <strong>average order revenue above the overall average order revenue</strong>?</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb7-2"><a></a>    <span class="fu">AVG</span>(order_revenue)</span>
-<span id="cb7-3"><a></a><span class="kw">FROM</span> tmp_order_revenue;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb8-2"><a></a>    customer_id,</span>
-<span id="cb8-3"><a></a>    <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_customer_revenue</span>
-<span id="cb8-4"><a></a><span class="kw">FROM</span> tmp_order_revenue</span>
-<span id="cb8-5"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span>
-<span id="cb8-6"><a></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(order_revenue) <span class="op">&gt;</span></span>
-<span id="cb8-7"><a></a>       (</span>
-<span id="cb8-8"><a></a>           <span class="kw">SELECT</span> <span class="fu">AVG</span>(order_revenue)</span>
-<span id="cb8-9"><a></a>           <span class="kw">FROM</span> tmp_order_revenue</span>
-<span id="cb8-10"><a></a>       );</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb7-2"><a aria-label="2"></a>    <span class="fu">AVG</span>(order_revenue)</span>
+<span id="cb7-3"><a aria-label="3"></a><span class="kw">FROM</span> tmp_order_revenue;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb8-2"><a aria-label="2"></a>    customer_id,</span>
+<span id="cb8-3"><a aria-label="3"></a>    <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_customer_revenue</span>
+<span id="cb8-4"><a aria-label="4"></a><span class="kw">FROM</span> tmp_order_revenue</span>
+<span id="cb8-5"><a aria-label="5"></a><span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb8-6"><a aria-label="6"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(order_revenue) <span class="op">&gt;</span></span>
+<span id="cb8-7"><a aria-label="7"></a>       (</span>
+<span id="cb8-8"><a aria-label="8"></a>           <span class="kw">SELECT</span> <span class="fu">AVG</span>(order_revenue)</span>
+<span id="cb8-9"><a aria-label="9"></a>           <span class="kw">FROM</span> tmp_order_revenue</span>
+<span id="cb8-10"><a aria-label="10"></a>       );</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -777,13 +778,13 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </div></div>
 <!-- end columns -->
 <div class="fragment">
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb9-2"><a></a><span class="kw">FROM</span> employees e</span>
-<span id="cb9-3"><a></a><span class="kw">WHERE</span> salary <span class="op">&gt;</span> (</span>
-<span id="cb9-4"><a></a>    <span class="kw">SELECT</span> d.target_salary</span>
-<span id="cb9-5"><a></a>    <span class="kw">FROM</span> departments d</span>
-<span id="cb9-6"><a></a>    <span class="kw">WHERE</span> d.department <span class="op">=</span> e.department</span>
-<span id="cb9-7"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a aria-label="1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb9-2"><a aria-label="2"></a><span class="kw">FROM</span> employees e</span>
+<span id="cb9-3"><a aria-label="3"></a><span class="kw">WHERE</span> salary <span class="op">&gt;</span> (</span>
+<span id="cb9-4"><a aria-label="4"></a>    <span class="kw">SELECT</span> d.target_salary</span>
+<span id="cb9-5"><a aria-label="5"></a>    <span class="kw">FROM</span> departments d</span>
+<span id="cb9-6"><a aria-label="6"></a>    <span class="kw">WHERE</span> d.department <span class="op">=</span> e.department</span>
+<span id="cb9-7"><a aria-label="7"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <table class="caption-top">
@@ -812,28 +813,28 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <section id="subquery-using-another-table-analytics-schema" class="slide level2 smaller">
 <h2>Subquery Using Another Table <code>Analytics Schema</code></h2>
 <p>Which customers have <strong>total spend above the average spend of all customers</strong>?</p>
-<div class="sourceCode" id="cb10" data-code-line-numbers="1-3|4-11|13-25"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb10-2"><a></a>    c.customer_id</span>
-<span id="cb10-3"><a></a><span class="kw">FROM</span> analytics.customers c</span>
-<span id="cb10-4"><a></a><span class="kw">WHERE</span> (</span>
-<span id="cb10-5"><a></a>    <span class="kw">SELECT</span> <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price)</span>
-<span id="cb10-6"><a></a>    <span class="kw">FROM</span> analytics.orders o</span>
-<span id="cb10-7"><a></a>    <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
-<span id="cb10-8"><a></a>    <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
-<span id="cb10-9"><a></a>    <span class="kw">WHERE</span> o.customer_id <span class="op">=</span> c.customer_id</span>
-<span id="cb10-10"><a></a>) <span class="op">&gt;</span></span>
-<span id="cb10-11"><a></a>(</span>
-<span id="cb10-12"><a></a>    <span class="kw">SELECT</span> <span class="fu">AVG</span>(customer_total)</span>
-<span id="cb10-13"><a></a>    <span class="kw">FROM</span> (</span>
-<span id="cb10-14"><a></a>        <span class="kw">SELECT</span></span>
-<span id="cb10-15"><a></a>            o.customer_id,</span>
-<span id="cb10-16"><a></a>            <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> customer_total</span>
-<span id="cb10-17"><a></a>        <span class="kw">FROM</span> analytics.orders o</span>
-<span id="cb10-18"><a></a>        <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
-<span id="cb10-19"><a></a>        <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
-<span id="cb10-20"><a></a>        <span class="kw">GROUP</span> <span class="kw">BY</span> o.customer_id</span>
-<span id="cb10-21"><a></a>    ) t</span>
-<span id="cb10-22"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-code-line-numbers="1-3|4-11|13-25"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb10-2"><a aria-label="2"></a>    c.customer_id</span>
+<span id="cb10-3"><a aria-label="3"></a><span class="kw">FROM</span> analytics.customers c</span>
+<span id="cb10-4"><a aria-label="4"></a><span class="kw">WHERE</span> (</span>
+<span id="cb10-5"><a aria-label="5"></a>    <span class="kw">SELECT</span> <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price)</span>
+<span id="cb10-6"><a aria-label="6"></a>    <span class="kw">FROM</span> analytics.orders o</span>
+<span id="cb10-7"><a aria-label="7"></a>    <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb10-8"><a aria-label="8"></a>    <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb10-9"><a aria-label="9"></a>    <span class="kw">WHERE</span> o.customer_id <span class="op">=</span> c.customer_id</span>
+<span id="cb10-10"><a aria-label="10"></a>) <span class="op">&gt;</span></span>
+<span id="cb10-11"><a aria-label="11"></a>(</span>
+<span id="cb10-12"><a aria-label="12"></a>    <span class="kw">SELECT</span> <span class="fu">AVG</span>(customer_total)</span>
+<span id="cb10-13"><a aria-label="13"></a>    <span class="kw">FROM</span> (</span>
+<span id="cb10-14"><a aria-label="14"></a>        <span class="kw">SELECT</span></span>
+<span id="cb10-15"><a aria-label="15"></a>            o.customer_id,</span>
+<span id="cb10-16"><a aria-label="16"></a>            <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> customer_total</span>
+<span id="cb10-17"><a aria-label="17"></a>        <span class="kw">FROM</span> analytics.orders o</span>
+<span id="cb10-18"><a aria-label="18"></a>        <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb10-19"><a aria-label="19"></a>        <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb10-20"><a aria-label="20"></a>        <span class="kw">GROUP</span> <span class="kw">BY</span> o.customer_id</span>
+<span id="cb10-21"><a aria-label="21"></a>    ) t</span>
+<span id="cb10-22"><a aria-label="22"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This query uses <strong>multiple tables inside the filter subquery</strong> while still producing a single comparison value.</p>
 </section>
 <section id="when-to-use-.smaller" class="slide level2 smaller">
@@ -854,13 +855,11 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <section id="what-is-a-column-subquery" class="slide level2 smaller">
 <h2>What Is a Column Subquery?</h2>
 <p>A column subquery returns a <strong>single value</strong> and is evaluated for <strong>each row</strong> of the outer query.</p>
-<div>
 <ul>
 <li class="fragment">Appears inside the <code>SELECT</code> clause</li>
 <li class="fragment">Produces a scalar value</li>
 <li class="fragment">Enriches each row with contextual information</li>
 </ul>
-</div>
 </section>
 <section id="mental-model" class="slide level2 smaller">
 <h2>Mental Model</h2>
@@ -938,11 +937,11 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </tbody>
 </table>
 <div class="fragment">
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb11-2"><a></a>    emp_id,</span>
-<span id="cb11-3"><a></a>    salary,</span>
-<span id="cb11-4"><a></a>    (<span class="kw">SELECT</span> <span class="fu">AVG</span>(salary) <span class="kw">FROM</span> employees) <span class="kw">AS</span> avg_salary</span>
-<span id="cb11-5"><a></a><span class="kw">FROM</span> employees;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb11-2"><a aria-label="2"></a>    emp_id,</span>
+<span id="cb11-3"><a aria-label="3"></a>    salary,</span>
+<span id="cb11-4"><a aria-label="4"></a>    (<span class="kw">SELECT</span> <span class="fu">AVG</span>(salary) <span class="kw">FROM</span> employees) <span class="kw">AS</span> avg_salary</span>
+<span id="cb11-5"><a aria-label="5"></a><span class="kw">FROM</span> employees;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <p><span class="math display">\[\downarrow\]</span></p>
@@ -976,26 +975,24 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </section>
 <section id="interpretation" class="slide level2 smaller">
 <h2>Interpretation</h2>
-<div>
 <ul>
 <li class="fragment">Subquery computes <strong>one global value</strong></li>
 <li class="fragment">Same value is attached to <strong>every row</strong></li>
 <li class="fragment">Subquery is evaluated <strong>once</strong></li>
 </ul>
-</div>
 </section>
 <section id="analytics-schema-example" class="slide level2 smaller">
 <h2>Analytics Schema Example</h2>
 <p><strong>Q:</strong> For each order, show the <strong>order revenue</strong> and the <strong>overall average order revenue</strong>.</p>
 <div class="fragment">
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb12-2"><a></a>    order_id,</span>
-<span id="cb12-3"><a></a>    order_revenue,</span>
-<span id="cb12-4"><a></a>    (</span>
-<span id="cb12-5"><a></a>        <span class="kw">SELECT</span> <span class="fu">AVG</span>(order_revenue)</span>
-<span id="cb12-6"><a></a>        <span class="kw">FROM</span> tmp_order_revenue</span>
-<span id="cb12-7"><a></a>    ) <span class="kw">AS</span> avg_order_revenue</span>
-<span id="cb12-8"><a></a><span class="kw">FROM</span> tmp_order_revenue;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb12-2"><a aria-label="2"></a>    order_id,</span>
+<span id="cb12-3"><a aria-label="3"></a>    order_revenue,</span>
+<span id="cb12-4"><a aria-label="4"></a>    (</span>
+<span id="cb12-5"><a aria-label="5"></a>        <span class="kw">SELECT</span> <span class="fu">AVG</span>(order_revenue)</span>
+<span id="cb12-6"><a aria-label="6"></a>        <span class="kw">FROM</span> tmp_order_revenue</span>
+<span id="cb12-7"><a aria-label="7"></a>    ) <span class="kw">AS</span> avg_order_revenue</span>
+<span id="cb12-8"><a aria-label="8"></a><span class="kw">FROM</span> tmp_order_revenue;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <table class="caption-top">
@@ -1077,16 +1074,16 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </section>
 <section id="query-output" class="slide level2 smaller">
 <h2>Query &amp; Output</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb13-2"><a></a>    e.emp_id,</span>
-<span id="cb13-3"><a></a>    e.salary,</span>
-<span id="cb13-4"><a></a>    (</span>
-<span id="cb13-5"><a></a>        <span class="kw">SELECT</span> </span>
-<span id="cb13-6"><a></a>            d.target_salary</span>
-<span id="cb13-7"><a></a>        <span class="kw">FROM</span> departments d</span>
-<span id="cb13-8"><a></a>        <span class="kw">WHERE</span> d.department <span class="op">=</span> e.department</span>
-<span id="cb13-9"><a></a>    ) <span class="kw">AS</span> target_salary</span>
-<span id="cb13-10"><a></a><span class="kw">FROM</span> employees e;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb13-2"><a aria-label="2"></a>    e.emp_id,</span>
+<span id="cb13-3"><a aria-label="3"></a>    e.salary,</span>
+<span id="cb13-4"><a aria-label="4"></a>    (</span>
+<span id="cb13-5"><a aria-label="5"></a>        <span class="kw">SELECT</span> </span>
+<span id="cb13-6"><a aria-label="6"></a>            d.target_salary</span>
+<span id="cb13-7"><a aria-label="7"></a>        <span class="kw">FROM</span> departments d</span>
+<span id="cb13-8"><a aria-label="8"></a>        <span class="kw">WHERE</span> d.department <span class="op">=</span> e.department</span>
+<span id="cb13-9"><a aria-label="9"></a>    ) <span class="kw">AS</span> target_salary</span>
+<span id="cb13-10"><a aria-label="10"></a><span class="kw">FROM</span> employees e;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1117,13 +1114,11 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <section id="key-observation" class="slide level2 smaller">
 <h2>Key Observation</h2>
 <p>This is a <strong>correlated scalar subquery</strong>.</p>
-<div>
 <ul>
 <li class="fragment">Subquery depends on the outer row</li>
 <li class="fragment">Evaluated <strong>once per row</strong></li>
 <li class="fragment">More flexible, but more expensive</li>
 </ul>
-</div>
 </section>
 <section id="analytics-schema-correlated-example" class="slide level2 smaller">
 <h2>Analytics Schema | Correlated Example</h2>
@@ -1133,24 +1128,24 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <li>Average spend of customers in the same city</li>
 </ul>
 <div class="fragment">
-<div class="sourceCode" id="cb14" data-code-line-numbers="1-3,9-10,17,18|4-8|11-16|1-18"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb14-2"><a></a>    c.customer_id,</span>
-<span id="cb14-3"><a></a>    (</span>
-<span id="cb14-4"><a></a>        <span class="kw">SELECT</span> <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price)</span>
-<span id="cb14-5"><a></a>        <span class="kw">FROM</span> analytics.orders o</span>
-<span id="cb14-6"><a></a>        <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
-<span id="cb14-7"><a></a>        <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
-<span id="cb14-8"><a></a>        <span class="kw">WHERE</span> o.customer_id <span class="op">=</span> c.customer_id</span>
-<span id="cb14-9"><a></a>    ) <span class="kw">AS</span> customer_spend,</span>
-<span id="cb14-10"><a></a>    (</span>
-<span id="cb14-11"><a></a>        <span class="kw">SELECT</span> <span class="fu">AVG</span>(oi.quantity <span class="op">*</span> p.price)</span>
-<span id="cb14-12"><a></a>        <span class="kw">FROM</span> analytics.orders o</span>
-<span id="cb14-13"><a></a>        <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
-<span id="cb14-14"><a></a>        <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
-<span id="cb14-15"><a></a>        <span class="kw">JOIN</span> analytics.customers c2 <span class="kw">ON</span> o.customer_id <span class="op">=</span> c2.customer_id</span>
-<span id="cb14-16"><a></a>        <span class="kw">WHERE</span> c2.city_id <span class="op">=</span> c.city_id</span>
-<span id="cb14-17"><a></a>    ) <span class="kw">AS</span> avg_city_spend</span>
-<span id="cb14-18"><a></a><span class="kw">FROM</span> analytics.customers c;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-code-line-numbers="1-3,9-10,17,18|4-8|11-16|1-18"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb14-2"><a aria-label="2"></a>    c.customer_id,</span>
+<span id="cb14-3"><a aria-label="3"></a>    (</span>
+<span id="cb14-4"><a aria-label="4"></a>        <span class="kw">SELECT</span> <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price)</span>
+<span id="cb14-5"><a aria-label="5"></a>        <span class="kw">FROM</span> analytics.orders o</span>
+<span id="cb14-6"><a aria-label="6"></a>        <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb14-7"><a aria-label="7"></a>        <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb14-8"><a aria-label="8"></a>        <span class="kw">WHERE</span> o.customer_id <span class="op">=</span> c.customer_id</span>
+<span id="cb14-9"><a aria-label="9"></a>    ) <span class="kw">AS</span> customer_spend,</span>
+<span id="cb14-10"><a aria-label="10"></a>    (</span>
+<span id="cb14-11"><a aria-label="11"></a>        <span class="kw">SELECT</span> <span class="fu">AVG</span>(oi.quantity <span class="op">*</span> p.price)</span>
+<span id="cb14-12"><a aria-label="12"></a>        <span class="kw">FROM</span> analytics.orders o</span>
+<span id="cb14-13"><a aria-label="13"></a>        <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb14-14"><a aria-label="14"></a>        <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb14-15"><a aria-label="15"></a>        <span class="kw">JOIN</span> analytics.customers c2 <span class="kw">ON</span> o.customer_id <span class="op">=</span> c2.customer_id</span>
+<span id="cb14-16"><a aria-label="16"></a>        <span class="kw">WHERE</span> c2.city_id <span class="op">=</span> c.city_id</span>
+<span id="cb14-17"><a aria-label="17"></a>    ) <span class="kw">AS</span> avg_city_spend</span>
+<span id="cb14-18"><a aria-label="18"></a><span class="kw">FROM</span> analytics.customers c;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="output" class="slide level2 smaller">
@@ -1204,23 +1199,19 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </section>
 <section id="when-column-subqueries-are-useful" class="slide level2 smaller">
 <h2>When Column Subqueries Are Useful</h2>
-<div>
 <ul>
 <li class="fragment">Adding global or contextual metrics</li>
 <li class="fragment">One-off analytical enrichment</li>
 <li class="fragment">Logical stepping stone to window functions</li>
 </ul>
-</div>
 </section>
 <section id="why-column-subqueries-become-limiting" class="slide level2 smaller">
 <h2>Why Column Subqueries Become Limiting</h2>
-<div>
 <ul>
 <li class="fragment">Evaluated per row</li>
 <li class="fragment">Performance degrades on large datasets</li>
 <li class="fragment">Hard to express complex partitions</li>
 </ul>
-</div>
 </section></section>
 <section>
 <section id="derived-tables-from" class="title-slide slide level1 center">
@@ -1230,7 +1221,6 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <section id="what-is-a-derived-table" class="slide level2 smaller">
 <h2>What Is a Derived Table?</h2>
 <p>A <strong>derived table</strong> is a subquery used inside the <code>FROM</code> clause.</p>
-<div>
 <ul>
 <li class="fragment">Exists only for the duration of the query<br>
 </li>
@@ -1238,7 +1228,6 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </li>
 <li class="fragment">Must always have an alias</li>
 </ul>
-</div>
 </section>
 <section id="mental-model-1" class="slide level2 smaller">
 <h2>Mental Model</h2>
@@ -1246,7 +1235,6 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <p>Create an inline dataset, then query it.</p>
 </blockquote>
 <p>Derived tables sit conceptually <strong>between</strong> column subqueries and CTEs.</p>
-<div>
 <ul>
 <li class="fragment">More powerful than column subqueries<br>
 </li>
@@ -1254,7 +1242,6 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </li>
 <li class="fragment">A stepping stone toward CTEs</li>
 </ul>
-</div>
 </section>
 <section id="conceptual-flow-1" class="slide level2 smaller">
 <h2>Conceptual Flow</h2>
@@ -1309,17 +1296,17 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </table>
 <div class="fragment">
 <p><strong>Q:</strong> What is the <strong>average salary per department</strong>, and show only departments with average salary above 1000?</p>
-<div class="sourceCode" id="cb15" data-code-line-numbers="1-4,11|5-10|1-11 "><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb15-2"><a></a>    department,</span>
-<span id="cb15-3"><a></a>    avg_salary</span>
-<span id="cb15-4"><a></a><span class="kw">FROM</span> (</span>
-<span id="cb15-5"><a></a>    <span class="kw">SELECT</span></span>
-<span id="cb15-6"><a></a>        department,</span>
-<span id="cb15-7"><a></a>        <span class="fu">AVG</span>(salary) <span class="kw">AS</span> avg_salary</span>
-<span id="cb15-8"><a></a>    <span class="kw">FROM</span> employees</span>
-<span id="cb15-9"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> department</span>
-<span id="cb15-10"><a></a>) t</span>
-<span id="cb15-11"><a></a><span class="kw">WHERE</span> avg_salary <span class="op">&gt;</span> <span class="dv">1000</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-code-line-numbers="1-4,11|5-10|1-11 "><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb15-2"><a aria-label="2"></a>    department,</span>
+<span id="cb15-3"><a aria-label="3"></a>    avg_salary</span>
+<span id="cb15-4"><a aria-label="4"></a><span class="kw">FROM</span> (</span>
+<span id="cb15-5"><a aria-label="5"></a>    <span class="kw">SELECT</span></span>
+<span id="cb15-6"><a aria-label="6"></a>        department,</span>
+<span id="cb15-7"><a aria-label="7"></a>        <span class="fu">AVG</span>(salary) <span class="kw">AS</span> avg_salary</span>
+<span id="cb15-8"><a aria-label="8"></a>    <span class="kw">FROM</span> employees</span>
+<span id="cb15-9"><a aria-label="9"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> department</span>
+<span id="cb15-10"><a aria-label="10"></a>) t</span>
+<span id="cb15-11"><a aria-label="11"></a><span class="kw">WHERE</span> avg_salary <span class="op">&gt;</span> <span class="dv">1000</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <table class="caption-top">
@@ -1340,7 +1327,6 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </section>
 <section id="key-observation-1" class="slide level2 smaller">
 <h2>Key Observation</h2>
-<div>
 <ul>
 <li class="fragment">Subquery produces a <strong>table</strong><br>
 </li>
@@ -1348,27 +1334,26 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </li>
 <li class="fragment">Alias is mandatory</li>
 </ul>
-</div>
 </section>
 <section id="analytics-schema-example-1" class="slide level2 smaller">
 <h2>Analytics Schema Example</h2>
 <p><strong>Q:</strong> What is the <strong>average order revenue per customer</strong>, and show only customers above the <strong>overall average</strong>?</p>
 <div class="fragment">
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb16-2"><a></a>    customer_id,</span>
-<span id="cb16-3"><a></a>    avg_order_revenue</span>
-<span id="cb16-4"><a></a><span class="kw">FROM</span> (</span>
-<span id="cb16-5"><a></a>    <span class="kw">SELECT</span></span>
-<span id="cb16-6"><a></a>        customer_id,</span>
-<span id="cb16-7"><a></a>        <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_order_revenue</span>
-<span id="cb16-8"><a></a>    <span class="kw">FROM</span> tmp_order_revenue</span>
-<span id="cb16-9"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span>
-<span id="cb16-10"><a></a>) t</span>
-<span id="cb16-11"><a></a><span class="kw">WHERE</span> avg_order_revenue <span class="op">&gt;</span></span>
-<span id="cb16-12"><a></a>      (</span>
-<span id="cb16-13"><a></a>          <span class="kw">SELECT</span> <span class="fu">AVG</span>(order_revenue)</span>
-<span id="cb16-14"><a></a>          <span class="kw">FROM</span> tmp_order_revenue</span>
-<span id="cb16-15"><a></a>      );</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb16-2"><a aria-label="2"></a>    customer_id,</span>
+<span id="cb16-3"><a aria-label="3"></a>    avg_order_revenue</span>
+<span id="cb16-4"><a aria-label="4"></a><span class="kw">FROM</span> (</span>
+<span id="cb16-5"><a aria-label="5"></a>    <span class="kw">SELECT</span></span>
+<span id="cb16-6"><a aria-label="6"></a>        customer_id,</span>
+<span id="cb16-7"><a aria-label="7"></a>        <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_order_revenue</span>
+<span id="cb16-8"><a aria-label="8"></a>    <span class="kw">FROM</span> tmp_order_revenue</span>
+<span id="cb16-9"><a aria-label="9"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb16-10"><a aria-label="10"></a>) t</span>
+<span id="cb16-11"><a aria-label="11"></a><span class="kw">WHERE</span> avg_order_revenue <span class="op">&gt;</span></span>
+<span id="cb16-12"><a aria-label="12"></a>      (</span>
+<span id="cb16-13"><a aria-label="13"></a>          <span class="kw">SELECT</span> <span class="fu">AVG</span>(order_revenue)</span>
+<span id="cb16-14"><a aria-label="14"></a>          <span class="kw">FROM</span> tmp_order_revenue</span>
+<span id="cb16-15"><a aria-label="15"></a>      );</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <div class="columns">
@@ -1428,22 +1413,22 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </li>
 <li>Maximum customer spend</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a></a><span class="kw">SELECT</span></span>
-<span id="cb17-2"><a></a>    city_id,</span>
-<span id="cb17-3"><a></a>    <span class="fu">AVG</span>(total_spend) <span class="kw">AS</span> avg_city_spend,</span>
-<span id="cb17-4"><a></a>    <span class="fu">MAX</span>(total_spend) <span class="kw">AS</span> max_city_spend</span>
-<span id="cb17-5"><a></a><span class="kw">FROM</span> (</span>
-<span id="cb17-6"><a></a>    <span class="kw">SELECT</span></span>
-<span id="cb17-7"><a></a>        c.customer_id,</span>
-<span id="cb17-8"><a></a>        c.city_id,</span>
-<span id="cb17-9"><a></a>        <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> total_spend</span>
-<span id="cb17-10"><a></a>    <span class="kw">FROM</span> analytics.customers c</span>
-<span id="cb17-11"><a></a>    <span class="kw">JOIN</span> analytics.orders o <span class="kw">ON</span> c.customer_id <span class="op">=</span> o.customer_id</span>
-<span id="cb17-12"><a></a>    <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
-<span id="cb17-13"><a></a>    <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
-<span id="cb17-14"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> c.customer_id, c.city_id</span>
-<span id="cb17-15"><a></a>) t</span>
-<span id="cb17-16"><a></a><span class="kw">GROUP</span> <span class="kw">BY</span> city_id;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a aria-label="1"></a><span class="kw">SELECT</span></span>
+<span id="cb17-2"><a aria-label="2"></a>    city_id,</span>
+<span id="cb17-3"><a aria-label="3"></a>    <span class="fu">AVG</span>(total_spend) <span class="kw">AS</span> avg_city_spend,</span>
+<span id="cb17-4"><a aria-label="4"></a>    <span class="fu">MAX</span>(total_spend) <span class="kw">AS</span> max_city_spend</span>
+<span id="cb17-5"><a aria-label="5"></a><span class="kw">FROM</span> (</span>
+<span id="cb17-6"><a aria-label="6"></a>    <span class="kw">SELECT</span></span>
+<span id="cb17-7"><a aria-label="7"></a>        c.customer_id,</span>
+<span id="cb17-8"><a aria-label="8"></a>        c.city_id,</span>
+<span id="cb17-9"><a aria-label="9"></a>        <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> total_spend</span>
+<span id="cb17-10"><a aria-label="10"></a>    <span class="kw">FROM</span> analytics.customers c</span>
+<span id="cb17-11"><a aria-label="11"></a>    <span class="kw">JOIN</span> analytics.orders o <span class="kw">ON</span> c.customer_id <span class="op">=</span> o.customer_id</span>
+<span id="cb17-12"><a aria-label="12"></a>    <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb17-13"><a aria-label="13"></a>    <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb17-14"><a aria-label="14"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> c.customer_id, c.city_id</span>
+<span id="cb17-15"><a aria-label="15"></a>) t</span>
+<span id="cb17-16"><a aria-label="16"></a><span class="kw">GROUP</span> <span class="kw">BY</span> city_id;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <table class="caption-top">
 <thead>
@@ -1480,9 +1465,9 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </div>
 <div class="callout-content">
 <p>Every derived table <strong>must have an alias</strong>.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a></a><span class="kw">FROM</span> (</span>
-<span id="cb18-2"><a></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
-<span id="cb18-3"><a></a>) t <span class="co">-- 't' is the alias</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a aria-label="1"></a><span class="kw">FROM</span> (</span>
+<span id="cb18-2"><a aria-label="2"></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
+<span id="cb18-3"><a aria-label="3"></a>) t <span class="co">-- 't' is the alias</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Without an alias, the query will <strong>fail.</strong></p>
 </div>
 </div>
@@ -1490,7 +1475,6 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </section>
 <section id="when-derived-tables-are-a-good-choice" class="slide level2 smaller">
 <h2>When Derived Tables Are a Good Choice</h2>
-<div>
 <ul>
 <li class="fragment">Intermediate results needed only once<br>
 </li>
@@ -1500,11 +1484,9 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </li>
 <li class="fragment">Preparing logic for CTE refactoring</li>
 </ul>
-</div>
 </section>
 <section id="why-derived-tables-become-limiting" class="slide level2 smaller">
 <h2>Why Derived Tables Become Limiting</h2>
-<div>
 <ul>
 <li class="fragment">Deep nesting hurts readability<br>
 </li>
@@ -1512,7 +1494,6 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 </li>
 <li class="fragment">Debugging is harder than with CTEs</li>
 </ul>
-</div>
 </section></section>
 <section>
 <section id="common-table-expressions-ctes" class="title-slide slide level1 center">
@@ -1523,71 +1504,63 @@ Instead, they embed logic directly inside a statement and are evaluated as part 
 <h2>Why CTEs?</h2>
 <p>Derived tables create <strong>inline pipelines</strong>.<br>
 CTEs make those pipelines <strong>named, readable, and reusable</strong>.</p>
-<div>
 <ul>
 <li class="fragment">Derived tables hide logic in parentheses</li>
 <li class="fragment">CTEs expose logic as explicit steps</li>
 <li class="fragment">Better for reasoning, debugging, and teaching</li>
 </ul>
-</div>
 </section>
 <section id="mental-model-2" class="slide level2 smaller">
 <h2>Mental Model</h2>
 <blockquote>
 <p>Build a readable data pipeline step by step.</p>
 </blockquote>
-<div>
 <ul>
 <li class="fragment">Each step has a name</li>
 <li class="fragment">Each step has a purpose</li>
 <li class="fragment">SQL reads top → bottom</li>
 </ul>
-</div>
 </section>
 <section id="what-is-a-cte" class="slide level2 smaller">
 <h2>What Is a CTE?</h2>
 <p>A <strong>Common Table Expression (CTE)</strong> is a named, temporary result set defined using <code>WITH</code>.</p>
-<div>
 <ul>
 <li class="fragment">Scoped to a single query</li>
 <li class="fragment">Behaves like a named derived table</li>
 <li class="fragment">Designed for multi-step analytics</li>
 </ul>
-</div>
 </section>
 <section id="simple-syntax" class="slide level2 smaller">
 <h2>Simple Syntax</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a></a><span class="kw">WITH</span> cte_name <span class="kw">AS</span> (</span>
-<span id="cb19-2"><a></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
-<span id="cb19-3"><a></a>)</span>
-<span id="cb19-4"><a></a><span class="kw">SELECT</span></span>
-<span id="cb19-5"><a></a>    <span class="op">..</span>.</span>
-<span id="cb19-6"><a></a><span class="kw">FROM</span> cte_name</span>
-<span id="cb19-7"><a></a><span class="kw">WHERE</span> <span class="op">..</span>.;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a aria-label="1"></a><span class="kw">WITH</span> cte_name <span class="kw">AS</span> (</span>
+<span id="cb19-2"><a aria-label="2"></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
+<span id="cb19-3"><a aria-label="3"></a>)</span>
+<span id="cb19-4"><a aria-label="4"></a><span class="kw">SELECT</span></span>
+<span id="cb19-5"><a aria-label="5"></a>    <span class="op">..</span>.</span>
+<span id="cb19-6"><a aria-label="6"></a><span class="kw">FROM</span> cte_name</span>
+<span id="cb19-7"><a aria-label="7"></a><span class="kw">WHERE</span> <span class="op">..</span>.;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment">Defined with <code>WITH</code></li>
 <li class="fragment">Queried like a table</li>
 <li class="fragment">Exists only within the statement</li>
 </ul>
-</div>
 </section>
 <section id="pipeline-of-ctes" class="slide level2 smaller">
 <h2>Pipeline of CTEs</h2>
 <p>CTEs naturally form <strong>pipelines</strong>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a></a><span class="kw">WITH</span> step1 <span class="kw">AS</span> (</span>
-<span id="cb20-2"><a></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
-<span id="cb20-3"><a></a>),</span>
-<span id="cb20-4"><a></a>step2 <span class="kw">AS</span> (</span>
-<span id="cb20-5"><a></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
-<span id="cb20-6"><a></a>    <span class="kw">FROM</span> step1</span>
-<span id="cb20-7"><a></a>),</span>
-<span id="cb20-8"><a></a>step3 <span class="kw">AS</span> (</span>
-<span id="cb20-9"><a></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
-<span id="cb20-10"><a></a>    <span class="kw">FROM</span> step2</span>
-<span id="cb20-11"><a></a>)</span>
-<span id="cb20-12"><a></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb20-13"><a></a><span class="kw">FROM</span> step3;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a aria-label="1"></a><span class="kw">WITH</span> step1 <span class="kw">AS</span> (</span>
+<span id="cb20-2"><a aria-label="2"></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
+<span id="cb20-3"><a aria-label="3"></a>),</span>
+<span id="cb20-4"><a aria-label="4"></a>step2 <span class="kw">AS</span> (</span>
+<span id="cb20-5"><a aria-label="5"></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
+<span id="cb20-6"><a aria-label="6"></a>    <span class="kw">FROM</span> step1</span>
+<span id="cb20-7"><a aria-label="7"></a>),</span>
+<span id="cb20-8"><a aria-label="8"></a>step3 <span class="kw">AS</span> (</span>
+<span id="cb20-9"><a aria-label="9"></a>    <span class="kw">SELECT</span> <span class="op">..</span>.</span>
+<span id="cb20-10"><a aria-label="10"></a>    <span class="kw">FROM</span> step2</span>
+<span id="cb20-11"><a aria-label="11"></a>)</span>
+<span id="cb20-12"><a aria-label="12"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb20-13"><a aria-label="13"></a><span class="kw">FROM</span> step3;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Each step builds on the previous one.</p>
 </section>
 <section id="ctes-in-the-analytical-workflow" class="slide level2 smaller">
@@ -1645,18 +1618,18 @@ CTEs make those pipelines <strong>named, readable, and reusable</strong>.</p>
 </table>
 <p><strong>Q:</strong> Compute average salary per department and keep only departments above 1000.</p>
 <div class="fragment">
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a></a><span class="kw">WITH</span> dept_avg <span class="kw">AS</span> (</span>
-<span id="cb21-2"><a></a>    <span class="kw">SELECT</span></span>
-<span id="cb21-3"><a></a>        department,</span>
-<span id="cb21-4"><a></a>        <span class="fu">AVG</span>(salary) <span class="kw">AS</span> avg_salary</span>
-<span id="cb21-5"><a></a>    <span class="kw">FROM</span> employees</span>
-<span id="cb21-6"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> department</span>
-<span id="cb21-7"><a></a>)</span>
-<span id="cb21-8"><a></a><span class="kw">SELECT</span></span>
-<span id="cb21-9"><a></a>    department,</span>
-<span id="cb21-10"><a></a>    avg_salary</span>
-<span id="cb21-11"><a></a><span class="kw">FROM</span> dept_avg</span>
-<span id="cb21-12"><a></a><span class="kw">WHERE</span> avg_salary <span class="op">&gt;</span> <span class="dv">1000</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a aria-label="1"></a><span class="kw">WITH</span> dept_avg <span class="kw">AS</span> (</span>
+<span id="cb21-2"><a aria-label="2"></a>    <span class="kw">SELECT</span></span>
+<span id="cb21-3"><a aria-label="3"></a>        department,</span>
+<span id="cb21-4"><a aria-label="4"></a>        <span class="fu">AVG</span>(salary) <span class="kw">AS</span> avg_salary</span>
+<span id="cb21-5"><a aria-label="5"></a>    <span class="kw">FROM</span> employees</span>
+<span id="cb21-6"><a aria-label="6"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> department</span>
+<span id="cb21-7"><a aria-label="7"></a>)</span>
+<span id="cb21-8"><a aria-label="8"></a><span class="kw">SELECT</span></span>
+<span id="cb21-9"><a aria-label="9"></a>    department,</span>
+<span id="cb21-10"><a aria-label="10"></a>    avg_salary</span>
+<span id="cb21-11"><a aria-label="11"></a><span class="kw">FROM</span> dept_avg</span>
+<span id="cb21-12"><a aria-label="12"></a><span class="kw">WHERE</span> avg_salary <span class="op">&gt;</span> <span class="dv">1000</span>;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="math inline">\(\downarrow\)</span></p>
 </div>
 <div class="fragment">
@@ -1678,23 +1651,19 @@ CTEs make those pipelines <strong>named, readable, and reusable</strong>.</p>
 </section>
 <section id="key-observations" class="slide level2 smaller">
 <h2>Key Observations</h2>
-<div>
 <ul>
 <li class="fragment">Each CTE is a named intermediate result</li>
 <li class="fragment">Logic is linear and readable</li>
 <li class="fragment">Matches analytical thinking</li>
 </ul>
-</div>
 </section>
 <section id="why-ctes-improve-readability" class="slide level2 smaller">
 <h2>Why CTEs Improve Readability</h2>
-<div>
 <ul>
 <li class="fragment">Derived tables → inside-out reading</li>
 <li class="fragment">CTEs → step-by-step reading</li>
 <li class="fragment">Easier to debug and extend</li>
 </ul>
-</div>
 </section>
 <section id="business-question-analytics-schema" class="slide level2 smaller">
 <h2>Business Question | Analytics Schema</h2>
@@ -1703,22 +1672,22 @@ CTEs make those pipelines <strong>named, readable, and reusable</strong>.</p>
 </blockquote>
 <div class="fragment">
 <p><span class="math inline">\(\downarrow\)</span></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a></a><span class="kw">WITH</span> customer_avg <span class="kw">AS</span> (</span>
-<span id="cb22-2"><a></a>    <span class="kw">SELECT</span></span>
-<span id="cb22-3"><a></a>        customer_id,</span>
-<span id="cb22-4"><a></a>        <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_order_revenue</span>
-<span id="cb22-5"><a></a>    <span class="kw">FROM</span> tmp_order_revenue</span>
-<span id="cb22-6"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span>
-<span id="cb22-7"><a></a>)</span>
-<span id="cb22-8"><a></a><span class="kw">SELECT</span></span>
-<span id="cb22-9"><a></a>    customer_id,</span>
-<span id="cb22-10"><a></a>    avg_order_revenue</span>
-<span id="cb22-11"><a></a><span class="kw">FROM</span> customer_avg</span>
-<span id="cb22-12"><a></a><span class="kw">WHERE</span> avg_order_revenue <span class="op">&gt;</span></span>
-<span id="cb22-13"><a></a>      (</span>
-<span id="cb22-14"><a></a>          <span class="kw">SELECT</span> <span class="fu">AVG</span>(order_revenue)</span>
-<span id="cb22-15"><a></a>          <span class="kw">FROM</span> tmp_order_revenue</span>
-<span id="cb22-16"><a></a>      );</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a aria-label="1"></a><span class="kw">WITH</span> customer_avg <span class="kw">AS</span> (</span>
+<span id="cb22-2"><a aria-label="2"></a>    <span class="kw">SELECT</span></span>
+<span id="cb22-3"><a aria-label="3"></a>        customer_id,</span>
+<span id="cb22-4"><a aria-label="4"></a>        <span class="fu">AVG</span>(order_revenue) <span class="kw">AS</span> avg_order_revenue</span>
+<span id="cb22-5"><a aria-label="5"></a>    <span class="kw">FROM</span> tmp_order_revenue</span>
+<span id="cb22-6"><a aria-label="6"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> customer_id</span>
+<span id="cb22-7"><a aria-label="7"></a>)</span>
+<span id="cb22-8"><a aria-label="8"></a><span class="kw">SELECT</span></span>
+<span id="cb22-9"><a aria-label="9"></a>    customer_id,</span>
+<span id="cb22-10"><a aria-label="10"></a>    avg_order_revenue</span>
+<span id="cb22-11"><a aria-label="11"></a><span class="kw">FROM</span> customer_avg</span>
+<span id="cb22-12"><a aria-label="12"></a><span class="kw">WHERE</span> avg_order_revenue <span class="op">&gt;</span></span>
+<span id="cb22-13"><a aria-label="13"></a>      (</span>
+<span id="cb22-14"><a aria-label="14"></a>          <span class="kw">SELECT</span> <span class="fu">AVG</span>(order_revenue)</span>
+<span id="cb22-15"><a aria-label="15"></a>          <span class="kw">FROM</span> tmp_order_revenue</span>
+<span id="cb22-16"><a aria-label="16"></a>      );</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="input-output" class="slide level2 smaller">
@@ -1782,36 +1751,34 @@ CTEs make those pipelines <strong>named, readable, and reusable</strong>.</p>
 <section id="business-question" class="slide level2 smaller">
 <h2>Business Question</h2>
 <p>For each city, compute:</p>
-<div>
 <ul>
 <li class="fragment">Average customer spend</li>
 <li class="fragment">Maximum customer spend</li>
 </ul>
-</div>
 </section>
 <section id="step-by-step-cte-pipeline" class="slide level2 smaller">
 <h2>Step-by-Step CTE Pipeline</h2>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a></a><span class="kw">WITH</span> customer_spend <span class="kw">AS</span> (</span>
-<span id="cb23-2"><a></a>    <span class="kw">SELECT</span></span>
-<span id="cb23-3"><a></a>        c.customer_id,</span>
-<span id="cb23-4"><a></a>        c.city_id,</span>
-<span id="cb23-5"><a></a>        <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> total_spend</span>
-<span id="cb23-6"><a></a>    <span class="kw">FROM</span> analytics.customers c</span>
-<span id="cb23-7"><a></a>    <span class="kw">JOIN</span> analytics.orders o <span class="kw">ON</span> c.customer_id <span class="op">=</span> o.customer_id</span>
-<span id="cb23-8"><a></a>    <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
-<span id="cb23-9"><a></a>    <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
-<span id="cb23-10"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> c.customer_id, c.city_id</span>
-<span id="cb23-11"><a></a>),</span>
-<span id="cb23-12"><a></a>city_agg <span class="kw">AS</span> (</span>
-<span id="cb23-13"><a></a>    <span class="kw">SELECT</span></span>
-<span id="cb23-14"><a></a>        city_id,</span>
-<span id="cb23-15"><a></a>        <span class="fu">AVG</span>(total_spend) <span class="kw">AS</span> avg_city_spend,</span>
-<span id="cb23-16"><a></a>        <span class="fu">MAX</span>(total_spend) <span class="kw">AS</span> max_city_spend</span>
-<span id="cb23-17"><a></a>    <span class="kw">FROM</span> customer_spend</span>
-<span id="cb23-18"><a></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> city_id</span>
-<span id="cb23-19"><a></a>)</span>
-<span id="cb23-20"><a></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb23-21"><a></a><span class="kw">FROM</span> city_agg;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a aria-label="1"></a><span class="kw">WITH</span> customer_spend <span class="kw">AS</span> (</span>
+<span id="cb23-2"><a aria-label="2"></a>    <span class="kw">SELECT</span></span>
+<span id="cb23-3"><a aria-label="3"></a>        c.customer_id,</span>
+<span id="cb23-4"><a aria-label="4"></a>        c.city_id,</span>
+<span id="cb23-5"><a aria-label="5"></a>        <span class="fu">SUM</span>(oi.quantity <span class="op">*</span> p.price) <span class="kw">AS</span> total_spend</span>
+<span id="cb23-6"><a aria-label="6"></a>    <span class="kw">FROM</span> analytics.customers c</span>
+<span id="cb23-7"><a aria-label="7"></a>    <span class="kw">JOIN</span> analytics.orders o <span class="kw">ON</span> c.customer_id <span class="op">=</span> o.customer_id</span>
+<span id="cb23-8"><a aria-label="8"></a>    <span class="kw">JOIN</span> analytics.order_items oi <span class="kw">ON</span> o.order_id <span class="op">=</span> oi.order_id</span>
+<span id="cb23-9"><a aria-label="9"></a>    <span class="kw">JOIN</span> analytics.products p <span class="kw">ON</span> oi.product_id <span class="op">=</span> p.product_id</span>
+<span id="cb23-10"><a aria-label="10"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> c.customer_id, c.city_id</span>
+<span id="cb23-11"><a aria-label="11"></a>),</span>
+<span id="cb23-12"><a aria-label="12"></a>city_agg <span class="kw">AS</span> (</span>
+<span id="cb23-13"><a aria-label="13"></a>    <span class="kw">SELECT</span></span>
+<span id="cb23-14"><a aria-label="14"></a>        city_id,</span>
+<span id="cb23-15"><a aria-label="15"></a>        <span class="fu">AVG</span>(total_spend) <span class="kw">AS</span> avg_city_spend,</span>
+<span id="cb23-16"><a aria-label="16"></a>        <span class="fu">MAX</span>(total_spend) <span class="kw">AS</span> max_city_spend</span>
+<span id="cb23-17"><a aria-label="17"></a>    <span class="kw">FROM</span> customer_spend</span>
+<span id="cb23-18"><a aria-label="18"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> city_id</span>
+<span id="cb23-19"><a aria-label="19"></a>)</span>
+<span id="cb23-20"><a aria-label="20"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb23-21"><a aria-label="21"></a><span class="kw">FROM</span> city_agg;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="math inline">\(\downarrow\)</span></p>
 <table class="caption-top">
 <thead>
@@ -1876,24 +1843,20 @@ CTEs make those pipelines <strong>named, readable, and reusable</strong>.</p>
 </section>
 <section id="when-ctes-are-the-right-choice" class="slide level2 smaller">
 <h2>When CTEs Are the Right Choice</h2>
-<div>
 <ul>
 <li class="fragment">Multi-step analytical workflows</li>
 <li class="fragment">Complex transformations</li>
 <li class="fragment">Explaining and documenting logic</li>
 <li class="fragment">Preparing for window functions</li>
 </ul>
-</div>
 </section>
 <section id="limitations-of-ctes" class="slide level2 smaller">
 <h2>Limitations of CTEs</h2>
-<div>
 <ul>
 <li class="fragment">Scoped to a single query</li>
 <li class="fragment">Not persisted</li>
 <li class="fragment">Can be slower in some engines</li>
 </ul>
-</div>
 
 
 </section></section>
@@ -2089,7 +2052,7 @@ CTEs make those pipelines <strong>named, readable, and reusable</strong>.</p>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -2116,190 +2079,173 @@ CTEs make those pipelines <strong>named, readable, and reusable</strong>.</p>
       });
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https://hovhannisyan91.github.io/data_analytics_bootcamp");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>
