@@ -489,14 +489,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../materials/statistics/slides/session02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Types</span></a>
+  <a href="../../materials/statistics/slides/session02_0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Types of Bias</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../materials/statistics/slides/session02_0.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Types of Bias</span></a>
+  <a href="../../materials/statistics/slides/session02_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Types</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -973,58 +973,45 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#interval-data" id="toc-interval-data" class="nav-link" data-scroll-target="#interval-data">Interval Data</a></li>
   <li><a href="#ratio-data" id="toc-ratio-data" class="nav-link" data-scroll-target="#ratio-data">Ratio Data</a></li>
-  </ul></li>
   <li><a href="#additional-data-types-common-in-analytics" id="toc-additional-data-types-common-in-analytics" class="nav-link" data-scroll-target="#additional-data-types-common-in-analytics">Additional Data Types (Common in Analytics)</a></li>
   </ul></li>
   <li><a href="#measures-of-central-tendency" id="toc-measures-of-central-tendency" class="nav-link" data-scroll-target="#measures-of-central-tendency">Measures of Central Tendency</a>
   <ul class="collapse">
-  <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean">Mean</a>
-  <ul class="collapse">
+  <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean">Mean</a></li>
+  <li><a href="#sample-mean" id="toc-sample-mean" class="nav-link" data-scroll-target="#sample-mean">Sample Mean</a></li>
+  <li><a href="#population-mean" id="toc-population-mean" class="nav-link" data-scroll-target="#population-mean">Population Mean</a></li>
   <li><a href="#weighted-mean" id="toc-weighted-mean" class="nav-link" data-scroll-target="#weighted-mean">Weighted Mean</a></li>
   <li><a href="#sample-mean-example" id="toc-sample-mean-example" class="nav-link" data-scroll-target="#sample-mean-example">Sample Mean Example</a></li>
-  </ul></li>
   <li><a href="#median" id="toc-median" class="nav-link" data-scroll-target="#median">Median</a></li>
   <li><a href="#mode" id="toc-mode" class="nav-link" data-scroll-target="#mode">Mode</a></li>
   <li><a href="#comparison-of-mean-median-and-mode" id="toc-comparison-of-mean-median-and-mode" class="nav-link" data-scroll-target="#comparison-of-mean-median-and-mode">Comparison of Mean, Median, and Mode</a></li>
+  </ul></li>
   <li><a href="#frequency-distributions" id="toc-frequency-distributions" class="nav-link" data-scroll-target="#frequency-distributions">Frequency Distributions</a>
   <ul class="collapse">
   <li><a href="#symmetric-distribution" id="toc-symmetric-distribution" class="nav-link" data-scroll-target="#symmetric-distribution">Symmetric Distribution</a></li>
   <li><a href="#left-skewed-distributions" id="toc-left-skewed-distributions" class="nav-link" data-scroll-target="#left-skewed-distributions">Left Skewed Distributions</a></li>
   <li><a href="#right-skewed-distributions" id="toc-right-skewed-distributions" class="nav-link" data-scroll-target="#right-skewed-distributions">Right Skewed Distributions</a></li>
-  </ul></li>
   <li><a href="#symmetric-left-skewed-and-right-skewed-distributions" id="toc-symmetric-left-skewed-and-right-skewed-distributions" class="nav-link" data-scroll-target="#symmetric-left-skewed-and-right-skewed-distributions">Symmetric, Left-Skewed, and Right-Skewed Distributions</a></li>
   <li><a href="#enriched-plot" id="toc-enriched-plot" class="nav-link" data-scroll-target="#enriched-plot">Enriched Plot</a></li>
-  <li><a href="#measures-of-variability" id="toc-measures-of-variability" class="nav-link" data-scroll-target="#measures-of-variability">Measures of Variability</a></li>
+  </ul></li>
+  <li><a href="#measures-of-variability" id="toc-measures-of-variability" class="nav-link" data-scroll-target="#measures-of-variability">Measures of Variability</a>
+  <ul class="collapse">
   <li><a href="#range" id="toc-range" class="nav-link" data-scroll-target="#range">Range</a></li>
   <li><a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance">Variance</a></li>
   <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation">Standard Deviation</a></li>
-  <li><a href="#how-to-compare-variability" id="toc-how-to-compare-variability" class="nav-link" data-scroll-target="#how-to-compare-variability">How to compare variability?</a>
-  <ul class="collapse">
+  <li><a href="#how-to-compare-variability" id="toc-how-to-compare-variability" class="nav-link" data-scroll-target="#how-to-compare-variability">How to compare variability?</a></li>
   <li><a href="#visual-comparison-of-variability" id="toc-visual-comparison-of-variability" class="nav-link" data-scroll-target="#visual-comparison-of-variability">Visual Comparison of Variability</a></li>
   <li><a href="#when-variability-is-bad" id="toc-when-variability-is-bad" class="nav-link" data-scroll-target="#when-variability-is-bad">When variability is <strong>bad</strong>?</a></li>
   <li><a href="#when-variability-is-good" id="toc-when-variability-is-good" class="nav-link" data-scroll-target="#when-variability-is-good">When variability is <strong>good</strong>?</a></li>
   <li><a href="#when-variability-is-neutral" id="toc-when-variability-is-neutral" class="nav-link" data-scroll-target="#when-variability-is-neutral">When variability is <strong>neutral</strong>?</a></li>
-  </ul></li>
   <li><a href="#why-n-1" id="toc-why-n-1" class="nav-link" data-scroll-target="#why-n-1">Why <span class="math inline">\(N-1\)</span>?</a></li>
-  <li><a href="#coefficient-of-variation-normalization" id="toc-coefficient-of-variation-normalization" class="nav-link" data-scroll-target="#coefficient-of-variation-normalization">Coefficient of Variation (Normalization)</a>
-  <ul class="collapse">
+  <li><a href="#coefficient-of-variation-normalization" id="toc-coefficient-of-variation-normalization" class="nav-link" data-scroll-target="#coefficient-of-variation-normalization">Coefficient of Variation (Normalization)</a></li>
   <li><a href="#formula-for-the-coefficient-of-variation" id="toc-formula-for-the-coefficient-of-variation" class="nav-link" data-scroll-target="#formula-for-the-coefficient-of-variation">Formula for the Coefficient of Variation</a></li>
-  </ul></li>
   <li><a href="#z-score" id="toc-z-score" class="nav-link" data-scroll-target="#z-score">Z-score</a></li>
-  <li><a href="#empirical-rule" id="toc-empirical-rule" class="nav-link" data-scroll-target="#empirical-rule">Empirical Rule</a>
-  <ul class="collapse">
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
-  </ul></li>
+  <li><a href="#empirical-rule" id="toc-empirical-rule" class="nav-link" data-scroll-target="#empirical-rule">Empirical Rule</a></li>
   <li><a href="#chebyshevs-theorem" id="toc-chebyshevs-theorem" class="nav-link" data-scroll-target="#chebyshevs-theorem">Chebyshev’s Theorem</a></li>
   <li><a href="#chebyshev-vs-empirical-rule" id="toc-chebyshev-vs-empirical-rule" class="nav-link" data-scroll-target="#chebyshev-vs-empirical-rule">Chebyshev vs Empirical Rule</a></li>
-  <li><a href="#grouped-data" id="toc-grouped-data" class="nav-link" data-scroll-target="#grouped-data">Grouped Data</a>
-  <ul class="collapse">
-  <li><a href="#mean-of-the-grouped-data" id="toc-mean-of-the-grouped-data" class="nav-link" data-scroll-target="#mean-of-the-grouped-data">Mean of the Grouped Data</a></li>
-  <li><a href="#step-2-cumulative" id="toc-step-2-cumulative" class="nav-link" data-scroll-target="#step-2-cumulative">Step 2: Cumulative</a></li>
-  <li><a href="#step-3-relative-frequency-table" id="toc-step-3-relative-frequency-table" class="nav-link" data-scroll-target="#step-3-relative-frequency-table">Step 3: Relative Frequency Table</a></li>
-  <li><a href="#step-4-percentage-frequencies-table" id="toc-step-4-percentage-frequencies-table" class="nav-link" data-scroll-target="#step-4-percentage-frequencies-table">Step 4: Percentage Frequencies Table</a></li>
-  <li><a href="#step-5-visualization" id="toc-step-5-visualization" class="nav-link" data-scroll-target="#step-5-visualization">Step 5: Visualization</a></li>
-  <li><a href="#grouped-sd" id="toc-grouped-sd" class="nav-link" data-scroll-target="#grouped-sd">Grouped SD</a></li>
+  <li><a href="#grouped-data" id="toc-grouped-data" class="nav-link" data-scroll-target="#grouped-data">Grouped Data</a></li>
   </ul></li>
   <li><a href="#relative-positions-percentile" id="toc-relative-positions-percentile" class="nav-link" data-scroll-target="#relative-positions-percentile">Relative Positions | Percentile</a>
   <ul class="collapse">
@@ -1233,9 +1220,8 @@ Tip
 </div>
 <hr>
 </section>
-</section>
-<section id="additional-data-types-common-in-analytics" class="level2">
-<h2 class="anchored" data-anchor-id="additional-data-types-common-in-analytics">Additional Data Types (Common in Analytics)</h2>
+<section id="additional-data-types-common-in-analytics" class="level3">
+<h3 class="anchored" data-anchor-id="additional-data-types-common-in-analytics">Additional Data Types (Common in Analytics)</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
@@ -1302,8 +1288,8 @@ graph TD
 </div>
 </section>
 </section>
-<section id="measures-of-central-tendency" class="level1">
-<h1>Measures of Central Tendency</h1>
+<section id="measures-of-central-tendency" class="level2">
+<h2 class="anchored" data-anchor-id="measures-of-central-tendency">Measures of Central Tendency</h2>
 <p>Once we understand our data types, the next step is to summarize them with simple, representative numbers.<br>
 These are called <strong>measures of central tendency</strong>, and they tell us where the “center” of our data lies.</p>
 <p>The three most common measures are:</p>
@@ -1315,8 +1301,8 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 <li><strong>Mode</strong> — the most frequent value</li>
 </ul>
 <hr>
-<section id="mean" class="level2">
-<h2 class="anchored" data-anchor-id="mean">Mean</h2>
+<section id="mean" class="level3">
+<h3 class="anchored" data-anchor-id="mean">Mean</h3>
 <p>The <strong>mean</strong> is the sum of all values divided by the number of observations.</p>
 <p><span class="math display">\[
 \text{Mean} = \frac{\sum_{i=1}^{n} x_i}{n}
@@ -1335,14 +1321,15 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </tr>
 </tbody>
 </table>
-<section id="mean-for-sample" class="level4">
-<h4 class="anchored" data-anchor-id="mean-for-sample">Mean for Sample</h4>
+</section>
+<section id="sample-mean" class="level3">
+<h3 class="anchored" data-anchor-id="sample-mean">Sample Mean</h3>
 <p><span class="math display">\[
 \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}
 \]</span></p>
 </section>
-<section id="population-mean" class="level4">
-<h4 class="anchored" data-anchor-id="population-mean">Population Mean</h4>
+<section id="population-mean" class="level3">
+<h3 class="anchored" data-anchor-id="population-mean">Population Mean</h3>
 <p>(same, only notation is different)</p>
 <p><span class="math display">\[
 \mu = \frac{\sum_{i=1}^{N} x_i}{N}
@@ -1421,9 +1408,8 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 \]</span></p>
 <hr>
 </section>
-</section>
-<section id="median" class="level2">
-<h2 class="anchored" data-anchor-id="median">Median</h2>
+<section id="median" class="level3">
+<h3 class="anchored" data-anchor-id="median">Median</h3>
 <p>The <strong>median</strong> is the value that separates the dataset into two equal halves.</p>
 <p><strong>Steps to calculate:</strong></p>
 <ol type="1">
@@ -1469,8 +1455,8 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </div>
 </div>
 </section>
-<section id="mode" class="level2">
-<h2 class="anchored" data-anchor-id="mode">Mode</h2>
+<section id="mode" class="level3">
+<h3 class="anchored" data-anchor-id="mode">Mode</h3>
 <p>The <strong>mode</strong> is the value that appears most often.</p>
 <table class="caption-top table">
 <thead>
@@ -1511,8 +1497,8 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </div>
 </div>
 </section>
-<section id="comparison-of-mean-median-and-mode" class="level2">
-<h2 class="anchored" data-anchor-id="comparison-of-mean-median-and-mode">Comparison of Mean, Median, and Mode</h2>
+<section id="comparison-of-mean-median-and-mode" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-of-mean-median-and-mode">Comparison of Mean, Median, and Mode</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -1574,12 +1560,13 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </div>
 </div>
 </section>
+</section>
 <section id="frequency-distributions" class="level2">
 <h2 class="anchored" data-anchor-id="frequency-distributions">Frequency Distributions</h2>
-<section id="symmetric-distribution" class="level3 smaller">
-<h3 class="smaller anchored" data-anchor-id="symmetric-distribution">Symmetric Distribution</h3>
+<section id="symmetric-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="symmetric-distribution">Symmetric Distribution</h3>
 <p>Mean ~ Median</p>
-<div id="c75df703" class="cell" data-execution_count="2">
+<div id="cd66a146" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1591,7 +1578,7 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </section>
 <section id="left-skewed-distributions" class="level3">
 <h3 class="anchored" data-anchor-id="left-skewed-distributions">Left Skewed Distributions</h3>
-<div id="bd3cb9d7" class="cell" data-execution_count="3">
+<div id="6aeaaaf0" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1603,7 +1590,7 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </section>
 <section id="right-skewed-distributions" class="level3">
 <h3 class="anchored" data-anchor-id="right-skewed-distributions">Right Skewed Distributions</h3>
-<div id="3c0e919a" class="cell" data-execution_count="4">
+<div id="1dac2c46" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1613,10 +1600,9 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </div>
 </div>
 </section>
-</section>
-<section id="symmetric-left-skewed-and-right-skewed-distributions" class="level2">
-<h2 class="anchored" data-anchor-id="symmetric-left-skewed-and-right-skewed-distributions">Symmetric, Left-Skewed, and Right-Skewed Distributions</h2>
-<div id="1c47a226" class="cell" data-execution_count="5">
+<section id="symmetric-left-skewed-and-right-skewed-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="symmetric-left-skewed-and-right-skewed-distributions">Symmetric, Left-Skewed, and Right-Skewed Distributions</h3>
+<div id="d0e92d5f" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1626,85 +1612,9 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </div>
 </div>
 </section>
-<section id="enriched-plot" class="level2">
-<h2 class="anchored" data-anchor-id="enriched-plot">Enriched Plot</h2>
-<div id="9cf4bf08" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">1</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Generate data ----</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_sym  <span class="op">=</span> np.random.normal(loc<span class="op">=</span><span class="dv">50</span>, scale<span class="op">=</span><span class="dv">10</span>, size<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data_left <span class="op">=</span> <span class="dv">100</span> <span class="op">-</span> np.random.gamma(shape<span class="op">=</span><span class="dv">5</span>, scale<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data_right <span class="op">=</span> np.random.gamma(shape<span class="op">=</span><span class="dv">4</span>, scale<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> [</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Symmetric</span><span class="ch">\n</span><span class="st">Mean ≈ Median"</span>, data_sym),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Left-Skewed</span><span class="ch">\n</span><span class="st">Mean &lt; Median"</span>, data_left),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Right-Skewed</span><span class="ch">\n</span><span class="st">Mean &gt; Median"</span>, data_right)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Create subplots ----</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="fl">4.5</span>))  <span class="co"># slightly wider for annotations</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> <span class="dv">20</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (title, data) <span class="kw">in</span> <span class="bu">zip</span>(axes, datasets):</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    mean_val <span class="op">=</span> np.mean(data)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    median_val <span class="op">=</span> np.median(data)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Histogram</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    counts, bins_hist, patches <span class="op">=</span> ax.hist(</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        data, bins<span class="op">=</span>bins, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolor<span class="op">=</span><span class="st">"black"</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># KDE smooth density</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    kde <span class="op">=</span> gaussian_kde(data)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    xline <span class="op">=</span> np.linspace(<span class="bu">min</span>(data), <span class="bu">max</span>(data), <span class="dv">400</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    ax.plot(xline, kde(xline) <span class="op">*</span> <span class="bu">len</span>(data) <span class="op">*</span> (bins_hist[<span class="dv">1</span>] <span class="op">-</span> bins_hist[<span class="dv">0</span>]),</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"black"</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span><span class="st">"KDE"</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mean line (blue dashed)</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    ax.axvline(mean_val, color<span class="op">=</span><span class="st">"blue"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    ax.annotate(<span class="st">"Mean"</span>, xy<span class="op">=</span>(mean_val, <span class="bu">max</span>(counts)<span class="op">*</span><span class="fl">0.9</span>),</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                xytext<span class="op">=</span>(mean_val, <span class="bu">max</span>(counts)<span class="op">*</span><span class="fl">1.1</span>),</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                ha<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span><span class="st">"blue"</span>, fontsize<span class="op">=</span><span class="dv">8</span>,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">"blue"</span>))</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Median line (red solid)</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    ax.axvline(median_val, color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"-"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    ax.annotate(<span class="st">"Median"</span>, xy<span class="op">=</span>(median_val, <span class="bu">max</span>(counts)<span class="op">*</span><span class="fl">0.9</span>),</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>                xytext<span class="op">=</span>(median_val, <span class="bu">max</span>(counts)<span class="op">*</span><span class="fl">1.1</span>),</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>                ha<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span><span class="st">"red"</span>, fontsize<span class="op">=</span><span class="dv">8</span>,</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">"red"</span>))</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Shaded tails depending on skew</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"Left"</span> <span class="kw">in</span> title:</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        ax.axvspan(<span class="bu">min</span>(data), mean_val, alpha<span class="op">=</span><span class="fl">0.12</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">"Right"</span> <span class="kw">in</span> title:</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>        ax.axvspan(mean_val, <span class="bu">max</span>(data), alpha<span class="op">=</span><span class="fl">0.12</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Titles &amp; labels</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Value"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Frequency"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(axis<span class="op">=</span><span class="st">"both"</span>, labelsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Summary table under plot</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    table_data <span class="op">=</span> [</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"Mean"</span>, <span class="ss">f"</span><span class="sc">{</span>mean_val<span class="sc">:.2f}</span><span class="ss">"</span>],</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"Median"</span>, <span class="ss">f"</span><span class="sc">{</span>median_val<span class="sc">:.2f}</span><span class="ss">"</span>],</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"Std Dev"</span>, <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span>std(data)<span class="sc">:.2f}</span><span class="ss">"</span>]</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> ax.table(</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>        cellText<span class="op">=</span>table_data,</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        colLabels<span class="op">=</span>[<span class="st">"Statistic"</span>, <span class="st">"Value"</span>],</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>        cellLoc<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>        loc<span class="op">=</span><span class="st">"bottom"</span>,</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">8</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    table.scale(<span class="dv">1</span>, <span class="fl">1.1</span>)</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(pad<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="enriched-plot" class="level3">
+<h3 class="anchored" data-anchor-id="enriched-plot">Enriched Plot</h3>
+<div id="803ace45" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1714,6 +1624,7 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </div>
 </div>
 </section>
+</section>
 <section id="measures-of-variability" class="level2">
 <h2 class="anchored" data-anchor-id="measures-of-variability">Measures of Variability</h2>
 <ul>
@@ -1721,9 +1632,8 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 <li>Variance</li>
 <li>Standard Deviation (SD)</li>
 </ul>
-</section>
-<section id="range" class="level2">
-<h2 class="anchored" data-anchor-id="range">Range</h2>
+<section id="range" class="level3">
+<h3 class="anchored" data-anchor-id="range">Range</h3>
 <p><span class="math display">\[
 \text{Range = Highest Value - Lowest Value}
 \]</span></p>
@@ -1744,8 +1654,8 @@ These are called <strong>measures of central tendency</strong>, and they tell us
 </div>
 </div>
 </section>
-<section id="variance" class="level2">
-<h2 class="anchored" data-anchor-id="variance">Variance</h2>
+<section id="variance" class="level3">
+<h3 class="anchored" data-anchor-id="variance">Variance</h3>
 <p><strong>Sample Variance:</strong></p>
 <p><span class="math display">\[
 s^{2} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^{2}}{n - 1}
@@ -1761,8 +1671,8 @@ N
 }
 \]</span></p>
 </section>
-<section id="standard-deviation" class="level2">
-<h2 class="anchored" data-anchor-id="standard-deviation">Standard Deviation</h2>
+<section id="standard-deviation" class="level3">
+<h3 class="anchored" data-anchor-id="standard-deviation">Standard Deviation</h3>
 <p><strong>Sample Standard Deviation (Standard Error)</strong></p>
 <p><span class="math display">\[
 s \;=\; \sqrt{s^{2}}
@@ -1788,8 +1698,8 @@ N
 }
 \]</span></p>
 </section>
-<section id="how-to-compare-variability" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-compare-variability">How to compare variability?</h2>
+<section id="how-to-compare-variability" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-compare-variability">How to compare variability?</h3>
 <p>In which cases you can compare standard deviations?</p>
 <table class="caption-top table">
 <thead>
@@ -1837,9 +1747,10 @@ N
 </tr>
 </tbody>
 </table>
+</section>
 <section id="visual-comparison-of-variability" class="level3">
 <h3 class="anchored" data-anchor-id="visual-comparison-of-variability">Visual Comparison of Variability</h3>
-<div id="2b338c88" class="cell" data-execution_count="7">
+<div id="43abc054" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1894,9 +1805,8 @@ Caution
 </div>
 </div>
 </section>
-</section>
-<section id="why-n-1" class="level2">
-<h2 class="anchored" data-anchor-id="why-n-1">Why <span class="math inline">\(N-1\)</span>?</h2>
+<section id="why-n-1" class="level3">
+<h3 class="anchored" data-anchor-id="why-n-1">Why <span class="math inline">\(N-1\)</span>?</h3>
 <p>A <strong>degree of freedom (df)</strong> is an independent piece of information that can vary freely.<br>
 Whenever we estimate a parameter from the sample, we introduce a constraint.<br>
 Each constraint removes one degree of freedom.</p>
@@ -1910,8 +1820,8 @@ df = n - 1
 \]</span></p>
 <!-- TODO -->
 </section>
-<section id="coefficient-of-variation-normalization" class="level2">
-<h2 class="anchored" data-anchor-id="coefficient-of-variation-normalization">Coefficient of Variation (Normalization)</h2>
+<section id="coefficient-of-variation-normalization" class="level3">
+<h3 class="anchored" data-anchor-id="coefficient-of-variation-normalization">Coefficient of Variation (Normalization)</h3>
 <p>The coefficient of variation (CV) is a measure of <em>relative variability</em>.<br>
 It allows us to compare the variability of two datasets <strong>even when their units or scales differ</strong>.</p>
 <hr>
@@ -1968,6 +1878,7 @@ It allows us to compare the variability of two datasets <strong>even when their 
 </tbody>
 </table>
 <hr>
+</section>
 <section id="formula-for-the-coefficient-of-variation" class="level3">
 <h3 class="anchored" data-anchor-id="formula-for-the-coefficient-of-variation">Formula for the Coefficient of Variation</h3>
 <p><span class="math display">\[
@@ -2003,9 +1914,8 @@ It allows us to compare the variability of two datasets <strong>even when their 
 <p>This means that, compared to its average price, <strong>Google’s stock price is more stable</strong> than Nike’s.</p>
 <p>The CV helps us compare variability across different scales and units—something raw standard deviations alone cannot do.</p>
 </section>
-</section>
-<section id="z-score" class="level2">
-<h2 class="anchored" data-anchor-id="z-score">Z-score</h2>
+<section id="z-score" class="level3">
+<h3 class="anchored" data-anchor-id="z-score">Z-score</h3>
 <p>Number of standard deviations that particular value is farther from the mean of its population or sample:</p>
 <p><strong>Population:</strong></p>
 <p><span class="math display">\[
@@ -2015,7 +1925,7 @@ z = \frac{x - \mu}{\sigma}
 <p><span class="math display">\[
 z = \frac{x - \bar{x}}{s}
 \]</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">=STANDARDIZE</span><span class="er">(</span><span class="ex">x,</span> mean, standard_deviation<span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">=STANDARDIZE</span><span class="er">(</span><span class="ex">x,</span> mean, standard_deviation<span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Suppose we have:</strong></p>
 <ul>
 <li><code>x = 540</code></li>
@@ -2026,15 +1936,15 @@ z = \frac{x - \bar{x}}{s}
 <hr>
 <p><strong>Rule of Thumb for identifying outliers:</strong> Data values that have z-scores above <code>+3</code> and below <code>-3</code> can be categorized as outliers.</p>
 </section>
-<section id="empirical-rule" class="level2">
-<h2 class="anchored" data-anchor-id="empirical-rule">Empirical Rule</h2>
+<section id="empirical-rule" class="level3">
+<h3 class="anchored" data-anchor-id="empirical-rule">Empirical Rule</h3>
 <p>For a normally distributed variable with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, the empirical rule states:</p>
 <ol type="1">
 <li>Within <strong>1</strong> standard deviation <span class="math inline">\((\mu \pm 1\sigma)\)</span>: about <span class="math inline">\(68\%\)</span> of the data</li>
 <li>Within <strong>2</strong> standard deviations <span class="math inline">\((\mu \pm 2\sigma)\)</span>: about <span class="math inline">\(95\%\)</span> of the data</li>
 <li>Within <strong>3</strong> standard deviations <span class="math inline">\(\mu \pm 3\sigma\)</span>: about <span class="math inline">\(99.7\%\)</span> of the data</li>
 </ol>
-<div id="c9f16668" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="8">
+<div id="9e286582" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2043,10 +1953,10 @@ z = \frac{x - \bar{x}}{s}
 </div>
 </div>
 </div>
-<section id="examples" class="level3">
-<h3 class="anchored" data-anchor-id="examples">Examples</h3>
-<section id="daily-steps-on-fitness-trackers" class="level4">
-<h4 class="anchored" data-anchor-id="daily-steps-on-fitness-trackers">Daily Steps on Fitness Trackers</h4>
+<section id="examples" class="level4">
+<h4 class="anchored" data-anchor-id="examples">Examples</h4>
+<section id="daily-steps-on-fitness-trackers" class="level5">
+<h5 class="anchored" data-anchor-id="daily-steps-on-fitness-trackers">Daily Steps on Fitness Trackers</h5>
 <p>Daily step counts for a person over several months often form a normal-like distribution.</p>
 <p><strong>Assuming:</strong></p>
 <ul>
@@ -2062,8 +1972,8 @@ z = \frac{x - \bar{x}}{s}
 </ul>
 <p>Fitness coaches use this rule to identify <code>unusually inactive</code> or <code>exceptionally active</code> days.</p>
 </section>
-<section id="sat-gre-university-exam-scores" class="level4">
-<h4 class="anchored" data-anchor-id="sat-gre-university-exam-scores">SAT / GRE / University Exam Scores</h4>
+<section id="sat-gre-university-exam-scores" class="level5">
+<h5 class="anchored" data-anchor-id="sat-gre-university-exam-scores">SAT / GRE / University Exam Scores</h5>
 <p>Large standardized tests tend to be approximately normal.</p>
 <p>Suppose:</p>
 <ul>
@@ -2080,8 +1990,8 @@ z = \frac{x - \bar{x}}{s}
 <p>Admissions departments use this distribution to benchmark <code>typical</code>, <code>strong</code>, or <code>exceptional</code> performance.</p>
 <hr>
 </section>
-<section id="summarized-examples" class="level4">
-<h4 class="anchored" data-anchor-id="summarized-examples">Summarized Examples</h4>
+<section id="summarized-examples" class="level5">
+<h5 class="anchored" data-anchor-id="summarized-examples">Summarized Examples</h5>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 18%">
@@ -2147,8 +2057,8 @@ z = \frac{x - \bar{x}}{s}
 </section>
 </section>
 </section>
-<section id="chebyshevs-theorem" class="level2">
-<h2 class="anchored" data-anchor-id="chebyshevs-theorem">Chebyshev’s Theorem</h2>
+<section id="chebyshevs-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="chebyshevs-theorem">Chebyshev’s Theorem</h3>
 <p>Chebyshev’s Theorem applies to <strong>any distribution</strong>, not only symmetric or bell-shaped ones.<br>
 It states that for any value of <span class="math inline">\((z &gt; 1)\)</span>, <strong>at least</strong> the following percentage of observations lie within<br>
 ( z ) standard deviations of the mean:</p>
@@ -2234,8 +2144,8 @@ Tip
 </div>
 <p>This is the power of expressing Chebyshev in <strong>z-score terms</strong>:</p>
 </section>
-<section id="chebyshev-vs-empirical-rule" class="level2">
-<h2 class="anchored" data-anchor-id="chebyshev-vs-empirical-rule">Chebyshev vs Empirical Rule</h2>
+<section id="chebyshev-vs-empirical-rule" class="level3">
+<h3 class="anchored" data-anchor-id="chebyshev-vs-empirical-rule">Chebyshev vs Empirical Rule</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
@@ -2273,8 +2183,8 @@ Tip
 </tbody>
 </table>
 </section>
-<section id="grouped-data" class="level2">
-<h2 class="anchored" data-anchor-id="grouped-data">Grouped Data</h2>
+<section id="grouped-data" class="level3">
+<h3 class="anchored" data-anchor-id="grouped-data">Grouped Data</h3>
 <p>Below table represents a grouped frequency distribution of respondents by age category. Each row corresponds to an age interval, and the second column shows the frequency (fᵢ), meaning the number of people who fall within that interval. The total frequency is <strong>100</strong>, indicating the entire sample size.</p>
 <table class="caption-top table">
 <thead>
@@ -2310,8 +2220,8 @@ Tip
 </tr>
 </tbody>
 </table>
-<section id="mean-of-the-grouped-data" class="level3">
-<h3 class="anchored" data-anchor-id="mean-of-the-grouped-data">Mean of the Grouped Data</h3>
+<section id="mean-of-the-grouped-data" class="level4">
+<h4 class="anchored" data-anchor-id="mean-of-the-grouped-data">Mean of the Grouped Data</h4>
 <p><span class="math display">\[
 \bar{x} \approx
 \frac{
@@ -2329,8 +2239,8 @@ n
 </li>
 <li><span class="math inline">\(k\)</span> = number of classes</li>
 </ul>
-<section id="step-1-midpoints" class="level4">
-<h4 class="anchored" data-anchor-id="step-1-midpoints">Step 1: Midpoints</h4>
+<section id="step-1-midpoints" class="level5">
+<h5 class="anchored" data-anchor-id="step-1-midpoints">Step 1: Midpoints</h5>
 <blockquote class="blockquote">
 <p><span class="math inline">\(\frac{20+30}{2}=25\)</span></p>
 </blockquote>
@@ -2377,8 +2287,8 @@ n
 </table>
 </section>
 </section>
-<section id="step-2-cumulative" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-cumulative">Step 2: Cumulative</h3>
+<section id="step-2-cumulative" class="level4">
+<h4 class="anchored" data-anchor-id="step-2-cumulative">Step 2: Cumulative</h4>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -2421,8 +2331,8 @@ n
 </tbody>
 </table>
 </section>
-<section id="step-3-relative-frequency-table" class="level3">
-<h3 class="anchored" data-anchor-id="step-3-relative-frequency-table">Step 3: Relative Frequency Table</h3>
+<section id="step-3-relative-frequency-table" class="level4">
+<h4 class="anchored" data-anchor-id="step-3-relative-frequency-table">Step 3: Relative Frequency Table</h4>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -2465,8 +2375,8 @@ n
 </tbody>
 </table>
 </section>
-<section id="step-4-percentage-frequencies-table" class="level3">
-<h3 class="anchored" data-anchor-id="step-4-percentage-frequencies-table">Step 4: Percentage Frequencies Table</h3>
+<section id="step-4-percentage-frequencies-table" class="level4">
+<h4 class="anchored" data-anchor-id="step-4-percentage-frequencies-table">Step 4: Percentage Frequencies Table</h4>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -2509,9 +2419,9 @@ n
 </tbody>
 </table>
 </section>
-<section id="step-5-visualization" class="level3">
-<h3 class="anchored" data-anchor-id="step-5-visualization">Step 5: Visualization</h3>
-<div id="686316c4" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="9">
+<section id="step-5-visualization" class="level4">
+<h4 class="anchored" data-anchor-id="step-5-visualization">Step 5: Visualization</h4>
+<div id="8d72d805" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2521,8 +2431,8 @@ n
 </div>
 </div>
 </section>
-<section id="grouped-sd" class="level3">
-<h3 class="anchored" data-anchor-id="grouped-sd">Grouped SD</h3>
+<section id="grouped-sd" class="level4">
+<h4 class="anchored" data-anchor-id="grouped-sd">Grouped SD</h4>
 <p><span class="math display">\[
 s^2 \approx \frac{\sum_{i=1}^k f_i (m_i - \bar{x})^2}{n - 1}
 \]</span></p>
@@ -2605,6 +2515,7 @@ s^2 \approx \frac{\sum_{i=1}^k f_i (m_i - \bar{x})^2}{n - 1}
 </tr>
 </tbody>
 </table>
+</section>
 </section>
 </section>
 <section id="relative-positions-percentile" class="level2">
@@ -2795,7 +2706,7 @@ P_{75} = \frac{14 + 18}{2} = 16
 <hr>
 <section id="boxplot-example" class="level4">
 <h4 class="anchored" data-anchor-id="boxplot-example">Boxplot Example</h4>
-<div id="ea04ddf7" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="10">
+<div id="09499c32" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3091,7 +3002,7 @@ as <span class="math inline">\(x\)</span> increases, <span class="math inline">\
 </tbody>
 </table>
 <hr>
-<div id="c12b24e6" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="11">
+<div id="7f2ff76d" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3378,7 +3289,7 @@ r_{xy} = \frac{12.8}{(1.79)(7.77)} = 0.9207
 </section>
 <section id="scatter-plot-with-values" class="level4">
 <h4 class="anchored" data-anchor-id="scatter-plot-with-values">Scatter Plot With Values</h4>
-<div id="e18a1436" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="12">
+<div id="fbbf0529" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3393,7 +3304,7 @@ r_{xy} = \frac{12.8}{(1.79)(7.77)} = 0.9207
 <h3 class="anchored" data-anchor-id="correlation-graphically">Correlation Graphically</h3>
 <p>Below image shoes the correlation visually given different values</p>
 <p><code>r = 1, -1, 0.6, -0.4, 0</code></p>
-<div id="9c118037" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="13">
+<div id="4764e4be" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3433,7 +3344,7 @@ r_{xy} = \frac{12.8}{(1.79)(7.77)} = 0.9207
 <p><strong>The common cause was hot weather</strong></p>
 </div>
 </div>
-<div id="159a92e3" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="14">
+<div id="9a194541" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3471,7 +3382,7 @@ r_{xy} = \frac{12.8}{(1.79)(7.77)} = 0.9207
 <p><strong>The common cause was fire severity</strong></p>
 </div>
 </div>
-<div id="d36033e4" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="15">
+<div id="c3881e87" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3509,7 +3420,7 @@ r_{xy} = \frac{12.8}{(1.79)(7.77)} = 0.9207
 <p><span class="math display">\[\downarrow\]</span> The common cause was job seniority</p>
 </div>
 </div>
-<div id="94fa56a4" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="16">
+<div id="f59c961c" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3547,7 +3458,7 @@ r_{xy} = \frac{12.8}{(1.79)(7.77)} = 0.9207
 <p><strong>The common cause was age</strong></p>
 </div>
 </div>
-<div id="5ae8b50a" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="17">
+<div id="7304c431" class="cell" data-fig-height="5" data-fig-width="18" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
