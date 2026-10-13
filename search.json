@@ -15359,37 +15359,11 @@
     ]
   },
   {
-    "objectID": "materials/statistics/session03.html#why-data-types-matter",
-    "href": "materials/statistics/session03.html#why-data-types-matter",
+    "objectID": "materials/statistics/session03.html#types-of-data",
+    "href": "materials/statistics/session03.html#types-of-data",
     "title": "Session 03: Data Types",
-    "section": "Why Data Types Matter?",
-    "text": "Why Data Types Matter?\nBefore calculating averages or plotting charts, it’s essential to recognize what kind of data you’re working with.\nThe classification of a variable determines:\n\nWhich summary statistics are meaningful\n\nWhich visualizations can be used\n\nHow relationships between variables should be interpreted",
-    "crumbs": [
-      "Syllabus",
-      "Statistical Thinking",
-      "Statistics",
-      "Session 03: Data Types"
-    ]
-  },
-  {
-    "objectID": "materials/statistics/session03.html#qualitative-categorical-data",
-    "href": "materials/statistics/session03.html#qualitative-categorical-data",
-    "title": "Session 03: Data Types",
-    "section": "Qualitative (Categorical) Data",
-    "text": "Qualitative (Categorical) Data\nQualitative data describe qualities, categories, or labels rather than numbers.\n\n\n\n\n\n\n\n\nSubtype\nDefinition\nExamples\n\n\n\n\nNominal\nCategories with no natural order\nGender (Male/Female), City (Paris, Yerevan, Tokyo)\n\n\nOrdinal\nCategories with a meaningful order, but unequal spacing\nEducation Level (High &lt; Bachelor &lt; Master &lt; PhD), Satisfaction (Low–Medium–High)\n\n\n\n\n\n\n\n\n\nTipRemember\n\n\n\n\nNominal → just names, no order\n\nOrdinal → names with rank",
-    "crumbs": [
-      "Syllabus",
-      "Statistical Thinking",
-      "Statistics",
-      "Session 03: Data Types"
-    ]
-  },
-  {
-    "objectID": "materials/statistics/session03.html#quantitative-numerical-data",
-    "href": "materials/statistics/session03.html#quantitative-numerical-data",
-    "title": "Session 03: Data Types",
-    "section": "Quantitative (Numerical) Data",
-    "text": "Quantitative (Numerical) Data\nQuantitative data represent measurable quantities that can be used in arithmetic operations.\n\n\n\n\n\n\n\n\nSubtype\nDefinition\nExamples\n\n\n\n\nDiscrete\nCountable numbers, often integers\nNumber of customers, Complaints per day\n\n\nContinuous\nMeasured values within a range\nTemperature, Age, Revenue, Weight\n\n\n\n\nInterval Data\nInterval values represent ordered units that have the same difference.\nA variable is considered interval data when it contains numeric values that are ordered and where the exact differences between values are known.\nExample (Temperature in Celsius):\n[-15, -10, -5, 0, 5, 10, 15, 20, 25, 30]\nA key limitation of interval data is that it does not have a true zero.\nIn the Celsius example, there is no such thing as “no temperature.”\n\n\nRatio Data\nRatio values are also ordered units that have the same difference, similar to interval values.\nThe key distinction is that ratio data has an absolute zero.\nExamples: Income, Weight, Length, etc.\n\n\n\n\n\n\nTip\n\n\n\n\nDiscrete → counting\n\nContinuous → measuring\n\n\n\n\n\n\nAdditional Data Types (Common in Analytics)\n\n\n\n\n\n\n\n\nType\nDefinition\nExample Applications\n\n\n\n\nBinary\nTwo possible outcomes (Yes/No, 0/1)\nSubscription status, churn indicator\n\n\nTime-Series\nObservations recorded sequentially over time\nDaily sales, hourly temperature\n\n\nTextual / Unstructured\nWords, sentences, or documents\nCustomer reviews, tweets\n\n\nSpatial / Geographical\nLocation-based information\nStore coordinates, delivery zones\n\n\n\n\n\n\n\n\n%%{init: {\"theme\": \"default\", \"logLevel\": \"fatal\"}}%%\ngraph TD\n    A[\"Data Types\"] --&gt; B[\"Qualitative (Categorical)\"]\n    A --&gt; C[\"Quantitative (Numerical)\"]\n    A --&gt; H[\"Other Types\"]\n\n    B --&gt; D[\"Nominal\"]\n    B --&gt; E[\"Ordinal\"]\n\n    C --&gt; F[\"Discrete\"]\n    C --&gt; G[\"Continuous\"]\n\n    \n    H --&gt; I[\"Binary\"]\n    H --&gt; J[\"Time-Series\"]\n    H --&gt; K[\"Textual\"]\n    H --&gt; L[\"Spatial\"]",
+    "section": "Types of Data",
+    "text": "Types of Data\nUnderstanding the types of data is the foundation of every analysis or visualization.\nDifferent data types require different summary statistics, charts, and interpretations.\n\n\nWhy Data Types Matter?\nBefore calculating averages or plotting charts, it’s essential to recognize what kind of data you’re working with.\nThe classification of a variable determines:\n\nWhich summary statistics are meaningful\n\nWhich visualizations can be used\n\nHow relationships between variables should be interpreted\n\n\n\n\nQualitative (Categorical) Data\nQualitative data describe qualities, categories, or labels rather than numbers.\n\n\n\n\n\n\n\n\nSubtype\nDefinition\nExamples\n\n\n\n\nNominal\nCategories with no natural order\nGender (Male/Female), City (Paris, Yerevan, Tokyo)\n\n\nOrdinal\nCategories with a meaningful order, but unequal spacing\nEducation Level (High &lt; Bachelor &lt; Master &lt; PhD), Satisfaction (Low–Medium–High)\n\n\n\n\n\n\n\n\n\nTipRemember\n\n\n\n\nNominal → just names, no order\n\nOrdinal → names with rank\n\n\n\n\n\nQuantitative (Numerical) Data\nQuantitative data represent measurable quantities that can be used in arithmetic operations.\n\n\n\n\n\n\n\n\nSubtype\nDefinition\nExamples\n\n\n\n\nDiscrete\nCountable numbers, often integers\nNumber of customers, Complaints per day\n\n\nContinuous\nMeasured values within a range\nTemperature, Age, Revenue, Weight\n\n\n\n\n\nInterval Data\nInterval values represent ordered units that have the same difference.\nA variable is considered interval data when it contains numeric values that are ordered and where the exact differences between values are known.\nExample (Temperature in Celsius):\n[-15, -10, -5, 0, 5, 10, 15, 20, 25, 30]\nA key limitation of interval data is that it does not have a true zero.\nIn the Celsius example, there is no such thing as “no temperature.”\n\n\nRatio Data\nRatio values are also ordered units that have the same difference, similar to interval values.\nThe key distinction is that ratio data has an absolute zero.\nExamples: Income, Weight, Length, etc.\n\n\n\n\n\n\nTip\n\n\n\n\nDiscrete → counting\n\nContinuous → measuring\n\n\n\n\n\n\nAdditional Data Types (Common in Analytics)\n\n\n\n\n\n\n\n\nType\nDefinition\nExample Applications\n\n\n\n\nBinary\nTwo possible outcomes (Yes/No, 0/1)\nSubscription status, churn indicator\n\n\nTime-Series\nObservations recorded sequentially over time\nDaily sales, hourly temperature\n\n\nTextual / Unstructured\nWords, sentences, or documents\nCustomer reviews, tweets\n\n\nSpatial / Geographical\nLocation-based information\nStore coordinates, delivery zones\n\n\n\n\n\n\n\n\n%%{init: {\"theme\": \"default\", \"logLevel\": \"fatal\"}}%%\ngraph TD\n    A[\"Data Types\"] --&gt; B[\"Qualitative (Categorical)\"]\n    A --&gt; C[\"Quantitative (Numerical)\"]\n    A --&gt; H[\"Other Types\"]\n\n    B --&gt; D[\"Nominal\"]\n    B --&gt; E[\"Ordinal\"]\n\n    C --&gt; F[\"Discrete\"]\n    C --&gt; G[\"Continuous\"]\n\n    \n    H --&gt; I[\"Binary\"]\n    H --&gt; J[\"Time-Series\"]\n    H --&gt; K[\"Textual\"]\n    H --&gt; L[\"Spatial\"]",
     "crumbs": [
       "Syllabus",
       "Statistical Thinking",
